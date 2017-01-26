@@ -6,16 +6,20 @@ import {login} from '../action-creators/login';
 
 const Login = ({ login }) => {
 
-    return (
-        <div className="container">
+  return (
+        <div className="section no-pad-bot" id="index-banner">
             <div className="row">
-            </div>
-            <div className="row">
-                <div className="col s6 offset-s3 center">
+                <div className="col m5 s10 offset-m7 offset-s2">
                     <div className="card grey lighten-5">
                         <div className="card-content" id="mainSet">
                             <p className="card-title">Please sign in:</p>
-                            <form method="POST" action="/api/auth/google" target="_self">
+                            <form onSubmit={evt => {
+                                    evt.preventDefault();
+                                    login(evt.target.username.value, evt.target.password.value);
+                                    browserHistory.push('/');
+
+                                    
+                                }}>
                                 <input placeholder="bob@example.com" name="username" />
                                 <label htmlFor="username" className="left">Username</label>
                                 <input placeholder="Password" name="password" type="password" />
