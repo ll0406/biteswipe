@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const CardBrowseContainer = props => {
+export const CardBrowse = props => {
   return (
     <div>
       {

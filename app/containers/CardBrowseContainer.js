@@ -4,7 +4,7 @@ import { CardBrowse } from '../components/CardBrowse';
 
 const mapStateToProps = state => {
   return {
-    list: state.list
+    list: state.restaurants.list
   };
 }
 
