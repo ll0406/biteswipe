@@ -1,6 +1,6 @@
 import {RECEIVE_RESTAURANTS} from '../constants';
 
-initialState = {
+const initialState = {
 	list: []
 };
 
@@ -16,3 +16,5 @@ const reducer = (state = initialState, action) => {
 	return newState;
 
 };
+
+export default reducer; 
