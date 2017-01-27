@@ -41,23 +41,10 @@ OAuth.setupStrategy({
   config: {
     clientID: env.FACEBOOK_CLIENT_ID,
     clientSecret: env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: `${app.rootUrl}/api/auth/login/facebook`,
+    callbackURL: `${app.rootUrl}/api/auth/facebook/success`,
   },
   passport
 })
-
-// Google needs the GOOGLE_CONSUMER_SECRET AND GOOGLE_CONSUMER_KEY
-// environment variables.
-// OAuth.setupStrategy({
-//   provider: 'google',
-//   strategy: require('passport-google-oauth').Strategy,
-//   config: {
-//     consumerKey: env.GOOGLE_CONSUMER_KEY,
-//     consumerSecret: env.GOOGLE_CONSUMER_SECRET,
-//     callbackURL: `${app.rootUrl}/api/auth/google/login`,
-//   },
-//   passport
-// })
 
 OAuth.setupStrategy({
   provider: 'google',
@@ -65,26 +52,12 @@ OAuth.setupStrategy({
   config: {
     clientID: env.GOOGLE_CLIENT_ID,
     clientSecret: env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${app.baseUrl}/api/auth/google/login`
-  },
-  passport
-})
-
-// Github needs the GITHUB_CLIENT_ID AND GITHUB_CLIENT_SECRET
-// environment variables.
-OAuth.setupStrategy({
-  provider: 'github',
-  strategy: require('passport-github2').Strategy,
-  config: {
-    clientID: env.GITHUB_CLIENT_ID,
-    clientSecrets: env.GITHUB_CLIENT_SECRET,
-    callbackURL: `${app.rootUrl}/api/auth/login/github`,
+    callbackURL: `${app.baseUrl}/api/auth/google/success`
   },
   passport
 })
 
 // Other passport configuration:
-
 passport.serializeUser((user, done) => {
   debug('will serialize user.id=%d', user.id)
   done(null, user.id)
@@ -131,15 +104,14 @@ passport.use(new (require('passport-local').Strategy) (
 
 auth.get('/whoami', (req, res) => res.send(req.user))
 
-auth.post('/:strategy', (req, res, next) => {
-  console.log(req.params.strategy);
+auth.post('/:strategy/login', (req, res, next) => 
   passport.authenticate(req.params.strategy, {
-    scope: ['email']
+    scope: ['email'],
+    successRedirect: '/'
   })(req, res, next)
-}
 )
 
-auth.get('/:strategy/login', (req, res, next) =>
+auth.get('/:strategy/success', (req, res, next) => 
   passport.authenticate(req.params.strategy, {
     successRedirect: '/'
   })(req, res, next)
@@ -151,4 +123,3 @@ auth.post('/logout', (req, res, next) => {
 })
 
 module.exports = auth
-

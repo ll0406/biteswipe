@@ -2,9 +2,8 @@
 
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
-import {login} from '../action-creators/login';
 
-const Login = ({ login }) => {
+const Login = ({ login, oauth }) => {
 
   return (
         <div className="section no-pad-bot" id="index-banner">
@@ -12,18 +11,18 @@ const Login = ({ login }) => {
                 <div className="col m5 s10 offset-m7 offset-s2">
                     <div className="card grey lighten-5">
                         <div className="card-content" id="mainSet">
-                            <p className="card-title">Please sign in:</p>
+                            <form action="/api/auth/google/login" method="post">
+                                <button className="waves-effect waves-light btn red" type="submit">Google
+                                  <i className="right mdi mdi-google"></i>
+                                </button>
+                            </form>
                             <form onSubmit={evt => {
                                     evt.preventDefault();
                                     login(evt.target.username.value, evt.target.password.value);
                                     browserHistory.push('/');
-
-                                    
                                 }}>
                                 <input placeholder="bob@example.com" name="username" />
-                                <label htmlFor="username" className="left">Username</label>
                                 <input placeholder="Password" name="password" type="password" />
-                                <label htmlFor="password" className="left">Password</label>
                                 <input className="waves-effect waves-light btn" type="submit" value="Login" />
                             </form>
                         </div>
@@ -32,6 +31,7 @@ const Login = ({ login }) => {
             </div>
         </div>
     );
+
 };
 
 export default Login;
