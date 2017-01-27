@@ -2,9 +2,7 @@ const router = require('express').Router();
 const axios = require('axios');
 const env = require('APP').env;
 
-console.log("yo what are you? quit being a cunt ", env);
 var config = {
-
   headers: {'user-key': env.ZOMATO_API_KEY}
 };
 
@@ -16,6 +14,5 @@ router.get('/', (req, res, next) => {
 	})
 	.catch(next);
 });
-
 
 module.exports = router;

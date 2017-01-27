@@ -15,7 +15,6 @@ function onEnterCard(){
 
 };
 
-
 render(
 	<Provider store={store}>
 		<Router history={browserHistory}>

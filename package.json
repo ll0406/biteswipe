@@ -10,12 +10,12 @@
     "build-watch": "check-node-version --node '>= 6.7.0' && bin/setup && webpack -w",
     "build-branch": "bin/build-branch.sh",
     "deploy-heroku": "bin/deploy-heroku.sh",
-    "start": "webpack && bin/setup && nodemon server/start.js",
+    "start": "bin/setup && nodemon server/start.js",
     "seed": "node db/seed.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dennisdeng2002/capstone.git"
+    "url": "git+https://github.com/dennisdeng2002/biteswipe.git"
   },
   "keywords": [
     "react",
@@ -25,9 +25,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/queerviolet/bones/issues"
+    "url": "https://github.com/dennisdeng2002/biteswipe/issues"
   },
-  "homepage": "https://github.com/queerviolet/bones#readme",
+  "homepage": "https://github.com/dennisdeng2002/biteswipe#readme",
   "dependencies": {
     "axios": "^0.15.2",
     "babel": "^6.5.2",

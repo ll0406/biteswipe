@@ -5,9 +5,9 @@ export const authenticated = user => ({
   type: AUTHENTICATED, user
 });
 
-export const login = (username, password, strategy) =>
+export const login = (username, password) =>
   dispatch =>
-    axios.post(`/api/auth/${strategy}`,
+    axios.post(`/api/auth/local/login`,
       {username, password})
       .then(() => dispatch(whoami()))
       .catch(() => dispatch(whoami()));
