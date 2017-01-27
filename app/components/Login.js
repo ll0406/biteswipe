@@ -3,7 +3,7 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 
-const Login = ({ login, oauth }) => {
+const Login = ({ login }) => {
 
   return (
         <div className="section no-pad-bot" id="index-banner">
