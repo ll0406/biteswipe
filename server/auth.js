@@ -41,7 +41,7 @@ OAuth.setupStrategy({
   config: {
     clientID: env.FACEBOOK_CLIENT_ID,
     clientSecret: env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: `${app.rootUrl}/api/auth/facebook/success`,
+    callbackURL: `${app.rootUrl}/api/auth/facebook/callback`,
   },
   passport
 })
@@ -52,7 +52,7 @@ OAuth.setupStrategy({
   config: {
     clientID: env.GOOGLE_CLIENT_ID,
     clientSecret: env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${app.baseUrl}/api/auth/google/success`
+    callbackURL: `${app.baseUrl}/api/auth/google/callback`
   },
   passport
 })
@@ -106,14 +106,14 @@ auth.get('/whoami', (req, res) => res.send(req.user))
 
 auth.post('/:strategy/login', (req, res, next) => 
   passport.authenticate(req.params.strategy, {
-    scope: ['email'],
+    scope: [],
     successRedirect: '/'
   })(req, res, next)
 )
 
-auth.get('/:strategy/success', (req, res, next) => 
+auth.get('/:strategy/callback', (req, res, next) => 
   passport.authenticate(req.params.strategy, {
-    successRedirect: '/'
+    callbackRedirect: '/'
   })(req, res, next)
 )
 

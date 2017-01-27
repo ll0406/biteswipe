@@ -1,4 +1,4 @@
-Capstone
+BiteSwipe
 
 Capstone Project for Fullstack Academy.
 
