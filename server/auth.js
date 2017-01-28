@@ -113,7 +113,7 @@ auth.post('/:strategy/login', (req, res, next) =>
 
 auth.get('/:strategy/callback', (req, res, next) => 
   passport.authenticate(req.params.strategy, {
-    callbackRedirect: '/'
+    successRedirect: '/'
   })(req, res, next)
 )
 
