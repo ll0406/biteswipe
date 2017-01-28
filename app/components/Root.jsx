@@ -15,7 +15,6 @@ const Root = (props) => {
             <div id="main-content-anchor">
                 { props.children }
             </div>
-            <Footer />
         </div>
     );
 };
