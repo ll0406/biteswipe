@@ -13,7 +13,7 @@ export const IconBar = props => {
         width="50px" height="50px"/>
       <img src="img/delivery_ico.png" 
         width="50px" height="50px"/>
-      <span>{price}</span>
+      <span className="price-range">{price}</span>
     </div>
   );
 }

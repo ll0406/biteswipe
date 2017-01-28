@@ -42,3 +42,20 @@ footer.page-footer {
     background-position: 50% 50%;
     height: 250px;
 }
+
+/* Cards view */
+.swipe-card .price-range {
+  vertical-align: middle;
+}
+
+.swipe-card {
+  text-align: center;
+}
+
+.swipe-card .swipe-left {
+  float: left;
+}
+
+.swipe-card .swipe-right {
+  float: right;
+}

@@ -3,7 +3,7 @@ import {SummaryCard} from './SummaryCard';
 
 export const CardBrowse = props => {
   return (
-    <div className="row">
+    <div className="row card-browser">
       <div className="col s12">
         {
           (props.list.length > 0) && (
