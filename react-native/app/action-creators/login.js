@@ -7,20 +7,20 @@ export const authenticated = user => ({
 
 export const login = (username, password) =>
   dispatch =>
-    axios.post('http://192.168.1.155:1337/api/auth/local/login',
+    axios.post('http://10.0.0.205:1337/api/auth/local/login',
       {username, password})
       .then(() => dispatch(whoami()))
       .catch(() => dispatch(whoami()));
 
 export const logout = () =>
   dispatch =>
-    axios.post('http://192.168.1.155:1337/api/auth/logout')
+    axios.post('http://10.0.0.205:1337/api/auth/logout')
       .then(() => dispatch(whoami()))
       .catch(() => dispatch(whoami()));
 
 export const whoami = () =>
   dispatch =>
-    axios.get('http://192.168.1.155:1337/api/auth/whoami')
+    axios.get('http://10.0.0.205:1337/api/auth/whoami')
       .then(response => {
         const user = response.data
         dispatch(authenticated(user))
