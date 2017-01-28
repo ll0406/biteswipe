@@ -1,6 +1,7 @@
 const app = require('APP'), {env} = app;
 const debug = require('debug')(`${app.name}:auth`);
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 const User = require('APP/db/models/user');
 const OAuth = require('APP/db/models/oauth');
@@ -102,20 +103,38 @@ passport.use(new (require('passport-local').Strategy) (
   }
 ))
 
+const generateToken = (req, res, next) => {  
+  req.token = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresInMinutes: 60});
+  next();
+}
+
+const respond = (req, res) => {
+  res.status(200).json({
+    user: req.user,
+    token: req.token
+  });
+}
+
 auth.get('/whoami', (req, res) => res.send(req.user))
 
-auth.post('/:strategy/login', (req, res, next) => 
+auth.post('/local/login', (req, res, next) => 
   passport.authenticate(req.params.strategy, {
-    scope: ['profile'],
-    successRedirect: '/'
-  })(req, res, next)
+    session: false
+  }, generateToken, respond)(req, res, next)
 )
 
-auth.get('/:strategy/callback', (req, res, next) => 
-  passport.authenticate(req.params.strategy, {
-    successRedirect: '/'
-  })(req, res, next)
-)
+// auth.post('/:strategy/login', (req, res, next) => 
+//   passport.authenticate(req.params.strategy, {
+//     scope: ['profile'],
+//     successRedirect: '/'
+//   })(req, res, next)
+// )
+
+// auth.get('/:strategy/callback', (req, res, next) => 
+//   passport.authenticate(req.params.strategy, {
+//     successRedirect: '/'
+//   })(req, res, next)
+// )
 
 auth.post('/logout', (req, res, next) => {
   req.logout()
