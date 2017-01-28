@@ -8,7 +8,7 @@ export const IconBar = props => {
   }
 
   return (
-    <div>
+    <div className="icon-bar">
       <img src="img/beer_ico.png" 
         width="50px" height="50px"/>
       <img src="img/delivery_ico.png" 

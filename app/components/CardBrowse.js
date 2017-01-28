@@ -3,8 +3,8 @@ import {SummaryCard} from './SummaryCard';
 
 export const CardBrowse = props => {
   return (
-    <div className="row card-browser">
-      <div className="col s12">
+    <div className="row">
+      <div className="col s12 card-browser">
         {
           (props.list.length > 0) && (
             props.list.map( (restaurant, i) => (
