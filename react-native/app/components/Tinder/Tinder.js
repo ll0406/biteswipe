@@ -29,6 +29,7 @@
 
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
+import {SummaryCard} from '../CardBrowse/SummaryCard';
 
 import SwipeCards from 'react-native-swipe-cards';
 
@@ -56,8 +57,7 @@ export default React.createClass({
     return (
       <SwipeCards
         cards={this.props.restaurants}
-
-        renderCard={(cardData) => <Card {...cardData} />}
+        renderCard={(cardData) => <SummaryCard restaurant={cardData}/>}
         renderNoMoreCards={() => <NoMoreCards />}
       />
     )
