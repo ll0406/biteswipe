@@ -2,11 +2,12 @@ const app = require('APP'), {env} = app;
 const debug = require('debug')(`${app.name}:auth`);
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const expressJwt = require('express-jwt');
+const authenticate = expressJwt({secret: env.SERVER_SECRET});
 
 const User = require('APP/db/models/user');
 const OAuth = require('APP/db/models/oauth');
 const auth = require('express').Router();
-
 
 /*************************
  * Auth strategies
@@ -42,7 +43,7 @@ OAuth.setupStrategy({
   config: {
     clientID: env.FACEBOOK_CLIENT_ID,
     clientSecret: env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: `${app.rootUrl}/api/auth/facebook/callback`,
+    callbackURL: 'http://10.0.2.2:1337/api/auth/facebook/callback'
   },
   passport
 })
@@ -53,7 +54,18 @@ OAuth.setupStrategy({
   config: {
     clientID: env.GOOGLE_CLIENT_ID,
     clientSecret: env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${app.baseUrl}/api/auth/google/callback`
+    callbackURL: 'http://10.0.2.2.nip.io:1337/api/auth/google/callback'
+  },
+  passport
+})
+
+OAuth.setupStrategy({
+  provider: 'twitter',
+  strategy: require('passport-twitter').Strategy,
+  config: {
+    consumerKey: env.TWITTER_CONSUMER_KEY,
+    consumerSecret: env.TWITTER_CONSUMER_SECRET,
+    callbackURL: 'http://10.0.2.2:1337/api/auth/twitter/callback'
   },
   passport
 })
@@ -103,8 +115,8 @@ passport.use(new (require('passport-local').Strategy) (
   }
 ))
 
-const generateToken = (req, res, next) => {  
-  req.token = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresInMinutes: 60});
+const generateToken = (req, res, next) => {
+  req.token = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresIn: 24*60*60});
   next();
 }
 
@@ -115,26 +127,29 @@ const respond = (req, res) => {
   });
 }
 
+const redirect = (req, res) => {
+  const url = `biteswipe://callback?${req.token}`;
+  res.redirect('biteswipe://callback');
+}
+
 auth.get('/whoami', (req, res) => res.send(req.user))
 
-auth.post('/local/login', (req, res, next) => 
-  passport.authenticate(req.params.strategy, {
+auth.post('/local/login', (req, res, next) => {
+  passport.authenticate('local', {
     session: false
-  }, generateToken, respond)(req, res, next)
-)
+  })(req, res, next)
+}, generateToken, respond)
 
-// auth.post('/:strategy/login', (req, res, next) => 
-//   passport.authenticate(req.params.strategy, {
-//     scope: ['profile'],
-//     successRedirect: '/'
-//   })(req, res, next)
-// )
+auth.get('/:strategy/login', (req, res, next) => {
+  passport.authenticate(req.params.strategy, {
+    scope: ['profile']
+  })(req, res, next)
+})
 
-// auth.get('/:strategy/callback', (req, res, next) => 
-//   passport.authenticate(req.params.strategy, {
-//     successRedirect: '/'
-//   })(req, res, next)
-// )
+auth.get('/:strategy/callback', (req, res, next) => {
+  passport.authenticate(req.params.strategy)
+  (req, res, next)
+}, generateToken, redirect)
 
 auth.post('/logout', (req, res, next) => {
   req.logout()
