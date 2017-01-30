@@ -6,17 +6,10 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import { getTheme } from 'react-native-material-kit';
 
 export const SummaryCard = props => {
-
-  const theme = getTheme();
-  console.log('sdaflj', theme.cardStyle);
-
   return (
-    <View style={theme.cardStyle}>
-    {console.log('eafd', theme.cardStyle)}
-      <View >
-        <Image source={{uri: 'http://www.fillmurray.com/284/196' }} />
-        <Text>{props.restaurant.name}</Text>
-      </View>
+    <View>
+      <Image source={{uri: 'http://www.fillmurray.com/284/196' }} style={{width: 100, height: 100}}/>
+      <Text>{props.restaurant.name}</Text>
       <View>
         {
           (props.restaurant.cuisines === '') 
@@ -31,14 +24,14 @@ export const SummaryCard = props => {
 }
 
 
-const styles = StyleSheet.create({
-  card: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 300,
-    height: 150,
-    borderColor: '#000000',
-    borderWidth: 1
-  }
-})
+// const styles = StyleSheet.create({
+//   card: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     width: 300,
+//     height: 150,
+//     borderColor: '#000000',
+//     borderWidth: 1
+//   }
+// })

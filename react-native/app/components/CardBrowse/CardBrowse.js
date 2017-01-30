@@ -1,18 +1,19 @@
 import React from 'react';
-import {SummaryCard} from './SummaryCard';
+// import {SummaryCard} from './SummaryCard';
+
+import { View, Text } from 'react-native';
 
 export const CardBrowse = props => {
+  console.log('cardBrowse props:',props);
   return (
-    <div className="row">
-      <div className="col s12 card-browser">
-        {
-          (props.list.length > 0) && (
-            props.list.map( (restaurant, i) => (
-              <SummaryCard key={i} restaurant={restaurant.restaurant} />
-            ))
-          ) 
-        }
-      </div>  
-    </div>
+    <View style={{backgroundColor:'green', flex: 1}}>
+      {
+        (props.list.length > 0) && (
+          props.list.map( (restaurant, i) => (
+            <Text>Heya!</Text>
+          ))
+        ) 
+      }
+    </View>
   )
 }

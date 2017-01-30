@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { CardBrowse } from '../components/CardBrowse';
+import { CardBrowse } from './CardBrowse';
 
 const mapStateToProps = state => {
   return {
