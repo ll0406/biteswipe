@@ -1,4 +1,4 @@
-import {AUTHENTICATED} from '../constants';
+import {AUTHENTICATED, TOKEN} from '../constants';
 
 const initialState = {
 	user: null,

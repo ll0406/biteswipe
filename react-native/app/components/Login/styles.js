@@ -5,7 +5,8 @@ import {
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
-const offset = Platform.OS === 'ios' ? 64 : 54
+const offset = Platform.OS === 'ios' ? 64 : 54;
+const textInputStyle = Platform.OS === 'ios' ? {marginTop: 30, marginBottom: 30, height: 20} : {marginTop: 30, marginBottom: 30};
 
 export default StyleSheet.create({
   container: {
@@ -22,14 +23,8 @@ export default StyleSheet.create({
     marginTop: 30,
     marginBottom: 30
   },
-  email: {
-    marginLeft: 20,
-    marginRight: 20
-  },
-  password: {
-    marginLeft: 20,
-    marginRight: 20
-  },
+  email: textInputStyle,
+  password: textInputStyle,
   login: {
     backgroundColor: '#009688',
     marginTop: 20,

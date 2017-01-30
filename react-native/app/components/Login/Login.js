@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import {
+  Platform,
   View,
   KeyboardAvoidingView,
   TextInput,
@@ -19,6 +20,8 @@ import {
 } from 'react-native-elements';
 
 import Hr from 'react-native-hr';
+
+import {ip} from '../../constants';
 
 const theme = getTheme();
 
@@ -50,7 +53,7 @@ export default class Login extends Component {
 
     const oauth = (strategy) => {
       Linking
-      .openURL(`http://10.0.2.2:1337/api/auth/${strategy}/login`)
+      .openURL(`http://${ip}:1337/api/auth/${strategy}/login`)
       .catch(err => console.error);
     }
 
@@ -85,20 +88,23 @@ export default class Login extends Component {
             <Hr lineColor="black" text="or" margin={50}/>
           </View>
 
-          <TextInput 
-            placeholder="Email"
-            onChangeText={(email) => this.setEmail(email)}
-            value={this.state.email}
-            keyboardType="email-address"
-            style={styles.email}
-          />
-          <TextInput 
-            placeholder="Password"
-            onChangeText={(password) => this.setPassword(password)}
-            value={this.state.password}
-            secureTextEntry={true}
-            style={styles.password}
-          />
+          <View style={styles.inputs}>
+            <TextInput 
+              placeholder="Email"
+              onChangeText={(email) => this.setEmail(email)}
+              value={this.state.email}
+              keyboardType="email-address"
+              style={styles.email}
+              autoCapitalize="none"
+            />
+            <TextInput 
+              placeholder="Password"
+              onChangeText={(password) => this.setPassword(password)}
+              value={this.state.password}
+              secureTextEntry={true}
+              style={styles.password}
+            />
+          </View>
 
           <Button title="Login" onPress={login} buttonStyle={styles.login}/>
           

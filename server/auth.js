@@ -116,15 +116,15 @@ passport.use(new (require('passport-local').Strategy) (
 ))
 
 const generateToken = (req, res, next) => {
-  req.token = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresIn: 24*60*60});
-  next();
+  req.token = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresIn: 24*60*60})
+  next()
 }
 
 const respond = (req, res) => {
   res.status(200).json({
     user: req.user,
     token: req.token
-  });
+  })
 }
 
 const redirect = (req, res) => {
@@ -155,5 +155,17 @@ auth.post('/logout', (req, res, next) => {
   req.logout()
   res.redirect('/api/auth/whoami')
 })
+
+auth.post('/signup', (req, res, next) => {
+  User.create(req.body)
+  .then(user => {
+    if(!user) res.sendStatus(404)
+    else req.login(user, (err) => {
+      if(err) next(err)
+      else next()
+    })
+  })
+  .catch(next)
+}, generateToken, respond)
 
 module.exports = auth

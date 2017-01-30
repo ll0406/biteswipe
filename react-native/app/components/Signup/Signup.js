@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 
 import {
+  Platform,
   View,
-  Text,
-  TextInput,
-  Button
+  KeyboardAvoidingView,
+  TextInput
 } from 'react-native';
 
 import styles from './styles';
@@ -13,7 +13,10 @@ import {
   getTheme
 } from 'react-native-material-kit';
 
-import { Actions } from 'react-native-router-flux';
+import {
+  SocialIcon,
+  Button
+} from 'react-native-elements';
 
 const theme = getTheme();
 
@@ -22,11 +25,19 @@ export default class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: '',
       email: '',
       password: ''
     }
+    this.setName = this.setName.bind(this);
     this.setEmail = this.setEmail.bind(this);
     this.setPassword = this.setPassword.bind(this);
+  }
+
+  setName(name) {
+    this.setState({
+      name
+    })
   }
 
   setEmail(email) {
@@ -44,26 +55,41 @@ export default class Signup extends Component {
   render() {
 
     const signup = () => {
-
+      this.props.signup(this.state.name, this.state.email, this.state.password);
     };
 
     return (
-      <View style={[theme.cardStyle, this.props.style]}>
-        <View style={styles.container}>
-          <TextInput 
-            placeholder="Email"
-            onChangeText={(email) => this.setEmail(email)}
-            value={this.state.email}
-            keyboardType="email-address"
-          />
-          <TextInput 
-            placeholder="Password"
-            onChangeText={(password) => this.setPassword(password)}
-            value={this.state.password}
-            secureTextEntry={true}
-          />
-          <Button title="Signup" onPress={signup}></Button>
-        </View>
+      <View style={styles.container}>
+        <KeyboardAvoidingView style={[theme.cardStyle, styles.card]}>
+
+          <View style={styles.inputs}>
+            <TextInput 
+              placeholder="Name"
+              onChangeText={(name) => this.setName(name)}
+              value={this.state.name}
+              style={styles.name}
+              autoCapitalize="none"
+            />
+            <TextInput 
+              placeholder="Email"
+              onChangeText={(email) => this.setEmail(email)}
+              value={this.state.email}
+              keyboardType="email-address"
+              style={styles.email}
+              autoCapitalize="none"
+            />
+            <TextInput 
+              placeholder="Password"
+              onChangeText={(password) => this.setPassword(password)}
+              value={this.state.password}
+              secureTextEntry={true}
+              style={styles.password}
+            />
+          </View>
+
+          <Button title="Signup" onPress={signup} buttonStyle={styles.signup}/>
+          
+        </KeyboardAvoidingView>
       </View>
     );
   };
