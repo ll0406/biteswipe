@@ -6,7 +6,7 @@ import {
 
 const { width, height } = Dimensions.get('window');
 const offset = Platform.OS === 'ios' ? 64 : 54;
-const textInputStyle = Platform.OS === 'ios' ? {marginTop: 30, marginBottom: 30, height: 20} : {marginTop: 30, marginBottom: 30};
+const textInputStyle = Platform.OS === 'ios' ? {marginTop: 30, marginBottom: 30, height: 20} : {};
 
 export default StyleSheet.create({
   container: {

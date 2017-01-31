@@ -2,8 +2,7 @@ const app = require('APP'), {env} = app;
 const debug = require('debug')(`${app.name}:auth`);
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-const expressJwt = require('express-jwt');
-const authenticate = expressJwt({secret: env.SERVER_SECRET});
+const crypto = require('crypto');
 
 const User = require('APP/db/models/user');
 const OAuth = require('APP/db/models/oauth');
@@ -115,30 +114,55 @@ passport.use(new (require('passport-local').Strategy) (
   }
 ))
 
-const generateToken = (req, res, next) => {
-  req.token = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresIn: 24*60*60})
+const authenticate = (req, res, next) => {
+  const token = req.headers['Authorization'].split(' ')[1]
+  const id = jwt.verify(token, env.SERVER_SECRET)
+  User.findById(id)
+  .then(user => {
+    req.user = user
+    next()
+  })
+  .catch(next);
+}
+
+const generateRefreshToken = (req, res, next) => {
+  const refreshToken = req.user.id + '.' + crypto.randomBytes(40).toString('hex')
+  User.update({refresh_token: refreshToken}, {
+    where: {
+      id: req.user.id
+    }
+  })
+  .then(user => {
+    req.refreshToken = refreshToken
+    next()
+  })
+  .catch(next)
+}
+
+const generateAccessToken = (req, res, next) => {
+  req.accessToken = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresIn: 24*60*60})
   next()
 }
 
 const respond = (req, res) => {
   res.status(200).json({
-    user: req.user,
-    token: req.token
+    refreshToken: req.refreshToken,
+    accessToken: req.accessToken
   })
 }
 
 const redirect = (req, res) => {
-  const url = `biteswipe://callback?${req.token}`;
-  res.redirect('biteswipe://callback');
+  const url = `biteswipe://callback?refresh=${req.refreshToken}&access=${req.accessToken}`
+  res.redirect(url)
 }
 
-auth.get('/whoami', (req, res) => res.send(req.user))
+auth.get('/token', authenticate, generateAccessToken, respond)
 
 auth.post('/local/login', (req, res, next) => {
   passport.authenticate('local', {
     session: false
   })(req, res, next)
-}, generateToken, respond)
+}, generateRefreshToken, generateAccessToken, respond)
 
 auth.get('/:strategy/login', (req, res, next) => {
   passport.authenticate(req.params.strategy, {
@@ -149,7 +173,7 @@ auth.get('/:strategy/login', (req, res, next) => {
 auth.get('/:strategy/callback', (req, res, next) => {
   passport.authenticate(req.params.strategy)
   (req, res, next)
-}, generateToken, redirect)
+}, generateRefreshToken, generateAccessToken, redirect)
 
 auth.post('/logout', (req, res, next) => {
   req.logout()
@@ -166,6 +190,6 @@ auth.post('/signup', (req, res, next) => {
     })
   })
   .catch(next)
-}, generateToken, respond)
+}, generateRefreshToken, generateAccessToken, respond)
 
 module.exports = auth

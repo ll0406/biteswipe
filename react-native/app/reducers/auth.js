@@ -1,15 +1,22 @@
-import {AUTHENTICATED, TOKEN} from '../constants';
+import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN} from '../constants';
 
 const initialState = {
-	user: null,
-	token: ''
+	refreshToken: '',
+	accessToken: '',
+	loggedIn: false
 }
 
 const reducer = (state=initialState, action) => {
 	let newState = Object.assign({}, state);
   switch(action.type) {
-  	case AUTHENTICATED:
-  		newState.user = action.user;
+  	case REFRESH_TOKEN:
+  		newState.refreshToken = action.refreshToken;
+  		break;
+  	case ACCESS_TOKEN:
+  		newState.accessToken = action.accessToken;
+  		break;
+  	case LOGGED_IN:
+  		newState.loggedIn = action.loggedIn;
   		break;
   }
   return newState;

@@ -1,14 +1,39 @@
 import React, { Component } from 'react';
 import {AppRegistry, View, StyleSheet} from 'react-native';
-import {Provider} from 'react-redux';
+import {connect, Provider} from 'react-redux';
 import store from './app/store';
-import {Scene, Router} from 'react-native-router-flux';
+import {Switch, Actions, Scene, Router} from 'react-native-router-flux';
 
 import Splash from './app/components/Splash';
 import Login from './app/components/Login';
 import Signup from './app/components/Signup';
 
+import Home from './app/components/Home';
 import Tinder from './app/components/Tinder';
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+const connectedSwitch = connect(mapStateToProps)(Switch);
+const selector = props => (props.auth.loggedIn ? 'loggedIn' : 'notLoggedIn');
+
+const scenes = Actions.create(
+  <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
+
+    <Scene key="notLoggedIn">
+      <Scene key="splash" component={Splash} title="Splash" hideNavBar={true} initial={true}/>
+      <Scene key="login" component={Login} title="Login" hideNavBar={false}/>
+      <Scene key="signup" component={Signup} title="Signup" hideNavBar={false}/>
+    </Scene>
+
+    <Scene key="loggedIn">
+      <Scene key="home" component={Home}/>
+      <Scene key="tinder" component={Tinder} hideNavBar={true} initial={true}/>
+    </Scene>
+
+  </Scene>
+);
 
 export default class BiteSwipe extends Component {
   render() {
@@ -17,18 +42,8 @@ export default class BiteSwipe extends Component {
         <Router 
           navigationBarStyle={styles.navBar} 
           titleStyle={styles.navTitle}
-          barButtonIconStyle={styles.navBarButton}>
-          <Scene key="root">
-            <Scene key="splash" component={Splash} initial={true} hideNavBar={true}/>
-            <Scene key="login" component={Login} title="Login" hideNavBar={false}/>
-            <Scene key="signup" component={Signup} title="Signup" hideNavBar={false}/>
-
-            <Scene key="home" tabs={true} hideNavBar={true} tabBarStyle={styles.tabBarStyle}>
-              <Scene key="tinder" component={Tinder} hideNavBar={true}/>
-            </Scene>
-
-          </Scene>
-        </Router>
+          barButtonIconStyle={styles.navBarButton}
+          scenes={scenes}/>
       </Provider>
     );
   }
@@ -43,13 +58,7 @@ const styles = StyleSheet.create({
   },
   navBarButton: {
     tintColor: 'white'
-  },
-  tabBarStyle: {
-      borderTopWidth: 0.5,
-      borderColor: '#b7b7b7',
-      backgroundColor: 'white',
-      opacity: 1
   }
-})
+});
 
 AppRegistry.registerComponent('BiteSwipe', () => BiteSwipe);

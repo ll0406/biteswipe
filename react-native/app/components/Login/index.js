@@ -3,7 +3,7 @@ import {login} from '../../action-creators/auth';
 import Login from './Login';
 
 const mapStateToProps = state => ({
-	token: state.auth.token
+	auth: state.auth
 });
 const mapStateToDispatch = {login};
 

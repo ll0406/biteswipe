@@ -16,9 +16,9 @@ import {
   MKColor
 } from 'react-native-material-kit';
 
-import { Actions } from 'react-native-router-flux';
+import {Actions} from 'react-native-router-flux';
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 export default class Splash extends Component {
 

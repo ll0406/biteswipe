@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
 import {
-  Platform,
   View,
   KeyboardAvoidingView,
   TextInput,
@@ -20,8 +19,8 @@ import {
 } from 'react-native-elements';
 
 import Hr from 'react-native-hr';
-
-import {ip} from '../../constants';
+import {IP} from '../../constants';
+import {Actions} from 'react-native-router-flux';
 
 const theme = getTheme();
 
@@ -49,11 +48,18 @@ export default class Login extends Component {
     })
   }
 
+  componentWillMount() {
+    console.log("mounted");
+    if(this.props.auth.loggedIn) {
+      Actions.tinder();
+    }
+  }
+
   render() {
 
     const oauth = (strategy) => {
       Linking
-      .openURL(`http://${ip}:1337/api/auth/${strategy}/login`)
+      .openURL(`http://${IP}:1337/api/auth/${strategy}/login`)
       .catch(err => console.error);
     }
 
