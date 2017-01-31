@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { SwipeButtons } from './SwipeButtons';
 
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { Dimensions, View, Text, Image, StyleSheet } from 'react-native';
 
 import { getTheme } from 'react-native-material-kit';
 
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 350,
+    width: Dimensions.get('window').width*.85,
     borderColor: '#ffffff',
     borderWidth: 1,
     borderRadius: 2,
