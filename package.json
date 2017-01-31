@@ -4,8 +4,8 @@
   "description": "Tinder for food",
   "main": "index.js",
   "scripts": {
-    "test": "check-node-version --node '>= 6.7.0' && bin/setup && mocha --compilers js:babel-core/register app/**/*.test.js app/**/*.test.jsx db/**/*.test.js server/**/*.test.js",
-    "test-watch": "check-node-version --node '>= 6.7.0' && bin/setup && mocha --compilers js:babel-core/register --watch app/**/*.test.js app/**/*.test.jsx db/**/*.test.js server/**/*.test.js",
+    "test": "check-node-version --node '>= 6.7.0' && bin/setup && mocha db/**/*.test.js server/**/*.test.js",
+    "test-watch": "check-node-version --node '>= 6.7.0' && bin/setup && mocha db/**/*.test.js server/**/*.test.js",
     "build-branch": "bin/build-branch.sh",
     "deploy-heroku": "bin/deploy-heroku.sh",
     "start": "bin/setup && nodemon server/start.js",
