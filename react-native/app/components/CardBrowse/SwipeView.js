@@ -1,5 +1,6 @@
 import React from 'react';
 import { SummaryCard } from './SummaryCard';
+import { styles } from './styles';
 
 import { View, Text } from 'react-native';
 
@@ -16,11 +17,13 @@ const NoMoreCards = () => {
 export const SwipeView = React.createClass({
   render () {
     return (
-      <SwipeCards 
-        cards={this.props.restaurants}
-        renderCard={(cardData) => <SummaryCard restaurant={cardData} />}
-        renderNoMoreCards={() => <NoMoreCards />}
-        />
+      <View style={{backgroundColor: '#F0F0F0', flex:1, elevation:0}}>
+        <SwipeCards 
+          cards={this.props.restaurants}
+          renderCard={(cardData) => <SummaryCard restaurant={cardData} />}
+          renderNoMoreCards={() => <NoMoreCards />}
+          />
+      </View>
     )
   }
 })
