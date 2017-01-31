@@ -56,7 +56,7 @@ module.exports = app
 
   .use((err, req, res, next) => {
     console.log(prettyError.render(err))
-    res.status(500).send(err)
+    res.status(500).send(err.message)
     next()
   })
 
