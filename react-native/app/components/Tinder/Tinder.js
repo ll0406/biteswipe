@@ -1,6 +1,34 @@
+// import React, {Component} from 'react';
+// import {Text, View, Image} from 'react-native';
+// import styles from './styles';
+
+// import SummaryCard from '../SummaryCard';
+// import SwipeCards from 'react-native-swipe-cards';
+
+// const NoMoreCards = () => {
+//   return (
+//       <View>
+//         <Text>No more cards</Text>
+//       </View>
+//     )
+// }
+
+// export default class Tinder extends Component{
+
+//   render() {
+//     return (
+//       <SwipeCards
+//         cards={this.props.restaurants}
+//         renderCard={(cardData) => <SummaryCard {...cardData} />}
+//         renderNoMoreCards={() => <NoMoreCards />}
+//       />
+//     )
+//   }
+
+// };
+
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import CardBrowse from '../CardBrowse/';
 
 import SwipeCards from 'react-native-swipe-cards';
 
@@ -26,7 +54,12 @@ export default React.createClass({
 
   render() {
     return (
-      <CardBrowse />
+      <SwipeCards
+        cards={this.props.restaurants}
+
+        renderCard={(cardData) => <Card {...cardData} />}
+        renderNoMoreCards={() => <NoMoreCards />}
+      />
     )
   }
 

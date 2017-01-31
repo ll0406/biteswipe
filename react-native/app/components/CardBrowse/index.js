@@ -4,7 +4,7 @@ import { SwipeView } from './SwipeView';
 
 const mapStateToProps = state => {
   return {
-    list: state.restaurants.list
+    restaurants: state.restaurants.list
   };
 }
 

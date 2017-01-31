@@ -3,16 +3,24 @@ import { SummaryCard } from './SummaryCard';
 
 import { View, Text } from 'react-native';
 
-export const SwipeView = props => {
+import SwipeCards from 'react-native-swipe-cards';
+
+const NoMoreCards = () => {
   return (
-    <View style={{backgroundColor:'#FAFAFA', flex: 1}}>
-      {
-        (props.list.length > 0) && (
-          props.list.map( (restaurant, i) => (
-            <SummaryCard restaurant={restaurant} key={i} />
-          ))
-        ) 
-      }
+    <View>
+      <Text>No more cards</Text>
     </View>
   )
-}
+};
+
+export const SwipeView = React.createClass({
+  render () {
+    return (
+      <SwipeCards 
+        cards={this.props.restaurants}
+        renderCard={(cardData) => <SummaryCard restaurant={cardData} />}
+        renderNoMoreCards={() => <NoMoreCards />}
+        />
+    )
+  }
+})
