@@ -1,9 +1,10 @@
-import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN} from '../constants';
+import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN} from '../constants';
 
 const initialState = {
 	refreshToken: '',
 	accessToken: '',
-	loggedIn: false
+	loggedIn: false,
+  gettingAccessToken: false
 }
 
 const reducer = (state=initialState, action) => {
@@ -18,6 +19,9 @@ const reducer = (state=initialState, action) => {
   	case LOGGED_IN:
   		newState.loggedIn = action.loggedIn;
   		break;
+    case GETTING_ACCESS_TOKEN:
+      newState.gettingAccessToken = action.gettingAccessToken;
+      break;
   }
   return newState;
 };

@@ -7,6 +7,7 @@ const crypto = require('crypto');
 const User = require('APP/db/models/user');
 const OAuth = require('APP/db/models/oauth');
 const auth = require('express').Router();
+const {authenticateRefreshToken, generateRefreshToken, generateAccessToken, respond, redirect} = require('./token');
 
 OAuth.setupStrategy({
   provider: 'facebook',
@@ -15,6 +16,7 @@ OAuth.setupStrategy({
     clientID: env.FACEBOOK_CLIENT_ID,
     clientSecret: env.FACEBOOK_CLIENT_SECRET,
     callbackURL: 'http://10.0.2.2:1337/api/auth/facebook/callback'
+    // callbackURL: 'http://127.0.0.1:1337/api/auth/facebook/callback'
   },
   passport
 })
@@ -26,6 +28,7 @@ OAuth.setupStrategy({
     clientID: env.GOOGLE_CLIENT_ID,
     clientSecret: env.GOOGLE_CLIENT_SECRET,
     callbackURL: 'http://10.0.2.2.nip.io:1337/api/auth/google/callback'
+    // callbackURL: 'http://127.0.0.1.nip.io:1337/api/auth/google/callback'
   },
   passport
 })
@@ -37,6 +40,7 @@ OAuth.setupStrategy({
     consumerKey: env.TWITTER_CONSUMER_KEY,
     consumerSecret: env.TWITTER_CONSUMER_SECRET,
     callbackURL: 'http://10.0.2.2:1337/api/auth/twitter/callback'
+    // callbackURL: 'http://127.0.0.1:1337/api/auth/twitter/callback'
   },
   passport
 })
@@ -86,77 +90,11 @@ passport.use(new (require('passport-local').Strategy) (
   }
 ))
 
-const authenticateRefreshToken = (req, res, next) => {
+auth.post('/local/login', passport.authenticate('local', {session: false}), generateRefreshToken, generateAccessToken, respond)
 
-  const header = req.headers['authorization']
-  if(!header) res.status(404).send('Authorization header not found')
+auth.get('/:strategy/login', (req, res, next) => passport.authenticate(req.params.strategy, {scope: ['profile']})(req, res, next))
 
-  const refreshToken = req.headers['authorization'].replace('Bearer ', '')
-  if(!refreshToken) res.status(404).send('Refresh token not found')
-
-  return User.findOne({
-    where: {
-      refresh_token: refreshToken
-    }
-  })
-  .then(user => {
-    if(!user) res.status(404).send('Invalid refresh token')
-    else {
-      req.user = user
-      next()
-    }
-  })
-  .catch(next)
-}
-
-const generateRefreshToken = (req, res, next) => {
-  const refreshToken = req.user.id + '.' + crypto.randomBytes(40).toString('hex')
-  User.update({refresh_token: refreshToken}, {
-    where: {
-      id: req.user.id
-    }
-  })
-  .then(user => {
-    if(!user) res.sendStatus(404)
-    req.refreshToken = refreshToken
-    next()
-  })
-  .catch(next)
-}
-
-const generateAccessToken = (req, res, next) => {
-  req.accessToken = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresIn: 24*60*60})
-  next()
-}
-
-const respond = (req, res) => {
-  res.status(200).json({
-    refreshToken: req.refreshToken,
-    accessToken: req.accessToken
-  })
-}
-
-const redirect = (req, res) => {
-  const url = `biteswipe://callback?refresh=${req.refreshToken}&access=${req.accessToken}`
-  res.redirect(url)
-}
-
-auth.post('/local/login', (req, res, next) => {
-  passport.authenticate('local', {
-    session: false
-  })(req, res, next)
-}, generateRefreshToken, generateAccessToken, respond)
-
-auth.get('/:strategy/login', (req, res, next) => {
-  passport.authenticate(req.params.strategy, {
-    scope: ['profile']
-  })(req, res, next)
-})
-
-auth.get('/:strategy/callback', (req, res, next) => {
-  passport.authenticate(req.params.strategy)
-  (req, res, next)
-}, generateRefreshToken, generateAccessToken, redirect)
+auth.get('/:strategy/callback', (req, res, next) => passport.authenticate(req.params.strategy)(req, res, next), generateRefreshToken, generateAccessToken, redirect)
 
 auth.post('/signup', (req, res, next) => {
   User.create(req.body)
@@ -171,17 +109,10 @@ auth.post('/signup', (req, res, next) => {
 }, generateRefreshToken, generateAccessToken, respond)
 
 auth.post('/logout', (req, res, next) => {
-  User.update({
-    refresh_token: ''
-  },
-  {
-    where: {
-      refresh_token: req.body.refreshToken
-    }
-  })
+  User.update({refresh_token: ''}, {where: {refresh_token: req.body.refreshToken}})
   .then(user => {
     if(!user) res.status(404).send('Invalid refresh token')
-    res.sendStatus(302)    
+    else res.sendStatus(200)
   })
   .catch(next)
 })

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, IP} from '../constants';
+import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, IP} from '../constants';
 
 export const receiveRefreshToken = refreshToken => ({
   type: REFRESH_TOKEN, refreshToken
@@ -13,12 +13,17 @@ export const updateLoggedIn = loggedIn => ({
   type: LOGGED_IN, loggedIn
 });
 
-export const getAccessToken = refreshToken => 
-  dispatch =>
+export const updateGettingAccessToken = gettingAccessToken => ({
+  type: GETTING_ACCESS_TOKEN, gettingAccessToken
+});
+
+export const getAccessToken = () => 
+  (dispatch, getState) =>
     axios.get(`http://${IP}:1337/api/auth/token`, 
-    {headers: {'Authorization': `Bearer ${refreshToken}`}})
+      {headers: {'Authorization': `Bearer ${getState().auth.refreshToken}`}})
       .then(res => res.data)
       .then(body => {
+        dispatch(updateGettingAccessToken(false));
         dispatch(receiveAccessToken(body.accessToken));
       })
       .catch(console.err);
@@ -47,10 +52,10 @@ export const login = (username, password) =>
       })
       .catch(console.err);
 
-export const logout = refreshToken =>
-  dispatch =>
+export const logout = () =>
+  (dispatch, getState) =>
     axios.post(`http://${IP}:1337/api/auth/logout`, 
-      {refreshToken})
+      {refreshToken: getState().auth.refreshToken})
       .then(() => {
         dispatch(receiveRefreshToken(''));
         dispatch(receiveAccessToken(''));
