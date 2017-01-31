@@ -48,13 +48,6 @@ export default class Login extends Component {
     })
   }
 
-  componentWillMount() {
-    console.log("mounted");
-    if(this.props.auth.loggedIn) {
-      Actions.tinder();
-    }
-  }
-
   render() {
 
     const oauth = (strategy) => {

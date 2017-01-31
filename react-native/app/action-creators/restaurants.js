@@ -6,13 +6,12 @@ export const receiveRestaurants = restaurants => ({
 	restaurants
 });
 
-export const getRestaurants = () => {
-	return dispatch => {
-		axios.get(`http://${IP}:1337/api/restaurants`)
-		.then(res => res.data)
-		.then(restaurants => {
-			dispatch(receiveRestaurants(restaurants));
-		})
-		.catch(console.err);
-	}
-};
+export const getRestaurants = () => 
+	(dispatch, getState) => 
+		axios.get(`http://${IP}:1337/api/restaurants`,
+			{headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}})
+			.then(res => res.data)
+			.then(restaurants => {
+				dispatch(receiveRestaurants(restaurants));
+			})
+			.catch(console.err);

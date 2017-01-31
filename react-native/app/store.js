@@ -1,13 +1,9 @@
 import {createStore, applyMiddleware} from 'redux';
 import rootReducer from './reducers';
 import createLogger from 'redux-logger';
+import authMiddleware from './middleware/auth';
 import thunkMiddleware from 'redux-thunk';
 
-import {whoami} from './action-creators/auth';
-import {getRestaurants} from './action-creators/restaurants';
-
-const store = createStore(rootReducer, applyMiddleware(createLogger(), thunkMiddleware));
+const store = createStore(rootReducer, applyMiddleware(createLogger(), authMiddleware, thunkMiddleware));
 
 export default store;
-
-store.dispatch(getRestaurants());

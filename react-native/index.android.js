@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {AppRegistry, View, StyleSheet} from 'react-native';
+import {AppRegistry, View, StyleSheet, Linking} from 'react-native';
 import {connect, Provider} from 'react-redux';
 import store from './app/store';
 import {Switch, Actions, Scene, Router} from 'react-native-router-flux';
@@ -12,24 +12,24 @@ import Home from './app/components/Home';
 import Tinder from './app/components/Tinder';
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  loggedIn: state.auth.loggedIn
 });
 
 const connectedSwitch = connect(mapStateToProps)(Switch);
-const selector = props => (props.auth.loggedIn ? 'loggedIn' : 'notLoggedIn');
+const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
 
 const scenes = Actions.create(
   <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
+
+    <Scene key="loggedIn">
+      <Scene key="home" component={Home}/>
+      <Scene key="tinder" component={Tinder} hideNavBar={true} initial={true}/>
+    </Scene>
 
     <Scene key="notLoggedIn">
       <Scene key="splash" component={Splash} title="Splash" hideNavBar={true} initial={true}/>
       <Scene key="login" component={Login} title="Login" hideNavBar={false}/>
       <Scene key="signup" component={Signup} title="Signup" hideNavBar={false}/>
-    </Scene>
-
-    <Scene key="loggedIn">
-      <Scene key="home" component={Home}/>
-      <Scene key="tinder" component={Tinder} hideNavBar={true} initial={true}/>
     </Scene>
 
   </Scene>

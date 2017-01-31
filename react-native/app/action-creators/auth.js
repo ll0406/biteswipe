@@ -13,38 +13,48 @@ export const updateLoggedIn = loggedIn => ({
   type: LOGGED_IN, loggedIn
 });
 
-export const getAccessToken = (token) => 
+export const getAccessToken = refreshToken => 
   dispatch =>
-    axios.get(`http://${IP}:1337/api/auth/token`, {
-      header: {
-
-      }
-    });
-
+    axios.get(`http://${IP}:1337/api/auth/token`, 
+    {headers: {'Authorization': `Bearer ${refreshToken}`}})
+      .then(res => res.data)
+      .then(body => {
+        dispatch(receiveAccessToken(body.accessToken));
+      })
+      .catch(console.err);
 
 export const signup = (name, email, password) => 
   dispatch =>
     axios.post(`http://${IP}:1337/api/auth/signup`,
       {name, email, password})
       .then(res => res.data)
-      .then((body) => {
+      .then(body => {
         dispatch(receiveRefreshToken(body.refreshToken));
         dispatch(receiveAccessToken(body.accessToken));
         dispatch(updateLoggedIn(true));
-      });
+      })
+      .catch(console.err);
 
 export const login = (username, password) =>
   dispatch =>
     axios.post(`http://${IP}:1337/api/auth/local/login`,
       {username, password})
       .then(res => res.data)
-      .then((body) => {
+      .then(body => {
         dispatch(receiveRefreshToken(body.refreshToken));
         dispatch(receiveAccessToken(body.accessToken));
         dispatch(updateLoggedIn(true));
-      });
+      })
+      .catch(console.err);
 
-export const logout = () =>
+export const logout = refreshToken =>
   dispatch =>
-    axios.post(`http://${IP}:1337/api/auth/logout`)
-      .then(() => dispatch(whoami()));
+    axios.post(`http://${IP}:1337/api/auth/logout`, 
+      {refreshToken})
+      .then(() => {
+        dispatch(receiveRefreshToken(''));
+        dispatch(receiveAccessToken(''));
+        dispatch(updateLoggedIn(false));
+      })
+      .catch(console.err);
+
