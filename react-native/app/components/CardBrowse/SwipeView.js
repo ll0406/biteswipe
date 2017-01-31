@@ -1,16 +1,15 @@
 import React from 'react';
-// import {SummaryCard} from './SummaryCard';
+import { SummaryCard } from './SummaryCard';
 
 import { View, Text } from 'react-native';
 
-export const CardBrowse = props => {
-  console.log('cardBrowse props:',props);
+export const SwipeView = props => {
   return (
-    <View style={{backgroundColor:'green', flex: 1}}>
+    <View style={{backgroundColor:'#FAFAFA', flex: 1}}>
       {
         (props.list.length > 0) && (
           props.list.map( (restaurant, i) => (
-            <Text>Heya!</Text>
+            <SummaryCard restaurant={restaurant} key={i} />
           ))
         ) 
       }

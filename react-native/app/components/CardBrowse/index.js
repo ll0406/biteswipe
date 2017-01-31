@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { CardBrowse } from './CardBrowse';
+import { SwipeView } from './SwipeView';
 
 const mapStateToProps = state => {
   return {
@@ -8,4 +8,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps)(CardBrowse);
+export default connect(mapStateToProps)(SwipeView);
