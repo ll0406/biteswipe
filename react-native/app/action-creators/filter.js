@@ -1,10 +1,16 @@
 import axios from 'axios';
-import {RECEIVE_LOCATION} from '../constants';
+import {RECEIVE_LOCATION, RECEIVE_SETTINGS} from '../constants';
 
 export const receiveLocation = location =>
 ({
   type: RECEIVE_LOCATION,
   location
+});
+
+export const receiveSearchSettings = settings =>
+({
+  type: RECEIVE_SETTINGS,
+  settings
 });
 
 export const getCurrentLocation = () => {
@@ -14,36 +20,20 @@ export const getCurrentLocation = () => {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
       }
-
-    console.log("the location: \n\n\n\n\n", receiveLocation);
-
     dispatch(receiveLocation(location));
     });
-
 	};
-
 };
 
-//calls the database, retrieves the previously saved search settings
 export const getSearchSettings = () => {
   return dispatch => {
-    axios.get('http://192.168.115.79:1337/api/searchSettings')
-    .then()
-  };
-};
-
-
-
-export const sendFilterOptions = (options) => {
-  return dispatch => {
-    axios.post('http://192.168.115.79:1337/api/restaurants', options)
+    axios.get('http://10.0.2.2:1337/api/searchSettings')
     .then(res => res.data)
-    .then(restaurants => {
-      res.json(restaurants);
+    .then(settings => {
+      dispatch(receiveSearchSettings(settings));
     })
-    .catch(console.err);
+    .catch(console.error);
   };
 };
 
-
-
+// TODO: post updated searchSettings from Filter.js updateFilterOption()

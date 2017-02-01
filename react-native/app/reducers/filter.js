@@ -1,7 +1,12 @@
-import {RECEIVE_LOCATION} from '../constants';
+import {RECEIVE_LOCATION, RECEIVE_SETTINGS} from '../constants';
 
 const initialState = {
-	location: []
+	location: [],
+  settings: {
+    radius: 8050,
+    priceRange: [1, 2, 3, 4],
+    categories: ['']
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,10 +18,15 @@ const reducer = (state = initialState, action) => {
 		case RECEIVE_LOCATION:
 			newState.location = action.location;
 			break;
+    case RECEIVE_SETTINGS:
+      newState.settings = action.settings;
+      break;
+    default:
+      return state
 	};
 
 	return newState;
 
 };
 
-export default reducer; 
+export default reducer;

@@ -10,35 +10,24 @@ import {
   Button
 } from 'react-native';
 
-import {getRestaurants} from '../../action-creators/restaurants';
-import {getCurrentLocation} from '../../action-creators/filter';
-
 export default class Filter extends Component {
 
 	constructor(props){
 	  super(props);
-	  this.state = {
-	  	stars : 5,
-	  	priceRange : 3
-	  }
 
 	  this.updateFilterOption = this.updateFilterOption.bind(this);
-
 	};
 
 	componentDidMount(){
-		store.dispatch(getCurrentLocation());
+		this.props.getCurrentLocation();
+		this.props.getSearchSettings();
 	};
 
-
-  //move method to connect
 	updateFilterOption(){
-		console.log("this DOT props: ", this.props.location.latitude);
-    store.dispatch(getRestaurants(this.props.location.latitude, this.props.location.longitude, 16047, 3, "bars"));
+    this.props.getRestaurants(this.props.location.latitude, this.props.location.longitude, this.props.settings.radius, this.props.settings.priceRange.join(','), this.props.settings.categories.join(','))
 	}
 
 	render(){
-
 		return(
 			<View>
 				<Text>BiteSwipe Filter Options:</Text>
@@ -49,7 +38,3 @@ export default class Filter extends Component {
 		);
 	};
 };
-
-
-
-
