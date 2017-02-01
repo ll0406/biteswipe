@@ -10,5 +10,4 @@ const store = createStore(rootReducer, applyMiddleware(createLogger(), thunkMidd
 
 export default store;
 
-store.dispatch(whoami());
-store.dispatch(getRestaurants());
+// store.dispatch(getRestaurants());

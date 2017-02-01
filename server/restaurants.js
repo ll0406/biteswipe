@@ -36,18 +36,18 @@ const refreshYelpToken = (req, res, next, attempted) => {
 const yelp = (req, res, next) => {
 	axios.get('https://api.yelp.com/v3/businesses/search?term=food&', {
 		headers: { Authorization: `Bearer ${env.YELP_TOKEN}`},
-		params: { 			  
+		params: {
 			latitude: req.query.latitude,
 			longitude: req.query.longitude,
 			radius: req.query.radius,
-			price: req.query.price, 
+			price: req.query.price,
 			categories: req.query.categories,
 			open_now: true
 		}
 	})
 	.then(res => res.data)
 	.then(body => {
-		res.json(body); 
+		res.json(body);
 	})
 	.catch(error => {
 		if(error.response.status === 401) refreshYelpToken(req, res, next, req.refreshedYelpToken || false);

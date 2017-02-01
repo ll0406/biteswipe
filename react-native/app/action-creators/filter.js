@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {RECEIVE_LOCATION} from '../constants';
 
-export const receiveLocation = location => 
+export const receiveLocation = location =>
 ({
   type: RECEIVE_LOCATION,
   location
@@ -14,9 +14,9 @@ export const getCurrentLocation = () => {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
       }
-          
+
     console.log("the location: \n\n\n\n\n", receiveLocation);
-        	
+
     dispatch(receiveLocation(location));
     });
 

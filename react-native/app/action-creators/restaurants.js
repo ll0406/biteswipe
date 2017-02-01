@@ -6,23 +6,26 @@ export const receiveRestaurants = restaurants => ({
 	restaurants
 });
 
-export const getRestaurants = (latitude, longitude, radius, price, open_now, categories) => {
+export const getRestaurants = (latitude, longitude, radius, price, categories) => {
+	console.log('in getRestaurants')
 	return dispatch => {
 		axios.get('http://10.0.2.2:1337/api/restaurants', {
-			params: {	 
-			  latitude,
-			  longitude,
-			  radius,
-			  price,
-			  open_now,
-			  categories
+			params: {
+			  latitude: latitude,
+			  longitude: longitude,
+			  radius: radius,
+			  price: price,
+			  categories: categories
 			}
 		})
-		.then(res => res.data)
+		.then(res => {
+			console.log('res.data', res.data)
+			return res.data
+		})
 		.then(restaurants => {
 			dispatch(receiveRestaurants(restaurants));
 		})
-		.catch(console.err);
+		.catch(console.error);
 	};
 };
 

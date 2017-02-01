@@ -14,11 +14,11 @@ import {getRestaurants} from '../../action-creators/restaurants';
 import {getCurrentLocation} from '../../action-creators/filter';
 
 export default class Filter extends Component {
-	
+
 	constructor(props){
 	  super(props);
 	  this.state = {
-	  	stars : 5, 
+	  	stars : 5,
 	  	priceRange : 3
 	  }
 
@@ -27,14 +27,22 @@ export default class Filter extends Component {
 	};
 
 	componentDidMount(){
-	
+
 		store.dispatch(getCurrentLocation());
 	};
+<<<<<<< Updated upstream
     
     //move method to connect 
 	updateFilterOption(){	
 		console.log("this DOT props: ", this.props.location.latitude);	
     store.dispatch(getRestaurants(this.props.location.latitude, this.props.location.longitude, 8047, 3, false, "bars,french"));
+=======
+
+    //move method to connect
+	updateFilterOption(){
+		console.log("this DOT props: ", this.props.location.latitude);
+    store.dispatch(getRestaurants(this.props.location.latitude, this.props.location.longitude, 16047, 3, "bars"));
+>>>>>>> Stashed changes
 	}
 
 	render(){
@@ -42,24 +50,12 @@ export default class Filter extends Component {
 		return(
 			<View>
 				<Text>BiteSwipe Filter Options:</Text>
-				
-				<Text>Number of Stars:</Text> 
-				<TextInput
-				 onChangeText={(stars) => this.setStars(stars)}
-				/>
-				
-				<Text>Price:</Text> 
-	            <TextInput 
-	             onChangeText={(priceRange) => this.setPriceRange(priceRange)}
-	            />
-	            <Text>Cuisine Types:</Text> 
 
-
-          		<Button title="Update" onPress={this.updateFilterOption}/>
+         <Button title="Update" onPress={this.updateFilterOption}/>
 
 			</View>
 		);
-	};		
+	};
 };
 
 
