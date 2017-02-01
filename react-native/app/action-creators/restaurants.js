@@ -1,5 +1,6 @@
 import {RECEIVE_RESTAURANTS, IP} from '../constants';
 import axios from 'axios';
+import {handleAuthenticationError} from './auth';
 
 export const receiveRestaurants = restaurants => ({
 	type: RECEIVE_RESTAURANTS,
@@ -14,4 +15,4 @@ export const getRestaurants = () =>
 			.then(restaurants => {
 				dispatch(receiveRestaurants(restaurants));
 			})
-			.catch(console.err);
+			.catch(error => handleAuthenticationError(error, getRestaurants));

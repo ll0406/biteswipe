@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, IP} from '../constants';
+import store from '../store'
 
 export const receiveRefreshToken = refreshToken => ({
   type: REFRESH_TOKEN, refreshToken
@@ -17,7 +18,12 @@ export const updateGettingAccessToken = gettingAccessToken => ({
   type: GETTING_ACCESS_TOKEN, gettingAccessToken
 });
 
-export const getAccessToken = () => 
+export const handleAuthenticationError = (error, func) => {
+  if (error.response.status === 401) store.dispatch(getAccessToken(func));
+  else console.error(error);
+};
+
+export const getAccessToken = (func) => 
   (dispatch, getState) =>
     axios.get(`http://${IP}:1337/api/auth/token`, 
       {headers: {'Authorization': `Bearer ${getState().auth.refreshToken}`}})
@@ -25,8 +31,13 @@ export const getAccessToken = () =>
       .then(body => {
         dispatch(updateGettingAccessToken(false));
         dispatch(receiveAccessToken(body.accessToken));
+        // try async thunk again
+        if(func) dispatch(func());
       })
-      .catch(console.err);
+      .catch(error => {
+        if(error.response.status === 401) dispatch(logout);
+        else console.error(error);
+      });
 
 export const signup = (name, email, password) => 
   dispatch =>
@@ -38,7 +49,7 @@ export const signup = (name, email, password) =>
         dispatch(receiveAccessToken(body.accessToken));
         dispatch(updateLoggedIn(true));
       })
-      .catch(console.err);
+      .catch(console.error);
 
 export const login = (username, password) =>
   dispatch =>
@@ -50,7 +61,7 @@ export const login = (username, password) =>
         dispatch(receiveAccessToken(body.accessToken));
         dispatch(updateLoggedIn(true));
       })
-      .catch(console.err);
+      .catch(console.error);
 
 export const logout = () =>
   (dispatch, getState) =>
@@ -61,5 +72,5 @@ export const logout = () =>
         dispatch(receiveAccessToken(''));
         dispatch(updateLoggedIn(false));
       })
-      .catch(console.err);
+      .catch(console.error);
 

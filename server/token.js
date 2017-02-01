@@ -34,18 +34,22 @@ const authenticateAccessToken = (req, res, next) => {
   const accessToken = header.replace('Bearer ', '');
   if(!accessToken) return res.status(401).send('Access token not found');
 
-  const obj = jwt.verify(accessToken, env.SERVER_SECRET);
-  if(!obj) return res.status(401).send('Invalid Access token');
+  // stupid async stuff
+  jwt.verify(accessToken, env.SERVER_SECRET, (err, decoded) => {
+    if(err) res.status(401).send('Invalid Access token');
+    else {      
+      User.findById(decoded.id)
+      .then(user => {
+        if(!user) res.sendStatus(401);
+        else {    
+          req.user = user;
+          next();
+        }
+      })
+      .catch(next);
+    };
+  });
 
-  User.findById(obj.id)
-  .then(user => {
-    if(!user) res.sendStatus(401);
-    else {    
-      req.user = user;
-      next();
-    }
-  })
-  .catch(next);
 };
 
 const generateRefreshToken = (req, res, next) => {
@@ -62,7 +66,7 @@ const generateRefreshToken = (req, res, next) => {
 };
 
 const generateAccessToken = (req, res, next) => {
-  req.accessToken = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresIn: 24*60*60});
+  req.accessToken = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresIn: 15});
   req.accessToken = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresIn: 15});
   next();
 };
