@@ -27,22 +27,14 @@ export default class Filter extends Component {
 	};
 
 	componentDidMount(){
-
 		store.dispatch(getCurrentLocation());
 	};
-<<<<<<< Updated upstream
-    
-    //move method to connect 
-	updateFilterOption(){	
-		console.log("this DOT props: ", this.props.location.latitude);	
-    store.dispatch(getRestaurants(this.props.location.latitude, this.props.location.longitude, 8047, 3, false, "bars,french"));
-=======
 
-    //move method to connect
+
+  //move method to connect
 	updateFilterOption(){
 		console.log("this DOT props: ", this.props.location.latitude);
     store.dispatch(getRestaurants(this.props.location.latitude, this.props.location.longitude, 16047, 3, "bars"));
->>>>>>> Stashed changes
 	}
 
 	render(){
