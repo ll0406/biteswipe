@@ -34,7 +34,7 @@ export default class Filter extends Component {
     //move method to connect 
 	updateFilterOption(){	
 		console.log("this DOT props: ", this.props.location.latitude);	
-        store.dispatch(getRestaurants(this.props.location.latitude, this.props.location.longitude, 8047, 3, "bars,french"));
+    store.dispatch(getRestaurants(this.props.location.latitude, this.props.location.longitude, 8047, 3, false, "bars,french"));
 	}
 
 	render(){
