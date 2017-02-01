@@ -22,7 +22,7 @@ export const SwipeView = React.createClass({
       this.props.getRestaurants();
     }
     return (
-      <View style={{backgroundColor: '#F0F0F0', flex:1, elevation:0}}>
+      <View style={styles.swipeViewBackground}>
         <SwipeCards 
           cards={this.props.restaurants}
           renderCard={(cardData) => <SummaryCard restaurant={cardData} />}
