@@ -2,6 +2,10 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 
 export const styles = StyleSheet.create({
+  cardWrapper: {
+    flex:1, 
+    marginTop: 45
+  },
   card: {
     elevation: 2,
     alignItems: 'center',

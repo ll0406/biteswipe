@@ -7,7 +7,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 export const SummaryCard = React.createClass({
   render () {
     return (
-      <View style={{flex:1, marginTop: 45}}>
+      <View style={styles.cardWrapper}>
         <View style={styles.card}>
           <Image 
             source={{uri: 'http://www.fillmurray.com/284/196'}} 
