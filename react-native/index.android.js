@@ -6,7 +6,9 @@ import { Scene, Router } from 'react-native-router-flux';
 
 import Login from './app/components/Login';
 import Tinder from './app/components/Tinder';
-import SwipeView from './app/components/CardBrowse';
+import SwipeView from './app/components/SwipeView';
+import NavBar from './app/components/NavBar';
+
 
 export default class BiteSwipe extends Component {
   render() {
@@ -15,8 +17,8 @@ export default class BiteSwipe extends Component {
         <Router>
           <Scene key="root">
             <Scene key="login" component={Login} hideNavBar={true}/>
-            <Scene key="swipeView" component={SwipeView} initial={true} hideNavBar={true}/>
-            <Scene key="tinder" component={Tinder} hideNavBar={true}/>
+            <Scene key="swipeView" component={SwipeView} hideNavBar={true}/>
+            <Scene key="NavBar" component={NavBar} initial={true} hideNavBar={true}/>
           </Scene>
         </Router>
       </Provider>

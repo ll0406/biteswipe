@@ -3,11 +3,12 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 export const styles = StyleSheet.create({
   card: {
-    elevation: 4,
+    elevation: 2,
     alignItems: 'center',
     width: Dimensions.get('window').width*.85,
     borderRadius: 3,
     backgroundColor: '#ffffff',
+    marginTop:25
   },
   cardContent: {
     padding: 15,

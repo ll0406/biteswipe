@@ -4,8 +4,6 @@ import { styles } from './styles';
 
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-import { getTheme } from 'react-native-material-kit';
-
 export const SummaryCard = React.createClass({
   render () {
     return (
