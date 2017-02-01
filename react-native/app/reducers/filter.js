@@ -5,7 +5,7 @@ const initialState = {
   settings: {
     radius: 8050,
     priceRange: [1, 2, 3, 4],
-    categories: ['']
+    categories: [pizza, newamerican, italian, chinese, sushi, mexican, burgers, indpak]
   }
 };
 
