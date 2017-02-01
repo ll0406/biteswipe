@@ -21,8 +21,8 @@ const updateSecretsFile = (keys, values) => {
 	  	if(keys.includes(k)) {
 	  		const index = keys.indexOf(k);
 	  		updatedLine = `\t${keys[index]}: \'${values[index]}\'${eol}`;
-	  		keys.splice(index);
-	  		values.splice(index);
+	  		keys.splice(index, 1);
+	  		values.splice(index, 1);
 	  	}
 	  	return updatedLine;
 	  });
