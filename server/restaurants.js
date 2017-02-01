@@ -34,8 +34,6 @@ const refreshYelpToken = (req, res, next, attempted) => {
 };
 
 const yelp = (req, res, next) => {
-	req.query.latitude = '37.422';
-	req.query.longitude = '-122.084';
 	axios.get('https://api.yelp.com/v3/businesses/search?term=food&', {
 		headers: { Authorization: `Bearer ${env.YELP_TOKEN}`},
 		params: { 			  
