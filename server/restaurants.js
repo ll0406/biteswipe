@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
 	.then(res => res.data)
 	.then(body => {
 		const restaurants = body.restaurants.map(obj => obj.restaurant);
-		res.json(restaurants); 
+		res.json(restaurants);
 	})
 	.catch(next);
 });

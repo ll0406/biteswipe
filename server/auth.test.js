@@ -14,8 +14,9 @@ describe('/api/auth', () => {
     db.didSync
       .then(() =>
         User.create(
-          {email: alice.username,
-          password: alice.password
+          {
+            email: alice.username,
+            password: alice.password,
         })
       )
   )
@@ -25,9 +26,11 @@ describe('/api/auth', () => {
       request(app)
         .post('/api/auth/local/login')
         .send(alice)
-        .expect(302)
-        .expect('Set-Cookie', /session=.*/)
-        .expect('Location', '/')
+        .expect(200)
+        .then(res => {
+          expect(res.body.refreshToken).to.not.be.null
+          expect(res.body.accessToken).to.not.be.null
+        })
       )
 
     it('fails with an invalid username and password', () =>
@@ -38,46 +41,64 @@ describe('/api/auth', () => {
       )      
   })
 
-  describe('GET /whoami', () => {
-    describe('when logged in,', () => {
-      const agent = request.agent(app)
-      before('log in', () => agent
-        .post('/api/auth/local/login') 
-        .send(alice))
+  describe('GET /token', () => {
+    const agent = request.agent(app)
+    let refreshToken
 
-      it('responds with the currently logged in user', () =>
-        agent.get('/api/auth/whoami')
-          .set('Accept', 'application/json')        
-          .expect(200)          
-          .then(res => expect(res.body).to.contain({
-            email: alice.username
-          }))
-      )      
-    })
+    before('log in', () => agent
+      .post('/api/auth/local/login') 
+      .send(alice)
+      .then(res => {
+        refreshToken = 'Bearer ' + res.body.refreshToken
+      })
+    )
 
-    it('when not logged in, responds with an empty object', () =>
-      request(app).get('/api/auth/whoami')
-        .expect(200)
-        .then(res => expect(res.body).to.eql({}))
+    it('responds with a new access token if given a valid refresh token', () =>
+      agent
+        .get('/api/auth/token')
+        .set('Authorization', refreshToken)        
+        .expect(200)          
+        .then(res => {
+          expect(res.body.accessToken).to.not.be.null
+        })
+    )
+
+    it('fails with a invalid refresh token', () =>
+      request(app).get('/api/auth/token')
+        .set('Authorization', 'yomama')
+        .expect(404)
     )
   })
 
   describe('POST /logout when logged in', () => {
     const agent = request.agent(app)
+    let refreshToken
 
     before('log in', () => agent
       .post('/api/auth/local/login') 
-      .send(alice))
+      .send(alice)
+      .then(res => {
+        refreshToken = res.body.refreshToken
+      })
+    )
 
-    it('logs you out and redirects to whoami', () => agent
+    it('deletes the current refresh token', () => agent
       .post('/api/auth/logout')
+      .send({
+        refreshToken: refreshToken
+      })
       .expect(302)
-      .expect('Location', '/api/auth/whoami')
       .then(() =>
-        agent.get('/api/auth/whoami')
-          .expect(200)
-          .then(rsp => expect(rsp.body).eql({}))
+        User.findOne({
+          where: {
+            email: alice.username
+          }
+        })
+        .then(user => {
+          expect(user.refresh_token).to.be.empty
+        })
       )
     )
   })
+
 })
