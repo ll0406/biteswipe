@@ -43,7 +43,7 @@ module.exports = app
 
   // Authentication middleware
   .use(passport.initialize())
-  .use(passport.session())
+  .use(passport.session({ maxAge: 12000 }))
   
   // Serve static files from ../public
   .use(express.static(resolve(__dirname, '..', 'public')))

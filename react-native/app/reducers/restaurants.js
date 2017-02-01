@@ -6,9 +6,6 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 	let newState = Object.assign({}, state);
-
-	console.log(action);
-
 	switch(action.type) {
 		case RECEIVE_RESTAURANTS:
 			newState.list = action.restaurants;
