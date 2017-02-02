@@ -5,6 +5,6 @@ import Signup from './Signup';
 const mapStateToProps = state => ({
 	signupError: state.auth.signupError
 });
-const mapStateToDispatch = {signup};
+const mapDispatchToProps = {signup};
 
-export default connect(mapStateToProps, mapStateToDispatch)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

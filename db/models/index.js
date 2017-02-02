@@ -6,7 +6,9 @@
 
 const User = require('./user');
 const OAuth = require('./oauth');
+const searchSettings = require('./searchSettings');
 
 OAuth.hasOne(User);
+User.hasOne(searchSettings);
 
-module.exports = {User}
+module.exports = {User, searchSettings};

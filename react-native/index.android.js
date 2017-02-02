@@ -5,12 +5,15 @@ import store from './app/store';
 import {Switch, Actions, Scene, Router} from 'react-native-router-flux';
 import queryString from 'query-string';
 
+
 import Splash from './app/components/Splash';
 import Login from './app/components/Login';
+import Filter from './app/components/Filter';
 import Signup from './app/components/Signup';
-
 import Home from './app/components/Home';
-import Tinder from './app/components/Tinder';
+import SwipeView from './app/components/SwipeView';
+import NavBar from './app/components/NavBar';
+
 
 import {receiveRefreshToken, receiveAccessToken, updateLoggedIn} from './app/action-creators/auth';
 
@@ -19,14 +22,18 @@ const mapStateToProps = state => ({
 });
 
 const connectedSwitch = connect(mapStateToProps)(Switch);
-const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
+
+  //
+  //  BUG: 'true' should read 'loggedIn'
+  //
+const selector = props => (true ? 'loggedIn' : 'notLoggedIn');
 
 const scenes = Actions.create(
   <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
 
     <Scene key="loggedIn">
       <Scene key="home" component={Home}/>
-      <Scene key="tinder" component={Tinder} hideNavBar={true} initial={true}/>
+      <Scene key="tinder" component={SwipeView} hideNavBar={true} initial={true}/>
     </Scene>
 
     <Scene key="notLoggedIn">
@@ -58,10 +65,22 @@ export default class BiteSwipe extends Component {
   }
 
   render() {
-    return (
+
+  const onEnterFilter = function(nextRouterState) {
+     //database call to get the previously saved settings.
+     store.dispatch(getSearchSettings());
+  };
+
+  const onChangeFilter = function (nextRouterState) {
+      const coordinates = '' + nextRouterState.location.latitude + ',' + nextRouterState.location.longitude;
+      store.dispatch(getCurrentLocation());
+      store.dispatch(sendCurrentLocation(coordinates));
+  };
+
+  return (
       <Provider store={store}>
-        <Router 
-          navigationBarStyle={styles.navBar} 
+        <Router
+          navigationBarStyle={styles.navBar}
           titleStyle={styles.navTitle}
           barButtonIconStyle={styles.navBarButton}
           scenes={scenes}/>
