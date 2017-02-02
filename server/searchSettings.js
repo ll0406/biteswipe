@@ -7,7 +7,7 @@ const searchSettings = require('APP/db/models/searchSettings')
 router.get('/', (req, res, next) => {
   searchSettings.find({
     where: {
-      user_id: req.user.id
+      user_id: 2
     }
   })
 	.then(settings => {
