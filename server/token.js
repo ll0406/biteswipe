@@ -79,7 +79,7 @@ const respond = (req, res) => {
 };
 
 const redirect = (req, res) => {
-  const url = `biteswipe://callback?page=login&refresh=${req.refreshToken}&access=${req.accessToken}`;
+  const url = `biteswipe://callback?page=login&refreshToken=${req.refreshToken}&accessToken=${req.accessToken}`;
   res.redirect(url);
 };
 
