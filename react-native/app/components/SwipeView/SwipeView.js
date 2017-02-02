@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { SummaryCard } from './SummaryCard';
 import { styles } from './styles';
 
@@ -14,28 +14,27 @@ import SwipeCards from 'react-native-swipe-cards';
     )
   };
 
-export const SwipeView = React.createClass({
+export default class SwipeView extends Component {
 
   componentDidMount(){
-    
-    //We need location and settings in order to run the 
-    //yelp search for restaurants    
-    Promise.all([this.props.getCurrentLocation(), 
+
+    //We need location and settings in order to run the
+    //yelp search for restaurants
+    Promise.all([this.props.getCurrentLocation(),
         this.props.getSearchSettings()])
     .then(gotSettings => {
-       this.props.getRestaurants();
+       this.props.getRestaurants()
     });
+  }
 
-  };
-
-  render () {
+  render() {
 
     const getRestaurants = () => {
       this.props.getRestaurants();
     }
     return (
       <View style={styles.swipeViewBackground}>
-        <SwipeCards 
+        <SwipeCards
           cards={this.props.restaurants}
           renderCard={(cardData) => <SummaryCard restaurant={cardData} />}
           renderNoMoreCards={() => <NoMoreCards />}
@@ -48,4 +47,4 @@ export const SwipeView = React.createClass({
       </View>
     )
   }
-})
+}
