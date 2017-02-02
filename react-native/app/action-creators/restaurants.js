@@ -6,11 +6,17 @@ export const receiveRestaurants = restaurants => ({
 	restaurants
 });
 
-
-export const getRestaurants = () => 
-	(dispatch, getState) => 
+export const getRestaurants = () =>
+	(dispatch, getState) =>
 		axios.get(`http://${IP}:1337/api/restaurants`,
-			{headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}})
+			{headers: {'Authorization': `Bearer ${getState().auth.accessToken}`},
+			params: {
+			  latitude: getState.location.latitude,
+			  longitude: getState.location.longitude,
+			  radius: getState.settings.radius,
+			  price: getState.settings.price.join(','),
+			  categories: getState.settings.categories.join(',')
+			}})
 			.then(res => res.data)
 			.then(restaurants => {
 				dispatch(receiveRestaurants(restaurants));
