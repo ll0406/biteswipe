@@ -4,26 +4,33 @@ import {connect, Provider} from 'react-redux';
 import store from './app/store';
 import {Switch, Actions, Scene, Router} from 'react-native-router-flux';
 
+
 import Splash from './app/components/Splash';
 import Login from './app/components/Login';
 import Signup from './app/components/Signup';
 
 import Home from './app/components/Home';
-import Tinder from './app/components/Tinder';
+import SwipeView from './app/components/SwipeView';
+import NavBar from './app/components/NavBar';
+
 
 const mapStateToProps = state => ({
   loggedIn: state.auth.loggedIn
 });
 
 const connectedSwitch = connect(mapStateToProps)(Switch);
-const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
+
+  //
+  //  BUG: 'true' should read 'loggedIn'
+  //
+const selector = props => (true ? 'loggedIn' : 'notLoggedIn');
 
 const scenes = Actions.create(
   <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
 
     <Scene key="loggedIn">
       <Scene key="home" component={Home}/>
-      <Scene key="tinder" component={Tinder} hideNavBar={true} initial={true}/>
+      <Scene key="tinder" component={SwipeView} hideNavBar={true} initial={true}/>
     </Scene>
 
     <Scene key="notLoggedIn">
