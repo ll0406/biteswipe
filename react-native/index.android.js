@@ -7,8 +7,8 @@ import {Switch, Actions, Scene, Router} from 'react-native-router-flux';
 
 import Splash from './app/components/Splash';
 import Login from './app/components/Login';
+import Filter from './app/components/Filter';
 import Signup from './app/components/Signup';
-
 import Home from './app/components/Home';
 import SwipeView from './app/components/SwipeView';
 import NavBar from './app/components/NavBar';
@@ -43,11 +43,24 @@ const scenes = Actions.create(
 );
 
 export default class BiteSwipe extends Component {
+
   render() {
-    return (
+
+  const onEnterFilter = function(nextRouterState) {
+     //database call to get the previously saved settings.
+     store.dispatch(getSearchSettings());
+  };
+
+  const onChangeFilter = function (nextRouterState) {
+      const coordinates = '' + nextRouterState.location.latitude + ',' + nextRouterState.location.longitude;
+      store.dispatch(getCurrentLocation());
+      store.dispatch(sendCurrentLocation(coordinates));
+  };
+
+  return (
       <Provider store={store}>
-        <Router 
-          navigationBarStyle={styles.navBar} 
+        <Router
+          navigationBarStyle={styles.navBar}
           titleStyle={styles.navTitle}
           barButtonIconStyle={styles.navBarButton}
           scenes={scenes}/>

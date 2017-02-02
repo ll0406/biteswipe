@@ -8,14 +8,12 @@ import Splash from './app/components/Splash';
 import Login from './app/components/Login';
 import Signup from './app/components/Signup';
 
-import Tinder from './app/components/Tinder';
-
 export default class BiteSwipe extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router 
-          navigationBarStyle={styles.navBar} 
+        <Router
+          navigationBarStyle={styles.navBar}
           titleStyle={styles.navTitle}
           barButtonIconStyle={styles.navBarButton}>
           <Scene key="root">
