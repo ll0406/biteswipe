@@ -7,8 +7,8 @@ const {authenticateAccessToken} = require('./token');
 api
   .get('/heartbeat', (req, res) => res.send({ok: true,}))
   .use('/auth', require('./auth'))
-  .use('/users', require('./users'))
   .use(authenticateAccessToken)
+  .use('/users', require('./users'))
   .use('/restaurants', require('./restaurants'));
 
 // No routes matched? 404.

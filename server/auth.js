@@ -16,7 +16,6 @@ OAuth.setupStrategy({
     clientID: env.FACEBOOK_CLIENT_ID,
     clientSecret: env.FACEBOOK_CLIENT_SECRET,
     callbackURL: 'http://10.0.2.2:1337/api/auth/facebook/callback'
-    // callbackURL: 'http://127.0.0.1:1337/api/auth/facebook/callback'
   },
   passport
 })
@@ -28,7 +27,6 @@ OAuth.setupStrategy({
     clientID: env.GOOGLE_CLIENT_ID,
     clientSecret: env.GOOGLE_CLIENT_SECRET,
     callbackURL: 'http://10.0.2.2.nip.io:1337/api/auth/google/callback'
-    // callbackURL: 'http://127.0.0.1.nip.io:1337/api/auth/google/callback'
   },
   passport
 })
@@ -40,7 +38,6 @@ OAuth.setupStrategy({
     consumerKey: env.TWITTER_CONSUMER_KEY,
     consumerSecret: env.TWITTER_CONSUMER_SECRET,
     callbackURL: 'http://10.0.2.2:1337/api/auth/twitter/callback'
-    // callbackURL: 'http://127.0.0.1:1337/api/auth/twitter/callback'
   },
   passport
 })
@@ -92,7 +89,7 @@ passport.use(new (require('passport-local').Strategy) (
 
 auth.post('/local/login', passport.authenticate('local', {session: false}), generateRefreshToken, generateAccessToken, respond)
 
-auth.get('/:strategy/login', (req, res, next) => passport.authenticate(req.params.strategy, {scope: ['profile']})(req, res, next))
+auth.get('/:strategy/login', (req, res, next) => passport.authenticate(req.params.strategy, {scope: ['email']})(req, res, next))
 
 auth.get('/:strategy/callback', (req, res, next) => passport.authenticate(req.params.strategy)(req, res, next), generateRefreshToken, generateAccessToken, redirect)
 

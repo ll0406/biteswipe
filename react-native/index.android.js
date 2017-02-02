@@ -44,6 +44,10 @@ export default class BiteSwipe extends Component {
     Linking.addEventListener('url', this._handleOpenURL);
   }
 
+  componentWillUnmount() {
+    Linking.removeEventListener('url', this._handleOpenURL);
+  }
+
   _handleOpenURL(event) {
     const obj = queryString.parse(event.url.replace('biteswipe://callback?', ''));
     if(obj.refreshToken && obj.accessToken) {

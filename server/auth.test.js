@@ -64,9 +64,9 @@ describe('/api/auth', () => {
     )
 
     it('fails with a invalid refresh token', () =>
-      request(app).get('/api/auth/token')
+      agent.get('/api/auth/token')
         .set('Authorization', 'yomama')
-        .expect(404)
+        .expect(401)
     )
   })
 
@@ -74,7 +74,8 @@ describe('/api/auth', () => {
     const agent = request.agent(app)
     let refreshToken
 
-    before('log in', () => agent
+    before('log in', () => 
+      agent
       .post('/api/auth/local/login') 
       .send(alice)
       .then(res => {
@@ -82,12 +83,13 @@ describe('/api/auth', () => {
       })
     )
 
-    it('deletes the current refresh token', () => agent
+    it('deletes the current refresh token', () => 
+      agent
       .post('/api/auth/logout')
       .send({
         refreshToken: refreshToken
       })
-      .expect(302)
+      .expect(200)
       .then(() =>
         User.findOne({
           where: {

@@ -66,8 +66,7 @@ const generateRefreshToken = (req, res, next) => {
 };
 
 const generateAccessToken = (req, res, next) => {
-  req.accessToken = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresIn: 15});
-  req.accessToken = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresIn: 15});
+  req.accessToken = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresIn: 24*60*60});
   next();
 };
 
