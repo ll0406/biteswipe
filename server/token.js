@@ -28,6 +28,9 @@ const authenticateRefreshToken = (req, res, next) => {
 
 const authenticateAccessToken = (req, res, next) => {
 
+  // skip authentication if not testing (remove this line in production)
+  if(!require('APP').isTesting) return;
+
   const header = req.headers['authorization'];
   if(!header) return res.status(401).send('Authorization header not found');
 
@@ -78,6 +81,7 @@ const respond = (req, res) => {
 };
 
 const redirect = (req, res) => {
+  // logout of current session (only used for OAuth)
   req.logout();
   const url = `biteswipe://callback?page=login&refreshToken=${req.refreshToken}&accessToken=${req.accessToken}`;
   res.redirect(url);

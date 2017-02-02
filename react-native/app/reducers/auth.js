@@ -1,4 +1,5 @@
 import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, LOGIN_ERROR, SIGNUP_ERROR} from '../constants';
+import { REHYDRATE } from 'redux-persist/constants'; 
 
 const initialState = {
 	refreshToken: '',
@@ -7,7 +8,7 @@ const initialState = {
   gettingAccessToken: false,
   loginError: '',
   signupError: ''
-}
+};
 
 const reducer = (state=initialState, action) => {
 	let newState = Object.assign({}, state);
@@ -29,6 +30,12 @@ const reducer = (state=initialState, action) => {
       break;
     case SIGNUP_ERROR:
       newState.signupError = action.signupError;
+      break;
+    case REHYDRATE:
+      const auth = action.payload.auth;
+      if(auth) {
+        newState = auth;
+      }
       break;
   }
   return newState;

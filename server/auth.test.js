@@ -103,4 +103,27 @@ describe('/api/auth', () => {
     )
   })
 
+  describe('POST /signup', () => {
+    it('creates a new user', () => 
+      request(app)
+      .post('/api/auth/signup')
+      .send({
+        name: 'da freshness',
+        email: 'da@freshness.com',
+        password: 'lmao12'
+      })
+      .expect(200)
+      .then(() =>
+        User.findOne({
+          where: {
+            email: 'da@freshness.com'
+          }
+        })
+        .then(user => {
+          expect(user).to.not.be.null
+        })
+      )
+    )
+  })
+
 })
