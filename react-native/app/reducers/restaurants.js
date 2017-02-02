@@ -1,7 +1,9 @@
 import {RECEIVE_RESTAURANTS} from '../constants';
 
+import dummyData from './dummyData';
+
 const initialState = {
-	list: []
+	list: dummyData
 };
 
 const reducer = (state = initialState, action) => {
