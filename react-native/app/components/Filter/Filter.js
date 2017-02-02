@@ -24,7 +24,7 @@ export default class Filter extends Component {
 	};
 
 	updateFilterOption(){
-    this.props.getRestaurants(this.props.location.latitude, this.props.location.longitude, this.props.settings.radius, this.props.settings.priceRange.join(','), this.props.settings.categories.join(','))
+    this.props.getRestaurants()
 	}
 
 	render(){
