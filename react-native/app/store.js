@@ -5,21 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import {persistStore} from 'redux-persist';
 import {AsyncStorage} from 'react-native';
 
-import {getRestaurants} from './action-creators/restaurants';
-import {getCurrentLocation, getSearchSettings} from './action-creators/filter';
-
 const store = createStore(rootReducer, applyMiddleware(createLogger(), thunkMiddleware));
 persistStore(store, {storage: AsyncStorage});
 
 export default store;
-
-// TODO: getRestaurants on app load
-// Need user settings to pass in
-// And need getCurrentLocation()
-
-// Need to make this into a Promise chain
-// so it fires in the correct order
-
-// store.dispatch(getCurrentLocation());
-// store.dispatch(getSearchSettings());
-// store.dispatch(getRestaurants());
