@@ -78,6 +78,7 @@ const respond = (req, res) => {
 };
 
 const redirect = (req, res) => {
+  req.logout();
   const url = `biteswipe://callback?page=login&refreshToken=${req.refreshToken}&accessToken=${req.accessToken}`;
   res.redirect(url);
 };

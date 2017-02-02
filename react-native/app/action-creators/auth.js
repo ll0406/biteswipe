@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, AUTH_ERROR, IP} from '../constants';
+import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, LOGIN_ERROR, SIGNUP_ERROR, IP} from '../constants';
 import store from '../store'
 
 export const receiveRefreshToken = refreshToken => ({
@@ -18,8 +18,12 @@ export const updateGettingAccessToken = gettingAccessToken => ({
   type: GETTING_ACCESS_TOKEN, gettingAccessToken
 });
 
-export const updateAuthError = authError => ({
-  type: AUTH_ERROR, authError
+export const updateLoginError = loginError => ({
+  type: LOGIN_ERROR, loginError
+});
+
+export const updateSignupError = signupError => ({
+  type: SIGNUP_ERROR, signupError
 });
 
 export const handleAuthenticationError = (error, func) => {
@@ -52,9 +56,13 @@ export const signup = (name, email, password) =>
         dispatch(receiveRefreshToken(body.refreshToken));
         dispatch(receiveAccessToken(body.accessToken));
         dispatch(updateLoggedIn(true));
-        dispatch(updateAuthError(''));
+        dispatch(updateLoginError(''));
+        dispatch(updateSignupError(''));
       })
-      .catch(console.error);
+      .catch(error => {
+        console.error(error);
+        dispatch(updateSignupError('Email has already been used'));
+      });
 
 export const login = (username, password) =>
   dispatch =>
@@ -65,10 +73,12 @@ export const login = (username, password) =>
         dispatch(receiveRefreshToken(body.refreshToken));
         dispatch(receiveAccessToken(body.accessToken));
         dispatch(updateLoggedIn(true));
-        dispatch(updateAuthError(''));
+        dispatch(updateLoginError(''));
+        dispatch(updateSignupError(''));
       })
       .catch(error => {
-        dispatch(updateAuthError('Invalid email/password'));
+        console.error(error);
+        dispatch(updateLoginError('Invalid email/password'));
       });
 
 export const logout = () =>
@@ -79,7 +89,6 @@ export const logout = () =>
         dispatch(receiveRefreshToken(''));
         dispatch(receiveAccessToken(''));
         dispatch(updateLoggedIn(false));
-        dispatch(updateAuthError(''));
       })
       .catch(console.error);
 

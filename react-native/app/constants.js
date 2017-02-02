@@ -6,7 +6,8 @@ export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 export const ACCESS_TOKEN = 'ACCESS_TOKEN';
 export const LOGGED_IN = 'LOGGED_IN';
 export const GETTING_ACCESS_TOKEN = 'GETTING_ACCESS_TOKEN';
-export const AUTH_ERROR = 'AUTH_ERROR';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const SIGNUP_ERROR = 'SIGNUP_ERROR';
 
 // restaurants
 export const RECEIVE_RESTAURANTS = 'RECEIVE_RESTAURANTS';

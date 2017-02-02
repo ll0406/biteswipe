@@ -3,7 +3,7 @@ import {login} from '../../action-creators/auth';
 import Login from './Login';
 
 const mapStateToProps = state => ({
-	authError: state.auth.authError
+	loginError: state.auth.loginError
 });
 const mapStateToDispatch = {login};
 

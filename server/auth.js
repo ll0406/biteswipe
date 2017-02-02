@@ -97,10 +97,10 @@ auth.post('/signup', (req, res, next) => {
   User.create(req.body)
   .then(user => {
     if(!user) res.sendStatus(404)
-    else req.login(user, (err) => {
-      if(err) next(err)
-      else next()
-    })
+    else {
+      req.user = user;
+      next();
+    }
   })
   .catch(next)
 }, generateRefreshToken, generateAccessToken, respond)

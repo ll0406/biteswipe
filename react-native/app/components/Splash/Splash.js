@@ -6,6 +6,8 @@ import {
   Text
 } from 'react-native';
 
+const {width, height} = Dimensions.get('window');
+
 import styles from './styles';
 
 import Carousel from 'react-native-looped-carousel'; 
@@ -18,7 +20,6 @@ import {
 
 import {Actions} from 'react-native-router-flux';
 
-const {width, height} = Dimensions.get('window');
 
 export default class Splash extends Component {
 

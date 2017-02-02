@@ -1,11 +1,12 @@
-import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, AUTH_ERROR} from '../constants';
+import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, LOGIN_ERROR, SIGNUP_ERROR} from '../constants';
 
 const initialState = {
 	refreshToken: '',
 	accessToken: '',
 	loggedIn: false,
   gettingAccessToken: false,
-  authError: ''
+  loginError: '',
+  signupError: ''
 }
 
 const reducer = (state=initialState, action) => {
@@ -23,8 +24,11 @@ const reducer = (state=initialState, action) => {
     case GETTING_ACCESS_TOKEN:
       newState.gettingAccessToken = action.gettingAccessToken;
       break;
-    case AUTH_ERROR:
-      newState.authError = action.authError;
+    case LOGIN_ERROR:
+      newState.loginError = action.loginError;
+      break;
+    case SIGNUP_ERROR:
+      newState.signupError = action.signupError;
       break;
   }
   return newState;

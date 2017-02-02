@@ -61,7 +61,8 @@ export default class Login extends Component {
         fields: {
           password: {
             password: true,
-            secureTextEntry: true
+            secureTextEntry: true,
+            error: 'Password must be at least 6 chars'
           }
         },
         hasError: false,
@@ -71,21 +72,19 @@ export default class Login extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  onChange(value) {
-    // invokes validation when user is typing
-    this.refs.form.getValue();
-    this.setState({
-      value
-    });
-  }
-
   componentWillReceiveProps(nextProps) {
-    if(nextProps.authError !== this.state.authError) {
+    if(nextProps.loginError !== this.state.loginError) {
       let options;
-      if(nextProps.authError.length) options = Object.assign({}, this.state.options, { hasError: true, error: nextProps.authError});
+      if(nextProps.loginError.length) options = Object.assign({}, this.state.options, { hasError: true, error: nextProps.loginError });
       else options = Object.assign({}, this.state.options, { hasError: false, error: '' });
       this.setState({ options });
     }
+  }
+
+  onChange(value) {
+    this.setState({
+      value
+    });
   }
 
   render() {
@@ -97,7 +96,8 @@ export default class Login extends Component {
     }
 
     const login = () => {
-      if(this.refs.form.getValue()){
+      const value = this.refs.form.getValue();
+      if(value){
         this.props.login(this.state.value.email, this.state.value.password);
       }
     };
