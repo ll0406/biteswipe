@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, IP} from '../constants';
+import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, AUTH_ERROR, IP} from '../constants';
 import store from '../store'
 
 export const receiveRefreshToken = refreshToken => ({
@@ -16,6 +16,10 @@ export const updateLoggedIn = loggedIn => ({
 
 export const updateGettingAccessToken = gettingAccessToken => ({
   type: GETTING_ACCESS_TOKEN, gettingAccessToken
+});
+
+export const updateAuthError = authError => ({
+  type: AUTH_ERROR, authError
 });
 
 export const handleAuthenticationError = (error, func) => {
@@ -48,6 +52,7 @@ export const signup = (name, email, password) =>
         dispatch(receiveRefreshToken(body.refreshToken));
         dispatch(receiveAccessToken(body.accessToken));
         dispatch(updateLoggedIn(true));
+        dispatch(updateAuthError(''));
       })
       .catch(console.error);
 
@@ -60,8 +65,11 @@ export const login = (username, password) =>
         dispatch(receiveRefreshToken(body.refreshToken));
         dispatch(receiveAccessToken(body.accessToken));
         dispatch(updateLoggedIn(true));
+        dispatch(updateAuthError(''));
       })
-      .catch(console.error);
+      .catch(error => {
+        dispatch(updateAuthError('Invalid email/password'));
+      });
 
 export const logout = () =>
   (dispatch, getState) =>
@@ -71,6 +79,7 @@ export const logout = () =>
         dispatch(receiveRefreshToken(''));
         dispatch(receiveAccessToken(''));
         dispatch(updateLoggedIn(false));
+        dispatch(updateAuthError(''));
       })
       .catch(console.error);
 

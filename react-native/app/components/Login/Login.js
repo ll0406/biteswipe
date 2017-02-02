@@ -13,6 +13,8 @@ import {
   getTheme
 } from 'react-native-material-kit';
 
+const theme = getTheme();
+
 import {
   SocialIcon,
   Button
@@ -22,30 +24,68 @@ import Hr from 'react-native-hr';
 import {IP} from '../../constants';
 import {Actions} from 'react-native-router-flux';
 
-const theme = getTheme();
+import t from 'tcomb-form-native';
+
+const Form = t.form.Form;
+const Email = t.subtype(t.String, email => {
+  // http://emailregex.com/
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(email);
+});
+
+// form data model
+const User = t.struct({
+  email: Email,
+  password: t.String
+});
+
+const options = {
+  fields: {
+    password: {
+      password: true,
+      secureTextEntry: true
+    }
+  }
+};
 
 export default class Login extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: ''
+      value: {
+        email: '',
+        password: ''
+      },
+      options: {
+        fields: {
+          password: {
+            password: true,
+            secureTextEntry: true
+          }
+        },
+        hasError: false,
+        error: ''
+      }
     }
-    this.setEmail = this.setEmail.bind(this);
-    this.setPassword = this.setPassword.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  setEmail(email) {
+  onChange(value) {
+    // invokes validation when user is typing
+    this.refs.form.getValue();
     this.setState({
-      email
-    })
+      value
+    });
   }
 
-  setPassword(password) {
-    this.setState({
-      password
-    })
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.authError !== this.state.authError) {
+      let options;
+      if(nextProps.authError.length) options = Object.assign({}, this.state.options, { hasError: true, error: nextProps.authError});
+      else options = Object.assign({}, this.state.options, { hasError: false, error: '' });
+      this.setState({ options });
+    }
   }
 
   render() {
@@ -57,7 +97,9 @@ export default class Login extends Component {
     }
 
     const login = () => {
-      this.props.login(this.state.email, this.state.password);
+      if(this.refs.form.getValue()){
+        this.props.login(this.state.value.email, this.state.value.password);
+      }
     };
 
     return (
@@ -87,23 +129,13 @@ export default class Login extends Component {
             <Hr lineColor="black" text="or" margin={50}/>
           </View>
 
-          <View style={styles.inputs}>
-            <TextInput 
-              placeholder="Email"
-              onChangeText={(email) => this.setEmail(email)}
-              value={this.state.email}
-              keyboardType="email-address"
-              style={styles.email}
-              autoCapitalize="none"
-            />
-            <TextInput 
-              placeholder="Password"
-              onChangeText={(password) => this.setPassword(password)}
-              value={this.state.password}
-              secureTextEntry={true}
-              style={styles.password}
-            />
-          </View>
+          <Form
+            ref="form"
+            type={User}
+            options={this.state.options}
+            onChange={this.onChange}
+            value={this.state.value}
+          />
 
           <Button title="Login" onPress={login} buttonStyle={styles.login}/>
           

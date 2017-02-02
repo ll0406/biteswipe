@@ -13,12 +13,12 @@ import {
   getTheme
 } from 'react-native-material-kit';
 
+const theme = getTheme();
+
 import {
   SocialIcon,
   Button
 } from 'react-native-elements';
-
-const theme = getTheme();
 
 export default class Signup extends Component {
 
