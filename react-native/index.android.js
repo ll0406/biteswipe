@@ -1,40 +1,84 @@
 import React, { Component } from 'react';
-import {AppRegistry, View} from 'react-native';
-import {Provider} from 'react-redux';
+import {AppRegistry, View, StyleSheet, Linking} from 'react-native';
+import {connect, Provider} from 'react-redux';
 import store from './app/store';
-import {Scene, Router} from 'react-native-router-flux';
+import {Switch, Actions, Scene, Router} from 'react-native-router-flux';
 
+
+import Splash from './app/components/Splash';
 import Login from './app/components/Login';
-import Tinder from './app/components/Tinder';
 import Filter from './app/components/Filter';
+import Signup from './app/components/Signup';
+import Home from './app/components/Home';
+import SwipeView from './app/components/SwipeView';
+import NavBar from './app/components/NavBar';
+
+
+const mapStateToProps = state => ({
+  loggedIn: state.auth.loggedIn
+});
+
+const connectedSwitch = connect(mapStateToProps)(Switch);
+
+  //
+  //  BUG: 'true' should read 'loggedIn'
+  //
+const selector = props => (true ? 'loggedIn' : 'notLoggedIn');
+
+const scenes = Actions.create(
+  <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
+
+    <Scene key="loggedIn">
+      <Scene key="home" component={Home}/>
+      <Scene key="tinder" component={SwipeView} hideNavBar={true} initial={true}/>
+    </Scene>
+
+    <Scene key="notLoggedIn">
+      <Scene key="splash" component={Splash} title="Splash" hideNavBar={true} initial={true}/>
+      <Scene key="login" component={Login} title="Login" hideNavBar={false}/>
+      <Scene key="signup" component={Signup} title="Signup" hideNavBar={false}/>
+    </Scene>
+
+  </Scene>
+);
 
 export default class BiteSwipe extends Component {
- 
+
   render() {
-  
+
   const onEnterFilter = function(nextRouterState) {
-     //database call to get the previously saved settings. 
+     //database call to get the previously saved settings.
      store.dispatch(getSearchSettings());
   };
 
   const onChangeFilter = function (nextRouterState) {
       const coordinates = '' + nextRouterState.location.latitude + ',' + nextRouterState.location.longitude;
-      store.dispatch(getCurrentLocation());  
-      store.dispatch(sendCurrentLocation(coordinates));  
+      store.dispatch(getCurrentLocation());
+      store.dispatch(sendCurrentLocation(coordinates));
   };
-  
+
   return (
       <Provider store={store}>
-        <Router>
-          <Scene key="root">
-            <Scene key="login" component={Login} hideNavBar={true}/>
-            <Scene key="tinder" component={Tinder} hideNavBar={true}/>
-            <Scene key="filter" component={Filter} initial={true} hideNavBar={true}/>
-          </Scene>
-        </Router>
+        <Router
+          navigationBarStyle={styles.navBar}
+          titleStyle={styles.navTitle}
+          barButtonIconStyle={styles.navBarButton}
+          scenes={scenes}/>
       </Provider>
     );
   }
-}
+};
+
+const styles = StyleSheet.create({
+  navBar: {
+    backgroundColor: '#2196F3'
+  },
+  navTitle: {
+    color: 'white'
+  },
+  navBarButton: {
+    tintColor: 'white'
+  }
+});
 
 AppRegistry.registerComponent('BiteSwipe', () => BiteSwipe);

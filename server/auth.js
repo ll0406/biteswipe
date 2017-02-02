@@ -2,47 +2,21 @@ const app = require('APP'), {env} = app;
 const debug = require('debug')(`${app.name}:auth`);
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 const User = require('APP/db/models/user');
 const OAuth = require('APP/db/models/oauth');
 const auth = require('express').Router();
+const {authenticateRefreshToken, generateRefreshToken, generateAccessToken, respond, redirect} = require('./token');
 
-
-/*************************
- * Auth strategies
- * 
- * The OAuth model knows how to configure Passport middleware.
- * To enable an auth strategy, ensure that the appropriate
- * environment variables are set.
- * 
- * You can do it on the command line:
- * 
- *   FACEBOOK_CLIENT_ID=abcd FACEBOOK_CLIENT_SECRET=1234 npm start
- * 
- * Or, better, you can create a ~/.$your_app_name.env.json file in
- * your home directory, and set them in there:
- * 
- * {
- *   FACEBOOK_CLIENT_ID: 'abcd',
- *   FACEBOOK_CLIENT_SECRET: '1234',
- * }
- * 
- * Concentrating your secrets this way will make it less likely that you
- * accidentally push them to Github, for example.
- * 
- * When you deploy to production, you'll need to set up these environment
- * variables with your hosting provider.
- **/
-
-// Facebook needs the FACEBOOK_CLIENT_ID and FACEBOOK_CLIENT_SECRET
-// environment variables.
 OAuth.setupStrategy({
   provider: 'facebook',
   strategy: require('passport-facebook').Strategy,
   config: {
     clientID: env.FACEBOOK_CLIENT_ID,
     clientSecret: env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: `${app.rootUrl}/api/auth/facebook/callback`,
+    callbackURL: 'http://10.0.2.2:1337/api/auth/facebook/callback'
+    // callbackURL: 'http://127.0.0.1:1337/api/auth/facebook/callback'
   },
   passport
 })
@@ -53,12 +27,25 @@ OAuth.setupStrategy({
   config: {
     clientID: env.GOOGLE_CLIENT_ID,
     clientSecret: env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${app.baseUrl}/api/auth/google/callback`
+    callbackURL: 'http://10.0.2.2.nip.io:1337/api/auth/google/callback'
+    // callbackURL: 'http://127.0.0.1.nip.io:1337/api/auth/google/callback'
   },
   passport
 })
 
-// Other passport configuration:
+OAuth.setupStrategy({
+  provider: 'twitter',
+  strategy: require('passport-twitter').Strategy,
+  config: {
+    consumerKey: env.TWITTER_CONSUMER_KEY,
+    consumerSecret: env.TWITTER_CONSUMER_SECRET,
+    callbackURL: 'http://10.0.2.2:1337/api/auth/twitter/callback'
+    // callbackURL: 'http://127.0.0.1:1337/api/auth/twitter/callback'
+  },
+  passport
+})
+
+// Used only for OAuth strategies
 passport.serializeUser((user, done) => {
   debug('will serialize user.id=%d', user.id)
   done(null, user.id)
@@ -96,49 +83,40 @@ passport.use(new (require('passport-local').Strategy) (
               return done(null, false, { message: 'Login incorrect' })
             }
             debug('authenticate user(email: "%s") did ok: user.id=%d', user.id)
-            done(null, user)              
+            done(null, user)
           })
       })
       .catch(done)
   }
 ))
 
-const generateToken = (req, res, next) => {  
-  req.token = jwt.sign({id: req.user.id}, env.SERVER_SECRET, {expiresInMinutes: 60});
-  next();
-}
+auth.post('/local/login', passport.authenticate('local', {session: false}), generateRefreshToken, generateAccessToken, respond)
 
-const respond = (req, res) => {
-  res.status(200).json({
-    user: req.user,
-    token: req.token
-  });
-}
+auth.get('/:strategy/login', (req, res, next) => passport.authenticate(req.params.strategy, {scope: ['profile']})(req, res, next))
 
-auth.get('/whoami', (req, res) => res.send(req.user))
+auth.get('/:strategy/callback', (req, res, next) => passport.authenticate(req.params.strategy)(req, res, next), generateRefreshToken, generateAccessToken, redirect)
 
-auth.post('/local/login', (req, res, next) => 
-  passport.authenticate(req.params.strategy, {
-    session: false
-  }, generateToken, respond)(req, res, next)
-)
-
-// auth.post('/:strategy/login', (req, res, next) => 
-//   passport.authenticate(req.params.strategy, {
-//     scope: ['profile'],
-//     successRedirect: '/'
-//   })(req, res, next)
-// )
-
-// auth.get('/:strategy/callback', (req, res, next) => 
-//   passport.authenticate(req.params.strategy, {
-//     successRedirect: '/'
-//   })(req, res, next)
-// )
+auth.post('/signup', (req, res, next) => {
+  User.create(req.body)
+  .then(user => {
+    if(!user) res.sendStatus(404)
+    else req.login(user, (err) => {
+      if(err) next(err)
+      else next()
+    })
+  })
+  .catch(next)
+}, generateRefreshToken, generateAccessToken, respond)
 
 auth.post('/logout', (req, res, next) => {
-  req.logout()
-  res.redirect('/api/auth/whoami')
+  User.update({refresh_token: ''}, {where: {refresh_token: req.body.refreshToken}})
+  .then(user => {
+    if(!user) res.status(404).send('Invalid refresh token')
+    else res.sendStatus(200)
+  })
+  .catch(next)
 })
+
+auth.get('/token', authenticateRefreshToken, generateAccessToken, respond)
 
 module.exports = auth

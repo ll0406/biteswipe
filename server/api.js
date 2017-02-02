@@ -2,6 +2,7 @@
 
 const db = require('APP/db');
 const api = module.exports = require('express').Router();
+const {authenticateAccessToken} = require('./token');
 
 api
   .get('/heartbeat', (req, res) => res.send({ok: true,}))

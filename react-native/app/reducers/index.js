@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
 
 const rootReducer = combineReducers({
-	login: require('./login').default,
-	restaurants: require('./restaurants').default,
-	filter: require('./filter').default
+	filter: require('./filter').default,
+	auth: require('./auth').default,
+	restaurants: require('./restaurants').default
 });
 
 export default rootReducer;

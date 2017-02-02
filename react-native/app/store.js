@@ -2,8 +2,6 @@ import {createStore, applyMiddleware} from 'redux';
 import rootReducer from './reducers';
 import createLogger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
-
-import {whoami} from './action-creators/login';
 import {getRestaurants} from './action-creators/restaurants';
 import {getCurrentLocation, getSearchSettings} from './action-creators/filter';
 
@@ -21,3 +19,4 @@ export default store;
 // store.dispatch(getCurrentLocation());
 // store.dispatch(getSearchSettings());
 // store.dispatch(getRestaurants());
+
