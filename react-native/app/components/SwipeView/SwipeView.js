@@ -6,15 +6,27 @@ import { View, Text, Button } from 'react-native';
 
 import SwipeCards from 'react-native-swipe-cards';
 
-const NoMoreCards = () => {
-  return (
-    <View>
-      <Text>No more cards</Text>
-    </View>
-  )
-};
+  const NoMoreCards = () => {
+    return (
+      <View>
+        <Text>No more cards</Text>
+      </View>
+    )
+  };
 
 export const SwipeView = React.createClass({
+
+  componentDidMount(){
+    
+    //We need location and settings in order to run the 
+    //yelp search for restaurants    
+    Promise.all([this.props.getCurrentLocation(), 
+        this.props.getSearchSettings()])
+    .then(gotSettings => {
+       this.props.getRestaurants();
+    });
+
+  };
 
   render () {
 

@@ -38,7 +38,7 @@ export default class Splash extends Component {
   }
 
   render() {
-
+    console.log("hey, you are on the splash page");
     const LoginButton = MKButton.coloredButton()
       .withText('Login')
       .withBackgroundColor(MKColor.Teal)

@@ -5,6 +5,7 @@ import { styles } from './styles';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
 export const SummaryCard = React.createClass({
+
   render () {
     return (
       <View style={styles.cardWrapper}>
