@@ -30,7 +30,7 @@ const scenes = Actions.create(
 
     <Scene key="loggedIn">
       <Scene key="home" component={Home}/>
-      <Scene key="tinder" component={SwipeView} hideNavBar={true} initial={true}/>
+      <Scene key="swipeView" component={SwipeView} hideNavBar={true} initial={true}/>
     </Scene>
 
     <Scene key="notLoggedIn">

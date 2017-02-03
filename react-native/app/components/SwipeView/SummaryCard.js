@@ -5,9 +5,11 @@ import { styles } from './styles';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
 import { HighlightsBox } from './HighlightsBox';
+import { RatingStars } from './RatingStars';
 
-export const SummaryCard = React.createClass({
+export const SummaryCard = React.createClass({  
   render () {
+    console.log(this.props);
     return (
       <View style={styles.cardWrapper}>
         <View style={styles.card}>
@@ -18,6 +20,9 @@ export const SummaryCard = React.createClass({
           <Text style={styles.cardSubTitle}>{this.props.restaurant.categories[0].title}</Text>
           <View style={styles.cardContent}>
             <HighlightsBox restaurant={this.props.restaurant}/>
+            <View style={styles.ratingView}>
+            <RatingStars rating={this.props.restaurant.rating}/>
+            </View>
           </View>
         </View>
       </View>
