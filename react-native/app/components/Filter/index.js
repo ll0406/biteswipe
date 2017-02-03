@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Filter from './Filter';
 
 import {getRestaurants} from '../../action-creators/restaurants';
-import {getCurrentLocation, getSearchSettings} from '../../action-creators/filter';
+import {getCurrentLocation, getSearchSettings, addSearchSettings} from '../../action-creators/filter';
 
 const mapStateToProps = state => {
   return {
@@ -22,6 +22,9 @@ const mapDispatchToProps = dispatch => { 
     getSearchSettings: () => { 
       dispatch(getSearchSettings())
     } ,
+    addSearchSettings: () => {
+      dispatch(addSearchSettings())
+    }
   }; 
 };
 

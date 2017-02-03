@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { SummaryCard } from './SummaryCard';
 import { styles } from './styles';
 
@@ -14,7 +14,7 @@ import SwipeCards from 'react-native-swipe-cards';
     )
   };
 
-export const SwipeView = React.createClass({
+export default class Filter extends Component {
 
   componentDidMount(){
     
@@ -29,7 +29,6 @@ export const SwipeView = React.createClass({
   };
 
   render () {
-
     const getRestaurants = () => {
       this.props.getRestaurants();
     }
@@ -48,4 +47,4 @@ export const SwipeView = React.createClass({
       </View>
     )
   }
-})
+};

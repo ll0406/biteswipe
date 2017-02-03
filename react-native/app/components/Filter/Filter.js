@@ -12,20 +12,19 @@ import {
 } from 'react-native';
 
 import CheckBox from 'react-native-checkbox';
-
 import styles from './styles';
 
 export default class Filter extends Component {
 
 	constructor(props){
 	  super(props);
-      
-
+     
 	  this.updateFilterOption = this.updateFilterOption.bind(this);
 	};
 
     state = {
-	  radius: 5
+	  radius: 5, 
+	  priceRange: []
 	};
 
 	componentDidMount(){
@@ -33,9 +32,25 @@ export default class Filter extends Component {
 		this.props.getSearchSettings();
 	};
 
-	updateFilterOption(){
+	onOneDollarPress(){
+		//new a state toggle checker?!
+	}
 
-    this.props.getRestaurants()
+	onTwoDollarPress(){
+		
+	}
+
+	onThreeDollarPress(){
+		
+	}
+
+	onFourDollarPress(){
+		
+	}
+
+	updateFilterOption(){
+	  this.props.addSearchSettings(this.state);
+      this.props.getRestaurants();
 	}
 
 	render(){
@@ -52,6 +67,35 @@ export default class Filter extends Component {
           		  value={5} 
 		          {...this.state}
 		          onSlidingComplete={(value) => this.setState({ radius: value })} />
+			        <Button
+		         onPress={onOneDollarPress}
+		         title="$"
+		         color="#841584"
+		         accessibilityLabel="Ok, Great!"
+		       />
+			   <Button
+		         onPress={onTwoDollarPress}
+		         title="$$"
+		         color="#841584"
+		         accessibilityLabel="Ok, Great!"
+		       />
+		       <Button
+		         onPress={onThreeDollarPress}
+		         title="$$$"
+		         color="#841584"
+		         accessibilityLabel="Ok, Great!"
+		       />
+		       <Button
+		         onPress={onFourDollarPress}
+		         title="$$$$"
+		         color="#841584"
+		         accessibilityLabel="Ok, Great!"
+		       />
+                <Button
+                  onPress={updateFilterOption}
+                  title="Update"
+                  accessibilityLabel="Updated!"
+                />
 			</View>
 		);
 	};
