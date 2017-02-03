@@ -17,4 +17,18 @@ router.get('/', (req, res, next) => {
 	.catch(next);
 });
 
+
+router.post('/', (req, res, next) => {
+  searchSettings.findOrCreate({
+    where: {
+      user_id: 2 //req.user.id
+    }
+  })
+  .spread(settings => {
+		console.log("current user", settings);
+		res.json(settings);
+	})
+  .catch(next);
+});
+
 module.exports = router;
