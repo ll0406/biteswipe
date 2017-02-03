@@ -32,9 +32,9 @@ const scenes = Actions.create(
   <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
 
     <Scene key="loggedIn">
-      <Scene key="filter" component={Filter} title="Filter" hideNavBar={true} initial={true}/>
+      <Scene key="filter" component={Filter} title="Filter" hideNavBar={true} />
       <Scene key="home" component={Home}/>
-      <Scene key="tinder" component={SwipeView} hideNavBar={true} />
+      <Scene key="tinder" component={SwipeView} hideNavBar={true}  initial={true} />
     </Scene>
 
     <Scene key="notLoggedIn">

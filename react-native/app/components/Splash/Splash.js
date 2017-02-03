@@ -10,7 +10,7 @@ const {width, height} = Dimensions.get('window');
 
 import styles from './styles';
 
-import Carousel from 'react-native-looped-carousel'; 
+import Carousel from 'react-native-looped-carousel';
 import CarouselItem from './CarouselItem';
 
 import {
@@ -26,8 +26,8 @@ export default class Splash extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      size: { 
-        width, height 
+      size: {
+        width, height
       },
       login: false
     };
@@ -39,7 +39,6 @@ export default class Splash extends Component {
   }
 
   render() {
-    console.log("hey, you are on the splash page");
     const LoginButton = MKButton.coloredButton()
       .withText('Login')
       .withBackgroundColor(MKColor.Teal)
@@ -62,7 +61,7 @@ export default class Splash extends Component {
 
     return (
       <View style={styles.container}>
-        <Carousel 
+        <Carousel
           delay={10000}
           style={this.state.size}
           autoplay>
@@ -79,5 +78,5 @@ export default class Splash extends Component {
     );
 
   };
-  
+
 };
