@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 
 import {
   Dimensions,
-  View,
-  Text
+  View
 } from 'react-native';
 
 const {width, height} = Dimensions.get('window');
@@ -20,7 +19,6 @@ import {
 
 import {Actions} from 'react-native-router-flux';
 
-
 export default class Splash extends Component {
 
   constructor(props) {
@@ -31,11 +29,6 @@ export default class Splash extends Component {
       },
       login: false
     };
-  }
-
-  _onLayoutDidChange(event) {
-    const layout = event.nativeEvent.layout;
-    this.setState({ size: { width: layout.width, height: layout.height } });
   }
 
   render() {

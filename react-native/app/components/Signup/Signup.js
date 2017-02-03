@@ -57,13 +57,13 @@ export default class Signup extends Component {
           password: {
             password: true,
             secureTextEntry: true,
-            error: 'Password must be at least 6 chars'
+            error: 'Password must be at least 6 characters'
           },
           confirm_password: {
             label: 'Confirm Password',
             password: true,
             secureTextEntry: true,
-            error: 'Password must be at least 6 chars'
+            error: 'Password must be at least 6 characters'
           }
         },
         hasError: false,
@@ -94,7 +94,7 @@ export default class Signup extends Component {
       const value = this.refs.form.getValue();
       if(value){
         this.props.signup(this.state.value.name, this.state.value.email, this.state.value.password);
-      } else {
+      } else if(this.state.value.password && this.state.value.confirm_password){
         let options;
         if (!samePasswords(this.state.value)) options = Object.assign({}, this.state.options, { hasError: true, error: 'Passwords must be the same' });
         else options = Object.assign({}, this.state.options, { hasError: false, error: '' });
