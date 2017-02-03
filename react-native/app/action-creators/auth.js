@@ -27,7 +27,7 @@ export const updateSignupError = signupError => ({
 });
 
 export const handleAuthenticationError = (error, func) => {
-  if (error.response.status === 401) store.dispatch(getAccessToken(func));
+  if (error.response && error.response.status === 401) store.dispatch(getAccessToken(func));
   else console.error(error);
 };
 
