@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, Text, Dimensions, StyleSheet} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Entypo';
 
 const CarouselItem = (props) => {
 
@@ -9,13 +9,13 @@ const CarouselItem = (props) => {
 			<Image
 				source={props.image}
 			  style={styles.image}>
-			  <View style={styles.logoContainer}>		  
-				  <View style={styles.circle}>
-				  	<View style={styles.textContainer}>
-						  <Text style={styles.text}>
+			  <View style={styles.circleContainer}>		  
+				  <View style={[styles.circle, {backgroundColor: props.color}]}>
+				  	<View style={styles.innerContainer}>
+						  <Text style={styles.innerText}>
 						  	BiteSwipe
 						  </Text>
-						  <Icon name="rocket" size={50} color="white"/>
+						  <Icon name="github" size={50} color="white"/>
 				  	</View>
 				  </View>
 			  </View>
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 	image: {
 		height, width
 	},
-	logoContainer: {
+	circleContainer: {
 		flex: 1,
 		alignItems: 'center',
 		marginTop: height / 10
@@ -43,14 +43,13 @@ const styles = StyleSheet.create({
 		width: width / 2,
 		height: width / 2,
 		borderRadius: width / 4,
-		backgroundColor: '#303F9F'
 	},
-	textContainer: {
+	innerContainer: {
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
-	text: {
+	innerText: {
 		fontSize: 30,
 		textAlign: 'center',
 		padding: 10,

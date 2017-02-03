@@ -57,11 +57,11 @@ export default class Splash extends Component {
         <Carousel
           delay={10000}
           style={this.state.size}
-          autoplay>
-          <CarouselItem image={require('./1.jpg')}></CarouselItem>
-          <CarouselItem image={require('./2.jpg')}></CarouselItem>
-          <CarouselItem image={require('./3.jpg')}></CarouselItem>
-          <CarouselItem image={require('./4.jpg')}></CarouselItem>
+          autoplay={true}>
+          <CarouselItem image={require('./1.jpg')} color={"#4CAF50"}></CarouselItem>
+          <CarouselItem image={require('./2.jpg')} color={"#303F9F"}></CarouselItem>
+          <CarouselItem image={require('./3.jpg')} color={"#009688"}></CarouselItem>
+          <CarouselItem image={require('./4.jpg')} color={"#03A9F4"}></CarouselItem>
         </Carousel>
         <View style={styles.buttons}>
           <LoginButton/>
