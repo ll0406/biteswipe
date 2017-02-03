@@ -14,27 +14,29 @@ import SwipeCards from 'react-native-swipe-cards';
     )
   };
 
-export default class Filter extends Component {
+export default class SwipeView extends Component {
 
   componentDidMount(){
-    
-    //We need location and settings in order to run the 
-    //yelp search for restaurants    
-    Promise.all([this.props.getCurrentLocation(), 
+
+    //We need location and settings in order to run the
+    //yelp search for restaurants
+    Promise.all([this.props.getCurrentLocation(),
         this.props.getSearchSettings()])
     .then(gotSettings => {
-       this.props.getRestaurants();
+       this.props.getRestaurants()
     });
+  }
 
   };
 
   render () {
+
     const getRestaurants = () => {
       this.props.getRestaurants();
     }
     return (
       <View style={styles.swipeViewBackground}>
-        <SwipeCards 
+        <SwipeCards
           cards={this.props.restaurants}
           renderCard={(cardData) => <SummaryCard restaurant={cardData} />}
           renderNoMoreCards={() => <NoMoreCards />}
@@ -47,4 +49,6 @@ export default class Filter extends Component {
       </View>
     )
   }
+
 };
+

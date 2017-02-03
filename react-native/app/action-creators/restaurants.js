@@ -8,7 +8,6 @@ export const receiveRestaurants = restaurants => ({
 
 export const getRestaurants = () =>
 	(dispatch, getState) => {
-		console.log("tell us the FUCKING getState(): ", getState());
 		axios.get(`http://${IP}:1337/api/restaurants`,
 			{headers: {'Authorization': `Bearer ${getState().auth.accessToken}`},
 			params: {
@@ -24,4 +23,4 @@ export const getRestaurants = () =>
 			})
 			.catch(console.error);
 	}
-	
+
