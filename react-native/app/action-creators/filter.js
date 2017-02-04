@@ -16,7 +16,7 @@ export const receiveSearchSettings = settings =>
 export const getCurrentLocation = () => {
   return dispatch => {
     return new Promise ((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(function(position) {
+      navigator.geolocation.getCurrentPosition(position => {
         const location = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude

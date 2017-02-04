@@ -3,8 +3,7 @@ import React, {Component} from 'react';
 import {
   Platform,
   View,
-  KeyboardAvoidingView,
-  TextInput
+  KeyboardAvoidingView
 } from 'react-native';
 
 import styles from './styles';
@@ -13,79 +12,107 @@ import {
   getTheme
 } from 'react-native-material-kit';
 
+const theme = getTheme();
+
 import {
   SocialIcon,
   Button
 } from 'react-native-elements';
 
-const theme = getTheme();
+import t from 'tcomb-form-native';
+
+const Form = t.form.Form;
+const Email = t.subtype(t.String, email => {
+  // http://emailregex.com/
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(email);
+});
+
+var Password = t.subtype(t.String, function (password) {
+  return password.length >= 6;
+});
+
+const samePasswords = (user) => (user.password === user.confirm_password)
+
+// form data model (wrap in subtype to utilize samePasswords validation)
+const User = t.subtype(t.struct({
+  name: t.String,
+  email: Email,
+  password: Password,
+  confirm_password: Password
+}), samePasswords);
 
 export default class Signup extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      email: '',
-      password: ''
+      value: {
+        name: '',
+        email: '',
+        password: ''
+      },
+      options: {
+        fields: {
+          password: {
+            password: true,
+            secureTextEntry: true,
+            error: 'Password must be at least 6 characters'
+          },
+          confirm_password: {
+            label: 'Confirm Password',
+            password: true,
+            secureTextEntry: true,
+            error: 'Password must be at least 6 characters'
+          }
+        },
+        hasError: false,
+        error: ''
+      }
     }
-    this.setName = this.setName.bind(this);
-    this.setEmail = this.setEmail.bind(this);
-    this.setPassword = this.setPassword.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  setName(name) {
-    this.setState({
-      name
-    })
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.signupError !== this.state.signupError) {
+      let options;
+      if(nextProps.signupError.length) options = Object.assign({}, this.state.options, { hasError: true, error: nextProps.signupError });
+      else options = Object.assign({}, this.state.options, { hasError: false, error: '' });
+      this.setState({ options });
+    }
   }
 
-  setEmail(email) {
+  onChange(value) {
     this.setState({
-      email
-    })
-  }
-
-  setPassword(password) {
-    this.setState({
-      password
-    })
+      value
+    });
   }
 
   render() {
 
     const signup = () => {
-      this.props.signup(this.state.name, this.state.email, this.state.password);
+      const value = this.refs.form.getValue();
+      if(value){
+        this.props.signup(this.state.value.name, this.state.value.email, this.state.value.password);
+      } else if(this.state.value.password && this.state.value.confirm_password){
+        let options;
+        if (!samePasswords(this.state.value)) options = Object.assign({}, this.state.options, { hasError: true, error: 'Passwords must be the same' });
+        else options = Object.assign({}, this.state.options, { hasError: false, error: '' });
+        this.setState({ options });
+      }
     };
 
     return (
       <View style={styles.container}>
         <KeyboardAvoidingView style={[theme.cardStyle, styles.card]}>
 
-          <View style={styles.inputs}>
-            <TextInput 
-              placeholder="Name"
-              onChangeText={(name) => this.setName(name)}
-              value={this.state.name}
-              style={styles.name}
-              autoCapitalize="none"
-            />
-            <TextInput 
-              placeholder="Email"
-              onChangeText={(email) => this.setEmail(email)}
-              value={this.state.email}
-              keyboardType="email-address"
-              style={styles.email}
-              autoCapitalize="none"
-            />
-            <TextInput 
-              placeholder="Password"
-              onChangeText={(password) => this.setPassword(password)}
-              value={this.state.password}
-              secureTextEntry={true}
-              style={styles.password}
-            />
-          </View>
+          <Form
+            ref="form"
+            type={User}
+            options={this.state.options}
+            onChange={this.onChange}
+            value={this.state.value}
+          />
 
           <Button title="Signup" onPress={signup} buttonStyle={styles.signup}/>
           
