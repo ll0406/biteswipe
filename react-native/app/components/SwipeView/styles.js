@@ -1,6 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-
 export const styles = StyleSheet.create({
   swipeViewBackground: {
     backgroundColor: '#F0F0F0', 
