@@ -5,7 +5,8 @@ import {  StyleSheet } from 'react-native';
 import { Container, Content, Tabs,View, Text } from 'native-base';
 
 import SwipeView from '../SwipeView';
-import Splash from '../Splash';
+import Results from '../Results';
+import History from '../History';
 
 export class TabBar extends Component {
 
@@ -14,8 +15,9 @@ export class TabBar extends Component {
       <Container>
         <View>
             <Tabs locked={true}>
+                <History tabLabel='History' />
                 <SwipeView tabLabel='Swipe' />
-                <Splash tabLabel='splash' />
+                <Results tabLabel='Results' />
             </Tabs>
         </View>
     </Container>

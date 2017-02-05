@@ -14,6 +14,7 @@ import Signup from './app/components/Signup';
 import Home from './app/components/Home';
 import SwipeView from './app/components/SwipeView';
 import TabBar from './app/components/TabBar';
+import DetailView from './app/components/DetailView';
 
 import Loading from './app/components/Loading';
 
@@ -42,7 +43,8 @@ const scenes = Actions.create(
 
 
     <Scene key="loggedIn">
-      <Scene key="TabBar" component={TabBar} title="Nav" hideNavBar intial={true} />
+      <Scene key="tabBar" component={TabBar} title="Nav" hideNavBar intial={true} />
+      <Scene key="detailView" component={DetailView} hideNavBar={false} title="Detail View" />
     </Scene>
 
     <Scene key="notLoggedIn">
