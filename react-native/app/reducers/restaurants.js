@@ -1,7 +1,8 @@
-import {RECEIVE_RESTAURANTS} from '../constants';
+import {RECEIVE_RESTAURANTS, RECEIVE_RESTAURANT} from '../constants';
 
 const initialState = {
-	list: []
+	list: [],
+  restaurant: {}
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,10 +11,15 @@ const reducer = (state = initialState, action) => {
 		case RECEIVE_RESTAURANTS:
 			newState.list = action.restaurants;
 			break;
+    case RECEIVE_RESTAURANT:
+      newState.restaurant = action.restaurant;
+      break;
+    default:
+      return state;
 	};
 
 	return newState;
 
 };
 
-export default reducer; 
+export default reducer;

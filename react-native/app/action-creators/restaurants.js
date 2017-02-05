@@ -1,10 +1,15 @@
-import {RECEIVE_RESTAURANTS, IP} from '../constants';
+import {RECEIVE_RESTAURANTS, RECEIVE_RESTAURANT, IP} from '../constants';
 import axios from 'axios';
 import {handleAuthenticationError} from './auth';
 
 export const receiveRestaurants = restaurants => ({
 	type: RECEIVE_RESTAURANTS,
 	restaurants
+});
+
+export const receiveRestaurant = restaurant => ({
+	type: RECEIVE_RESTAURANT,
+	restaurant
 });
 
 export const getRestaurants = () =>
@@ -25,4 +30,15 @@ export const getRestaurants = () =>
 				dispatch(receiveRestaurants(body.businesses));
 			})
 			.catch(error => handleAuthenticationError(error, getRestaurants));
+		}
+
+export const getRestaurant = () =>
+	(dispatch, getState) => {
+		console.log('in getRestaurant')
+		axios.get(`http://${IP}:1337/api/restaurants/restaurant`)
+			.then(res => res.data)
+			.then(restaurant => {
+				dispatch(receiveRestaurant(restaurant));
+			})
+			.catch(error => handleAuthenticationError(error, getRestaurant));
 		}

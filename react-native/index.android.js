@@ -12,6 +12,7 @@ import Filter from './app/components/Filter';
 import Signup from './app/components/Signup';
 import Home from './app/components/Home';
 import SwipeView from './app/components/SwipeView';
+import Restaurant from './app/components/Restaurant';
 import NavBar from './app/components/NavBar';
 import Loading from './app/components/Loading';
 
@@ -23,15 +24,16 @@ const mapStateToProps = state => ({
 
 const connectedSwitch = connect(mapStateToProps)(Switch);
 
-const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
+const selector = props => (!props.loggedIn ? 'loggedIn' : 'notLoggedIn');
 
 const scenes = Actions.create(
   <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
 
     <Scene key="loggedIn">
-      <Scene key="filter" component={Filter} title="Filter" hideNavBar={true}/>
+      <Scene key="restaurant" component={Restaurant} title="Restaurant" hideNavBar={true} initial={true} />
+      <Scene key="swipe" component={SwipeView} hideNavBar={true} />
+      <Scene key="filter" component={Filter} title="Filter" hideNavBar={true} />
       <Scene key="home" component={Home} hideNavBar={true}/>
-      <Scene key="swipe" component={SwipeView} hideNavBar={true} initial={true}/>
     </Scene>
 
     <Scene key="notLoggedIn">
@@ -82,7 +84,7 @@ export default class BiteSwipe extends Component {
       return (
         <Loading/>
         );
-    } else {      
+    } else {
       return (
           <Provider store={store}>
             <Router

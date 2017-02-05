@@ -12,6 +12,9 @@ export const SIGNUP_ERROR = 'SIGNUP_ERROR';
 // restaurants
 export const RECEIVE_RESTAURANTS = 'RECEIVE_RESTAURANTS';
 
+// restaurants
+export const RECEIVE_RESTAURANT = 'RECEIVE_RESTAURANT';
+
 //in filter settings, we will need to determine the user's location
 export const RECEIVE_LOCATION = 'RECEIVE_LOCATION';
 

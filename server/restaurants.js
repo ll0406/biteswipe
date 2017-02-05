@@ -1,8 +1,7 @@
 const router = require('express').Router();
 const axios = require('axios');
-const env = require('APP').env;
-const querystring = require('querystring');
 const {updateSecretsFile} = require('./utils');
+const env = require('../.biteswipe.env.js');
 
 const refreshYelpToken = (req, res, next, attempted) => {
 	if(attempted) return next();
@@ -58,6 +57,48 @@ const yelp = (req, res, next) => {
 	});
 };
 
+// TODO: add in restaurant id
+const restaurant = (req, res, next) => {
+	console.log('in restaurant route')
+	axios.get('https://api.yelp.com/v3/businesses/gary-danko-san-francisco', {
+		headers: { Authorization: `Bearer ${env.YELP_TOKEN}`}})
+	.then(res => res.data)
+	.then(restaurant => {
+		console.log('restaurant detail', restaurant)
+		res.json(restaurant);
+	})
+	.catch(error => {
+		if(error.response.status === 401) refreshYelpToken(req, res, next, req.refreshedYelpToken || false);
+		else {
+			req.refreshedYelpToken = false;
+			next(error);
+		}
+	});
+};
+
+// get all restaurants matching filter
 router.get('/', yelp);
+
+// get restaurant detail by restaurant id
+// TODO: add id in url
+router.get('/restaurant', restaurant);
+
+// get restaurant reviews by restaurant id
+router.get('/:id/reviews', (req, res, next) => {
+	axios.get(`https://api.yelp.com/v3/businesses/${req.params.id}/reviews`, {
+		headers: { Authorization: `Bearer ${env.YELP_TOKEN}`}})
+	.then(res => res.data)
+	.then(restaurant => {
+		console.log('restaurant detail', restaurant)
+		res.json(restaurant);
+	})
+	.catch(error => {
+		if(error.response.status === 401) refreshYelpToken(req, res, next, req.refreshedYelpToken || false);
+		else {
+			req.refreshedYelpToken = false;
+			next(error);
+		}
+	})
+})
 
 module.exports = router;
