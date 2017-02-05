@@ -39,8 +39,7 @@ const scenes = Actions.create(
 
 
     <Scene key="loggedIn">
-      <Scene key="home" component={Home} title="homepage" />
-      <Scene key="swipeView" component={SwipeView} title="Swipe it!" hideNavBar initial={true}/>
+      <Scene key="NavBar" component={NavBar} title="Nav" hideNavBar={true} intial={true} />
     </Scene>
 
     <Scene key="notLoggedIn">

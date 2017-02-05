@@ -1,36 +1,24 @@
 import React, { Component } from 'react';
 
-import { View, Text, StyleSheet } from 'react-native';
+import {  StyleSheet } from 'react-native';
 
-import Tabs from 'react-native-tabs';
+import { Container, Content, Tabs,View, Text } from 'native-base';
+
+import SwipeView from '../SwipeView';
+import Splash from '../Splash';
 
 export class NavBar extends Component {
-  constructor(props){
-    super(props);
-    this.state = {page:'second'};
-  }
-  render() {
-    var self = this;
-    return (
-      <View style={styles.NavBar}>
-        <Tabs selected={this.state.page} style={{backgroundColor:'white'}}
-              selectedStyle={{color:'red'}} onSelect={el=>this.setState({page:el.props.name})}>
-            <Text name="first">Settings</Text>
-            <Text name="second" selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}>Swipe it!</Text>
-            <Text name="fourth" selectedStyle={{color:'green'}}>History</Text>
 
-        </Tabs>
-        {
-          /*
-          <Text style={styles.welcome}>
-              Welcome to React Native
-          </Text>
-          <Text style={styles.instructions}>
-              Selected page: {this.state.page}
-          </Text>
-          */ 
-        }
-      </View>
+  render() {
+    return (
+      <Container>
+        <View>
+            <Tabs>
+                <SwipeView tabLabel='Swipe' />
+                <Splash tabLabel='splash' />
+            </Tabs>
+        </View>
+    </Container>
     );
   }
 }
