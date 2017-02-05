@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { SummaryCard } from './SummaryCard';
 import NavBar from '../NavBar/';
 import { styles } from './styles';
@@ -6,17 +6,28 @@ import { styles } from './styles';
 import { Button } from 'react-native';
 import { View, Content, Text, DeckSwiper, Card, Header } from 'native-base'
 
-const NoMoreCards = () => {
-  return (
-    <View>
-      <Text>No more cards</Text>
-    </View>
-  )
-};
+  const NoMoreCards = () => {
+    return (
+      <View>
+        <Text>No more cards</Text>
+      </View>
+    )
+  };
 
-export const SwipeView = React.createClass({
+export default class SwipeView extends Component {
 
-  render () {
+  componentDidMount(){
+
+    //We need location and settings in order to run the
+    //yelp search for restaurants
+    Promise.all([this.props.getCurrentLocation(),
+        this.props.getSearchSettings()])
+    .then(gotSettings => {
+       this.props.getRestaurants()
+    });
+  }
+
+  render() {
 
     const getRestaurants = () => {
       this.props.getRestaurants();
@@ -24,11 +35,11 @@ export const SwipeView = React.createClass({
 
     return (
       <View style={[styles.swipeViewBackground, {flex:1}]}>
-          <DeckSwiper
-            dataSource={this.props.restaurants}
-            renderItem={(cardData) => <SummaryCard restaurant={cardData} />}
-          />
+        <DeckSwiper
+          dataSource={this.props.restaurants}
+          renderItem={(cardData) => <SummaryCard restaurant={cardData} />}
+        />
       </View>
     )
   }
-})
+}

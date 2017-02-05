@@ -47,6 +47,7 @@
     "passport-twitter": "^1.0.4",
     "pg": "^6.1.0",
     "pretty-error": "^2.0.2",
+    "react-native-checkbox": "^1.1.0",
     "sequelize": "^3.24.6",
     "sinon": "^1.17.6",
     "sinon-chai": "^2.8.0"

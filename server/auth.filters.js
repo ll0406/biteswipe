@@ -1,19 +1,11 @@
-const mustBeLoggedIn = (req, res, next) => {
-  if (!req.user) {
-    return res.status(401).send('You must be logged in')
-  }
-  next()
-};
-
 const selfOnly = action => (req, res, next) => {
-  if (req.params.id !== req.user.id) {
-    return res.status(403).send(`You can only ${action} yourself.`)
-  }
-  next()
+  if(parseInt(req.params.id, 10) === req.user.id || req.user.admin) next()
+  else return res.status(403).send(`You can only ${action} yourself.`)
 };
 
 const forbidden = message => (req, res, next) => {
-  res.status(403).send(message)
+	if(req.user.admin) next()
+	else return res.status(403).send(message)
 };
 
-module.exports = {mustBeLoggedIn, selfOnly, forbidden};
+module.exports = {selfOnly, forbidden};

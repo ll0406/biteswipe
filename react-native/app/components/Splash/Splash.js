@@ -2,13 +2,14 @@ import React, {Component} from 'react';
 
 import {
   Dimensions,
-  View,
-  Text
+  View
 } from 'react-native';
+
+const {width, height} = Dimensions.get('window');
 
 import styles from './styles';
 
-import Carousel from 'react-native-looped-carousel'; 
+import Carousel from 'react-native-looped-carousel';
 import CarouselItem from './CarouselItem';
 
 import {
@@ -18,27 +19,19 @@ import {
 
 import {Actions} from 'react-native-router-flux';
 
-const {width, height} = Dimensions.get('window');
-
 export default class Splash extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      size: { 
-        width, height 
+      size: {
+        width, height
       },
       login: false
     };
   }
 
-  _onLayoutDidChange(event) {
-    const layout = event.nativeEvent.layout;
-    this.setState({ size: { width: layout.width, height: layout.height } });
-  }
-
   render() {
-
     const LoginButton = MKButton.coloredButton()
       .withText('Login')
       .withBackgroundColor(MKColor.Teal)
@@ -61,14 +54,14 @@ export default class Splash extends Component {
 
     return (
       <View style={styles.container}>
-        <Carousel 
+        <Carousel
           delay={10000}
           style={this.state.size}
-          autoplay>
-          <CarouselItem image={require('./1.jpg')}></CarouselItem>
-          <CarouselItem image={require('./2.jpg')}></CarouselItem>
-          <CarouselItem image={require('./3.jpg')}></CarouselItem>
-          <CarouselItem image={require('./4.jpg')}></CarouselItem>
+          autoplay={true}>
+          <CarouselItem image={require('./1.jpg')} color={"#4CAF50"}></CarouselItem>
+          <CarouselItem image={require('./2.jpg')} color={"#303F9F"}></CarouselItem>
+          <CarouselItem image={require('./3.jpg')} color={"#009688"}></CarouselItem>
+          <CarouselItem image={require('./4.jpg')} color={"#03A9F4"}></CarouselItem>
         </Carousel>
         <View style={styles.buttons}>
           <LoginButton/>
@@ -78,5 +71,5 @@ export default class Splash extends Component {
     );
 
   };
-  
+
 };

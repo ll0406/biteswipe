@@ -8,6 +8,7 @@ import { HighlightsBox } from './HighlightsBox';
 import { RatingStars } from './RatingStars';
 
 export const SummaryCard = React.createClass({  
+
   render () {
     return (
       <View style={styles.card}>
