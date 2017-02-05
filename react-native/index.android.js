@@ -10,9 +10,8 @@ import Splash from './app/components/Splash';
 import Login from './app/components/Login';
 import Filter from './app/components/Filter';
 import Signup from './app/components/Signup';
-import Home from './app/components/Home';
 import SwipeView from './app/components/SwipeView';
-import Loading from './app/components/Loading';
+import LoadingSplash from './app/components/LoadingSplash';
 import DrawerLayout from './app/components/DrawerLayout';
 
 import {receiveRefreshToken, receiveAccessToken, updateLoggedIn} from './app/action-creators/auth';
@@ -30,7 +29,6 @@ const scenes = Actions.create(
 
     <Scene key="loggedIn" component={DrawerLayout} open={false}>
       <Scene key="filter" component={Filter} title="Filter"/>
-      <Scene key="home" component={Home}/>
       <Scene key="swipe" component={SwipeView} initial={true}/>
     </Scene>
 
@@ -48,8 +46,10 @@ export default class BiteSwipe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rehydrated: false
+      rehydrated: false,
+      animated: false
     };
+    this.animationCompleted = this.animationCompleted.bind(this);
   }
 
   componentWillMount() {
@@ -77,10 +77,16 @@ export default class BiteSwipe extends Component {
     }
   }
 
+  animationCompleted() {
+    this.setState({
+      animated: true
+    })
+  }
+
   render() {
-    if(!this.state.rehydrated) {
+    if(!this.state.rehydrated || !this.state.animated) {
       return (
-        <Loading/>
+        <LoadingSplash animationCompleted={this.animationCompleted}/>
         );
     } else {      
       return (

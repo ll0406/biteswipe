@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import {
   View,
@@ -7,7 +7,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-const Loading = (props) => {
+const Loading = props => {
 	return (
 		<View style={styles.container}>
 			<ActivityIndicator

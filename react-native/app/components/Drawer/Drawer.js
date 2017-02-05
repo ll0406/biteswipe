@@ -14,7 +14,7 @@ export default class Drawer extends Component{
 		        <MaterialDrawer.Header image={<Image source={require('./nav.jpg')} />}>
 		            <View style={styles.header}>
 		            	<Avatar size={80} image={<Image source={{ uri: "https://theduran.com/wp-content/uploads/2016/12/putin-winking.jpg" }}/>} />
-		              <Text style={[styles.headerText, COLOR.paperGrey50, TYPO.paperFontSubhead]}>BiteSwipe</Text>
+		              <Text style={[styles.headerText, COLOR.paperGrey50, TYPO.paperFontSubhead]}>Vlad Pudding</Text>
 		            </View>
 		        </MaterialDrawer.Header>
 
