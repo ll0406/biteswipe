@@ -2,10 +2,36 @@ import React, {Component} from 'react';
 import {View, Text, Image} from 'react-native';
 import {Avatar, Drawer as MaterialDrawer, Divider, COLOR, TYPO} from 'react-native-material-design';
 import {Actions} from 'react-native-router-flux';
+import TimerMixin from 'react-timer-mixin';
 
 import styles from './styles';
 
-export default class Drawer extends Component{
+// must use createClass to incorporate mixins
+const Drawer = React.createClass({
+	mixins: [TimerMixin],
+
+	onPress(type) {
+		const drawer = this.props.drawer;
+		drawer.close();
+		// wait for drawer to close
+		this.setTimeout(() => {
+			switch(type) {
+				case 'biteswipe':
+					Actions.swipe();
+					break;
+				case 'search':
+					Actions.filter();
+					break;
+				case 'logout':
+					this.props.logout();
+					break;
+			};
+		}, 250);
+	},
+
+	onLongPress(type) {
+		this.onPress(type);
+	},
 
 	render() {
 
@@ -22,22 +48,24 @@ export default class Drawer extends Component{
 		            items={[
 	            		{
 	            	    value: 'BiteSwipe',
-	            	    onPress: () => Actions.swipe(),
-	            	    onLongPress: () => Actions.swipe()
+	            	    onPress: () => this.onPress('biteswipe'),
+	            	    onLongPress: () => this.onLongPress('biteswipe')
 	            	  },
 		            	{
 		                value: 'Search Settings',
-		                onPress: () => Actions.filter(),
-		                onLongPress: () => Actions.filter()
+		                onPress: () => this.onPress('search'),
+		                onLongPress: () => this.onLongPress('search')
 		              },
 		            	{
 		                value: 'Logout',
-		                onPress: () => this.props.logout(),
-		                onLongPress: () => this.props.logout()
+		                onPress: () => this.onPress('logout'),
+		                onLongPress: () => this.onLongPress('logout')
 		              }
 		            ]}
 		        />
 		    </MaterialDrawer>
 		);
-	};
-};
+	}
+});
+
+export default Drawer;

@@ -51,7 +51,7 @@ export default class DrawerLayout extends Component {
 					open={open}
 					onOpen={() => Actions.refresh({ key: navigationState.key, open: true})}
 					onClose={() => Actions.refresh({ key: navigationState.key, open: false})}
-					content={<Drawer/>}
+					content={<Drawer drawer={this._drawer}/>}
 					tapToClose={true}
 					openDrawerOffset={drawerOffset}
 					tweenHandler={ratio => ({
@@ -60,6 +60,7 @@ export default class DrawerLayout extends Component {
 					  	}
 						})
 					}
+					ref={ref => this._drawer = ref}
 					>
 					<View style={styles.navBarContainer}>
 						<NavBar navigationState={navigationState}/>

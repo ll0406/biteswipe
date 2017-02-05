@@ -11,7 +11,7 @@ const NavBar = props => {
   	    title="BiteSwipe"
   	    icon="menu"
   	    onIconPress={() => {
-  	    	Actions.refresh({ key: navigationState.key, open: true })
+  	    	Actions.refresh({ key: navigationState.key, open: value => !value })
   	    }}
   	/>
   );
