@@ -24,8 +24,7 @@ export const SwipeView = React.createClass({
 
     return (
       <View style={[styles.swipeViewBackground, {flex:1}]}>
-          <DeckSwiper 
-            scrollEnabled={false}
+          <DeckSwiper
             dataSource={this.props.restaurants}
             renderItem={(cardData) => <SummaryCard restaurant={cardData} />}
           />

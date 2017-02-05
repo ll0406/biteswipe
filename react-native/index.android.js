@@ -39,7 +39,7 @@ const scenes = Actions.create(
 
 
     <Scene key="loggedIn">
-      <Scene key="NavBar" component={NavBar} title="Nav" hideNavBar={true} intial={true} />
+      <Scene key="NavBar" component={NavBar} title="Nav" hideNavBar intial={true} />
     </Scene>
 
     <Scene key="notLoggedIn">

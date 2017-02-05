@@ -13,7 +13,7 @@ export class NavBar extends Component {
     return (
       <Container>
         <View>
-            <Tabs>
+            <Tabs locked={true}>
                 <SwipeView tabLabel='Swipe' />
                 <Splash tabLabel='splash' />
             </Tabs>
