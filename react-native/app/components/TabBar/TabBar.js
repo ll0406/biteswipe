@@ -7,7 +7,7 @@ import { Container, Content, Tabs,View, Text } from 'native-base';
 import SwipeView from '../SwipeView';
 import Splash from '../Splash';
 
-export class NavBar extends Component {
+export class TabBar extends Component {
 
   render() {
     return (

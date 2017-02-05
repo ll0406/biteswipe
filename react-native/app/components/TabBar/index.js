@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 
-import { NavBar } from './NavBar';
+import { TabBar } from './TabBar';
 
 const mapStateToProps = state => {
   return {};
 }
 
-export default connect(mapStateToProps)(NavBar);
+export default connect(mapStateToProps)(TabBar);

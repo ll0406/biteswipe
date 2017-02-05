@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { SummaryCard } from './SummaryCard';
-import NavBar from '../NavBar/';
 import { styles } from './styles';
 
 import { Button } from 'react-native';
@@ -34,7 +33,7 @@ export default class SwipeView extends Component {
     }
 
     return (
-      <View style={[styles.swipeViewBackground, {flex:1}]}>
+      <View style={styles.swipeViewBackground}>
         <DeckSwiper
           dataSource={this.props.restaurants}
           renderItem={(cardData) => <SummaryCard restaurant={cardData} />}

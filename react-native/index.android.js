@@ -13,7 +13,7 @@ import Filter from './app/components/Filter';
 import Signup from './app/components/Signup';
 import Home from './app/components/Home';
 import SwipeView from './app/components/SwipeView';
-import NavBar from './app/components/NavBar';
+import TabBar from './app/components/TabBar';
 
 import Loading from './app/components/Loading';
 
@@ -42,25 +42,13 @@ const scenes = Actions.create(
 
 
     <Scene key="loggedIn">
-<<<<<<< HEAD
-      <Scene key="NavBar" component={NavBar} title="Nav" hideNavBar intial={true} />
+      <Scene key="TabBar" component={TabBar} title="Nav" hideNavBar intial={true} />
     </Scene>
 
     <Scene key="notLoggedIn">
       <Scene key="splash" component={Splash} title="Splash" hideNavBar={true} initial={true}/>
       <Scene key="login" component={Login} title="Login" hideNavBar={true}/>
       <Scene key="signup" component={Signup} title="Signup" hideNavBar={true}/>
-=======
-      <Scene key="filter" component={Filter} title="Filter" hideNavBar={true}/>
-      <Scene key="home" component={Home} hideNavBar={true}/>
-      <Scene key="swipe" component={SwipeView} hideNavBar={true} initial={true}/>
-    </Scene>
-
-    <Scene key="notLoggedIn">
-      <Scene key="splash" component={Splash} title="Splash" hideNavBar={true}/>
-      <Scene key="login" component={Login} title="Login" hideNavBar={false}/>
-      <Scene key="signup" component={Signup} title="Signup" hideNavBar={false}/>
->>>>>>> react-native
     </Scene>
 
   </Scene>
