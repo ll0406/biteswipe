@@ -59,6 +59,9 @@ export default class Login extends Component {
       },
       options: {
         fields: {
+          email: {
+            autoCapitalize: 'none'
+          },
           password: {
             password: true,
             secureTextEntry: true,

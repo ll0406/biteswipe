@@ -1,33 +1,43 @@
 import React, {Component} from 'react';
-import Drawer as NativeDrawer from 'react-native-drawer';
-import {Actions, DefaultRenderer} from 'react-native-router-flux';
-import Menu from './Menu';
+import {View, Text, Image} from 'react-native';
+import {Avatar, Drawer as MaterialDrawer, Divider, COLOR, TYPO} from 'react-native-material-design';
+import {Actions} from 'react-native-router-flux';
 
 import styles from './styles';
 
-export default class DrawerLayout extends Component {
-	constructor(props) {
-		super(props);
-	}
+export default class Drawer extends Component{
 
 	render() {
-		const state = this.props.navigationState;
-		const children = state.children;
+
 		return (
-			<NativeDrawer
-				type="overlay"
-				open={state.open}
-				content={<Menu/>}
-				tapToClose={true}
-				openDrawerOffset={0.2}
-				panCloseMask={0.2}
-				closedDrawerOffset={-3}
-				tweenHandler={(ratio) => ({
-				  main: { opacity:( 2 - ratio) / 2 }
-				})}
-				>
-				<DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate}/>
-			</NativeDrawer>
-			);
+		    <MaterialDrawer theme='light'>
+		        <MaterialDrawer.Header image={<Image source={require('./nav.jpg')} />}>
+		            <View style={styles.header}>
+		            	<Avatar size={80} image={<Image source={{ uri: "https://theduran.com/wp-content/uploads/2016/12/putin-winking.jpg" }}/>} />
+		              <Text style={[styles.headerText, COLOR.paperGrey50, TYPO.paperFontSubhead]}>BiteSwipe</Text>
+		            </View>
+		        </MaterialDrawer.Header>
+
+		        <MaterialDrawer.Section
+		            items={[
+	            		{
+	            	    value: 'BiteSwipe',
+	            	    onPress: () => Actions.swipe(),
+	            	    onLongPress: () => Actions.swipe()
+	            	  },
+		            	{
+		                value: 'Search Settings',
+		                onPress: () => Actions.filter(),
+		                onLongPress: () => Actions.filter()
+		              },
+		            	{
+		                value: 'Logout',
+		                onPress: () => this.props.logout(),
+		                onLongPress: () => this.props.logout()
+		              }
+		            ]}
+		        />
+		    </MaterialDrawer>
+		);
 	};
 };

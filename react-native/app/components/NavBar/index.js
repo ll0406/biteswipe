@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
+import NavBar from './NavBar';
 
-import { NavBar } from './NavBar';
+const mapStateToProps = state => ({});
 
-const mapStateToProps = state => {
-  return {};
-}
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

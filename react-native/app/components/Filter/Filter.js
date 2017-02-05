@@ -30,11 +30,10 @@ export default class Filter extends Component {
 
 	componentDidMount(){
 		this.props.getCurrentLocation();
-		this.props.getSearchSettings();
+		// this.props.getSearchSettings();
 	};
 
 	updateFilterOption(){
-
     this.props.getRestaurants()
 	}
 

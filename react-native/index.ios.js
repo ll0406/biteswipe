@@ -12,8 +12,8 @@ import Filter from './app/components/Filter';
 import Signup from './app/components/Signup';
 import Home from './app/components/Home';
 import SwipeView from './app/components/SwipeView';
-import NavBar from './app/components/NavBar';
 import Loading from './app/components/Loading';
+import DrawerLayout from './app/components/DrawerLayout';
 
 import {receiveRefreshToken, receiveAccessToken, updateLoggedIn} from './app/action-creators/auth';
 
@@ -28,10 +28,10 @@ const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
 const scenes = Actions.create(
   <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
 
-    <Scene key="loggedIn">
-      <Scene key="filter" component={Filter} title="Filter" hideNavBar={true}/>
-      <Scene key="home" component={Home} hideNavBar={true}/>
-      <Scene key="swipe" component={SwipeView} hideNavBar={true} initial={true} />
+    <Scene key="loggedIn" component={DrawerLayout} open={false}>
+      <Scene key="filter" component={Filter} title="Filter"/>
+      <Scene key="home" component={Home}/>
+      <Scene key="swipe" component={SwipeView} initial={true}/>
     </Scene>
 
     <Scene key="notLoggedIn">

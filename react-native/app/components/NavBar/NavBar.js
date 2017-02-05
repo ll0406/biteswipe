@@ -1,14 +1,20 @@
 import React from 'react';
+import {Toolbar} from 'react-native-material-design';
+import {Actions} from 'react-native-router-flux';
 
-// import { styles } from './styles';
-import { getTheme } from 'react-native-material-kit';
+const NavBar = props => {
 
-import { View, Text } from 'react-native';
-
-export const NavBar = props => {
+	const navigationState = props.navigationState;
+  
   return (
-    <View>
-        <Text> Nav bar lol </Text>
-    </View>
+  	<Toolbar
+  	    title="BiteSwipe"
+  	    icon="menu"
+  	    onIconPress={() => {
+  	    	Actions.refresh({ key: navigationState.key, open: true })
+  	    }}
+  	/>
   );
-}
+};
+
+export default NavBar;

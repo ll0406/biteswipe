@@ -12,8 +12,6 @@ const initialState = {
 const reducer = (state = initialState, action) => {
 	let newState = Object.assign({}, state);
 
-	console.log(action);
-
 	switch(action.type) {
 		case RECEIVE_LOCATION:
 			newState.location = action.location;

@@ -53,6 +53,9 @@ export default class Signup extends Component {
         password: ''
       },
       options: {
+        email: {
+          autoCapitalize: 'none'
+        },
         fields: {
           password: {
             password: true,
