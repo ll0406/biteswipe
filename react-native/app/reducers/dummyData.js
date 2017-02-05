@@ -67,7 +67,7 @@ export default dummyData = [
             "longitude": -83.3959475669046
         },
         "url": "https://www.yelp.com/biz/public-house-food-drink-monroe-2?adjust_creative=itIv_3HRGaTGUQViTUHMEQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=itIv_3HRGaTGUQViTUHMEQ",
-        "distance": 2317.743143616,
+        "distance": 23107.743143616,
         "location": {
             "country": "US",
             "city": "Monroe",

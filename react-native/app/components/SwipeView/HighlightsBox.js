@@ -31,7 +31,8 @@ export const HighlightsBox = props => {
 
   }
 
-  let distance = (props.restaurant.distance * 0.000621371).toFixed(1);
+  let distance = (props.restaurant.distance * 0.000621371);
+  distance = (distance > 10) ? Math.round(distance) : distance.toFixed(1);
 
   return (
     <View style={styles.highlightsBox}>

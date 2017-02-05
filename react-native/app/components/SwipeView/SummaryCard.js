@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { SwipeButtons } from './SwipeButtons';
 import { styles } from './styles';
 
-import { View, Text, Image, StyleSheet, TouchableHighlight } from 'react-native';
+import { View, Text, Image, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import { HighlightsBox } from './HighlightsBox';

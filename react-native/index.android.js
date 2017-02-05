@@ -28,29 +28,19 @@ const connectedSwitch = connect(mapStateToProps)(Switch);
 
 const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
 
-let style = StyleSheet.create({
-        tabBarStyle: {
-            borderTopWidth : .5,
-            borderColor    : '#b7b7b7',
-            backgroundColor: 'white',
-            opacity        : 1
-        }
-    });
-
-
 const scenes = Actions.create(
   <Scene key="root" component={connectedSwitch} selector={selector} >
 
 
     <Scene key="loggedIn">
-      <Scene key="tabBar" component={TabBar} title="Nav" hideNavBar intial={true} />
+      <Scene key="tabBar" component={TabBar} title="Nav" hideNavBar intial />
       <Scene key="detailView" component={DetailView} hideNavBar={false} title="Detail View" />
     </Scene>
 
     <Scene key="notLoggedIn">
-      <Scene key="splash" component={Splash} title="Splash" hideNavBar={true} initial={true}/>
-      <Scene key="login" component={Login} title="Login" hideNavBar={true}/>
-      <Scene key="signup" component={Signup} title="Signup" hideNavBar={true}/>
+      <Scene key="splash" component={Splash} title="Splash" hideNavBar initial/>
+      <Scene key="login" component={Login} title="Login" hideNavBar/>
+      <Scene key="signup" component={Signup} title="Signup" hideNavBar/>
     </Scene>
 
   </Scene>
