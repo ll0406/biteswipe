@@ -7,21 +7,24 @@ export const styles = StyleSheet.create({
   swipeViewBackground: {
     backgroundColor: '#F0F0F0', 
     flex:1, 
-    elevation:0  
+    elevation:0
   },
 
   cardWrapper: {
-    flex:1, 
-    marginTop: 45
+    marginTop: 45,
+    flex: 1,
+    alignSelf: 'auto',
   },
+
   card: {
-    elevation: 2,
+    elevation: 4,
     alignItems: 'center',
     justifyContent: 'center',
     width: width*.85,
     borderRadius: 3,
     backgroundColor: '#ffffff',
-    marginTop:25
+    marginTop:25,
+    alignSelf: 'center'
   },
   cardContent: {
     paddingTop: 5,

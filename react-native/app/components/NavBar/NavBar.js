@@ -12,7 +12,7 @@ export class NavBar extends Component {
   render() {
     var self = this;
     return (
-      <View style={styles.container}>
+      <View style={styles.NavBar}>
         <Tabs selected={this.state.page} style={{backgroundColor:'white'}}
               selectedStyle={{color:'red'}} onSelect={el=>this.setState({page:el.props.name})}>
             <Text name="first">Settings</Text>

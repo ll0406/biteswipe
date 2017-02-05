@@ -3,9 +3,8 @@ import { SummaryCard } from './SummaryCard';
 import NavBar from '../NavBar/';
 import { styles } from './styles';
 
-import { View, Text, Button } from 'react-native';
-
-import SwipeCards from 'react-native-swipe-cards';
+import { Button, View } from 'react-native';
+import { Container, Content, Text, DeckSwiper, Card, Header } from 'native-base'
 
 const NoMoreCards = () => {
   return (
@@ -24,14 +23,15 @@ export const SwipeView = React.createClass({
     }
 
     return (
-      <View style={styles.swipeViewBackground}>
+      <Container style={styles.swipeViewBackground}>
         <NavBar />
-        <SwipeCards 
-          cards={this.props.restaurants}
-          renderCard={(cardData) => <SummaryCard restaurant={cardData} />}
-          renderNoMoreCards={() => <NoMoreCards />}
+        <View>
+          <DeckSwiper 
+            dataSource={this.props.restaurants}
+            renderItem={(cardData) => <SummaryCard restaurant={cardData} />}
           />
-      </View>
+        </View>
+      </Container>
     )
   }
 })
