@@ -1,5 +1,6 @@
 import React from 'react';
 import { SummaryCard } from './SummaryCard';
+import NavBar from '../NavBar/';
 import { styles } from './styles';
 
 import { View, Text, Button } from 'react-native';
@@ -21,18 +22,15 @@ export const SwipeView = React.createClass({
     const getRestaurants = () => {
       this.props.getRestaurants();
     }
+
     return (
       <View style={styles.swipeViewBackground}>
+        <NavBar />
         <SwipeCards 
           cards={this.props.restaurants}
           renderCard={(cardData) => <SummaryCard restaurant={cardData} />}
           renderNoMoreCards={() => <NoMoreCards />}
           />
-        <Button
-          color="blue"
-          title="Get Restaurants"
-          onPress={getRestaurants}
-        />
       </View>
     )
   }

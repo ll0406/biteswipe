@@ -4,7 +4,6 @@ import {connect, Provider} from 'react-redux';
 import store from './app/store';
 import {Switch, Actions, Scene, Router} from 'react-native-router-flux';
 
-
 import Splash from './app/components/Splash';
 import Login from './app/components/Login';
 import Filter from './app/components/Filter';
@@ -12,7 +11,7 @@ import Signup from './app/components/Signup';
 import Home from './app/components/Home';
 import SwipeView from './app/components/SwipeView';
 import NavBar from './app/components/NavBar';
-
+var ToolbarAndroid = require('ToolbarAndroid');
 
 const mapStateToProps = state => ({
   loggedIn: state.auth.loggedIn
@@ -25,18 +24,29 @@ const connectedSwitch = connect(mapStateToProps)(Switch);
   //
 const selector = props => (true ? 'loggedIn' : 'notLoggedIn');
 
+let style = StyleSheet.create({
+        tabBarStyle: {
+            borderTopWidth : .5,
+            borderColor    : '#b7b7b7',
+            backgroundColor: 'white',
+            opacity        : 1
+        }
+    });
+
+
 const scenes = Actions.create(
-  <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
+  <Scene key="root" component={connectedSwitch} selector={selector} >
+
 
     <Scene key="loggedIn">
-      <Scene key="home" component={Home}/>
-      <Scene key="swipeView" component={SwipeView} hideNavBar={true} initial={true}/>
+      <Scene key="home" component={Home} title="homepage" />
+      <Scene key="swipeView" component={SwipeView} title="Swipe it!" hideNavBar initial={true}/>
     </Scene>
 
     <Scene key="notLoggedIn">
       <Scene key="splash" component={Splash} title="Splash" hideNavBar={true} initial={true}/>
-      <Scene key="login" component={Login} title="Login" hideNavBar={false}/>
-      <Scene key="signup" component={Signup} title="Signup" hideNavBar={false}/>
+      <Scene key="login" component={Login} title="Login" hideNavBar={true}/>
+      <Scene key="signup" component={Signup} title="Signup" hideNavBar={true}/>
     </Scene>
 
   </Scene>

@@ -9,7 +9,6 @@ import { RatingStars } from './RatingStars';
 
 export const SummaryCard = React.createClass({  
   render () {
-    console.log(this.props);
     return (
       <View style={styles.cardWrapper}>
         <View style={styles.card}>

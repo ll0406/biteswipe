@@ -31,7 +31,7 @@ export const HighlightsBox = props => {
 
   }
 
-
+  let distance = (props.restaurant.distance * 0.000621371).toFixed(1);
 
   return (
     <View style={styles.highlightsBox}>
@@ -40,7 +40,7 @@ export const HighlightsBox = props => {
       </View>
       {formatPrice()}
       <View style={styles.distanceDot}>
-        <Text style={styles.distanceDotText}>3</Text>
+        <Text style={styles.distanceDotText}>{distance}</Text>
         <Text style={styles.distanceDotText}>mi.</Text>
       </View>
     </View>
