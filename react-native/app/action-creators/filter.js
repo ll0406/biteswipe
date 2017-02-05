@@ -7,12 +7,13 @@ export const receiveLocation = location =>
   location
 });
 
-//EDIT !!! JC
+
 export const receiveSearchSettings = settings =>
 ({
   type: RECEIVE_SETTINGS,
   settings
 });
+
 
 export const getCurrentLocation = () => {
   return dispatch => {
@@ -41,14 +42,10 @@ export const getSearchSettings = () => {
 };
 
 // TODO: post updated searchSettings from Filter.js updateFilterOption()
-export const addSearchSettings = (settings) => {
+export const addSearchSettings = (priceRange, radius, categories) => {
   return dispatch => {
-    return axios.post('http://10.0.2.2:1337/api/searchSettings', settings)
+    return axios.put('http://10.0.2.2:1337/api/searchSettings', { priceRange: priceRange, radius: radius, categories: categories })
     .then(res => res.data)
-    .then(settings => {
-      //add the new Search settings to the global state now?!
-       //dispatch(receiveSearchSettings(settings));
-    })
     .catch(console.error);
   }
 }; 

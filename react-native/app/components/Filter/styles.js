@@ -11,6 +11,9 @@ var styles = StyleSheet.create({
     fontWeight: '500',
     margin: 10,
   },
+  buttonContainer: {
+    flexDirection: "row"
+  }
 });
 
 module.exports = styles;

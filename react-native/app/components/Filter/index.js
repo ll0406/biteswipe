@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Filter from './Filter';
 
 import {getRestaurants} from '../../action-creators/restaurants';
-import {getCurrentLocation, getSearchSettings, addSearchSettings} from '../../action-creators/filter';
+import {getCurrentLocation, getSearchSettings, addSearchSettings, receiveSearchSettings} from '../../action-creators/filter';
 
 const mapStateToProps = state => {
   return {
@@ -16,16 +16,19 @@ const mapDispatchToProps = dispatch => { 
     getCurrentLocation: () => { 
       dispatch(getCurrentLocation())
     } ,
-    getRestaurants: (latitude, longitude, radius, priceRange, categories) => {
-      dispatch(getRestaurants(latitude, longitude, radius, priceRange, categories))
+    getRestaurants: () => {
+      dispatch(getRestaurants())
     },
     getSearchSettings: () => { 
       dispatch(getSearchSettings())
     } ,
-    addSearchSettings: () => {
-      dispatch(addSearchSettings())
+    addSearchSettings: (priceRange, radius, categories) => {       //update to the db 
+      dispatch(addSearchSettings(priceRange, radius, categories))
+    }, 
+    receiveSearchSettings: (localSettings) => {
+      dispatch(receiveSearchSettings(localSettings))
     }
-  }; 
-};
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

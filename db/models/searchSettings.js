@@ -9,7 +9,8 @@ const db = require('APP/db');
 const searchSettings = db.define('searchSettings', {
 
   priceRange: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER)
+    type: Sequelize.ARRAY(Sequelize.INTEGER), 
+    defaultValue: [1,2,3,4]
   },
   radius: {
     type: Sequelize.INTEGER,
@@ -17,6 +18,7 @@ const searchSettings = db.define('searchSettings', {
   },
   categories: {
     type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: ['pizza', 'newamerican', 'italian', 'chinese', 'sushi', 'mexican', 'burgers', 'indpak']
   }
 
 });

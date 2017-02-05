@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import store from '../../store';
 
-
 import {
   View,
   Image,
@@ -15,9 +14,10 @@ import {
 import CheckBox from 'react-native-checkbox';
 import styles from './styles';
 
-export default class Filter extends Component {
+export default class Favorites extends Component {
 
 	constructor(props){
+		
 	  super(props);
      
 	  this.updateFilterOption = this.updateFilterOption.bind(this);

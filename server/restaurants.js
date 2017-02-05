@@ -34,19 +34,22 @@ const refreshYelpToken = (req, res, next, attempted) => {
 };
 
 const yelp = (req, res, next) => {
+	console.log("TELL ME PRICE YELP1!!!! ", req.query.priceRange);
 	axios.get('https://api.yelp.com/v3/businesses/search?term=food&', {
 		headers: { Authorization: `Bearer ${env.YELP_TOKEN}`},
 		params: {
 			latitude: req.query.latitude,
 			longitude: req.query.longitude,
 			radius: req.query.radius,
-			price: req.query.price,
+			price: req.query.priceRange,
 			categories: req.query.categories,
-			open_now: true
+			open_now: true, 
+			limit: 2
 		}
 	})
 	.then(res => res.data)
 	.then(body => {
+		console.log("body TELL ME: ", body);
 		res.json(body);
 	})
 	.catch(error => {

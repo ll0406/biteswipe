@@ -13,12 +13,13 @@ export const getRestaurants = () =>
 			params: {
 			  latitude: getState().filter.location.latitude,
 			  longitude: getState().filter.location.longitude,
-			  radius: getState().filter.settings.radius,
+			  radius: 32187,
 			  priceRange: getState().filter.settings.priceRange.join(','),
 			  categories: getState().filter.settings.categories.join(',')
 			}})
 			.then(res => res.data)
 			.then(restaurants => {
+				console.log("call me REST: ", restaurants);
 				dispatch(receiveRestaurants(restaurants));
 			})
 			.catch(console.error);
