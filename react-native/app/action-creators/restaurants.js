@@ -39,13 +39,10 @@ export const getRestaurants = () =>
 
 export const getRestaurant = (id) =>
 	(dispatch) => {
-		axios.get(`http://${IP}:1337/api/restaurants/restaurant/:id`, {
-			params: {
-				id: id
-			}
-		})
+		axios.get(`http://${IP}:1337/api/restaurants/${id}`)
 		.then(res => res.data)
 		.then(restaurant => {
+			console.log('restaurant detail', restaurant)
 			dispatch(receiveRestaurant(restaurant));
 		})
 		.catch(error => handleAuthenticationError(error, getRestaurant));
@@ -53,7 +50,7 @@ export const getRestaurant = (id) =>
 
 export const getReviews = (id) =>
 	(dispatch) => {
-		axios.get(`http://${IP}:1337/api/restaurants/restaurant/:id/reviews`, {
+		axios.get(`http://${IP}:1337/api/restaurants/:id/reviews`, {
 			params: {
 				id: id
 			}
