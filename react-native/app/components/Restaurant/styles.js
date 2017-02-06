@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
   card: {
     elevation: 2,
     backgroundColor: '#ffffff',
+    marginBottom: 15,
     padding: 15
   },
   cardTitle: {
@@ -18,7 +19,7 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     padding: 5,
     position: 'absolute',
-    top: 0
+    top: 300
   },
   cardImage: {
     width: Dimensions.get('window').width*1,
