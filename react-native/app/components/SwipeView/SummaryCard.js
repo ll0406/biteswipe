@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
-import { SwipeButtons } from './SwipeButtons';
 import { styles } from './styles';
 
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableHighlight } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
-export const SummaryCard = React.createClass({
+import { HighlightsBox } from './HighlightsBox';
+import { RatingStars } from './RatingStars';
+
+export const SummaryCard = React.createClass({  
 
   render () {
+    const goToDetailView = () => Actions.detailView({restaurant: this.props.restaurant});
     return (
-      <View style={styles.cardWrapper}>
-        <View style={styles.card}>
+      <View style={styles.card}>
+        <TouchableHighlight onPress={goToDetailView}>
           <Image 
-            source={{uri: 'http://www.fillmurray.com/284/196'}} 
+            source={{uri: this.props.restaurant.image_url}} 
             style={styles.cardImage}/>
-          <Text style={styles.cardTitle}>{this.props.restaurant.name}</Text>
-          <View style={styles.cardContent}>
-            {
-              (this.props.restaurant.categories === undefined) 
-              ? <Text>No 'cuisine' data</Text> 
-              : <Text>{this.props.restaurant.categories[0].title}</Text> 
-            }
-            <Text>Rating: No rating</Text>
+        </TouchableHighlight>
+        <Text style={styles.cardTitle}>{this.props.restaurant.name}</Text>
+        <Text style={styles.cardSubTitle}>{this.props.restaurant.categories[0].title}</Text>
+        <View style={styles.cardContent}>
+          <HighlightsBox restaurant={this.props.restaurant}/>
+          <View style={styles.ratingView}>
+          <RatingStars rating={this.props.restaurant.rating}/>
           </View>
         </View>
       </View>
