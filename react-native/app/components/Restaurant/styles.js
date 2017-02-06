@@ -8,10 +8,9 @@ export const styles = StyleSheet.create({
     backgroundColor: '#ffffff'
   },
   card: {
-    marginTop: 10,
     elevation: 2,
     backgroundColor: '#ffffff',
-    padding: 10
+    padding: 15
   },
   cardTitle: {
     backgroundColor: "transparent",
@@ -27,7 +26,8 @@ export const styles = StyleSheet.create({
   },
   reviewImage: {
     width: 30,
-    height: 30
+    height: 30,
+    borderRadius: 15
   },
   tab: {
     flex: 1,
@@ -41,9 +41,9 @@ export const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   reviewName: {
-    marginLeft: 35
+    marginLeft: 40
   },
   pushDown: {
-    marginTop: 10
+    marginTop: 12
   }
 })
