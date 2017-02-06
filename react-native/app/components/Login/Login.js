@@ -33,20 +33,15 @@ const Email = t.subtype(t.String, email => {
   return regex.test(email);
 });
 
+const Password = t.subtype(t.String, password => {
+  return password.length >= 6;
+});
+
 // form data model
 const User = t.struct({
   email: Email,
-  password: t.String
+  password: Password
 });
-
-const options = {
-  fields: {
-    password: {
-      password: true,
-      secureTextEntry: true
-    }
-  }
-};
 
 export default class Login extends Component {
 

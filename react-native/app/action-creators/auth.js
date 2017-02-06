@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, LOGIN_ERROR, SIGNUP_ERROR, IP} from '../constants';
+import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, LOGIN_ERROR, SIGNUP_ERROR, AUTHENTICATED_USER, IP} from '../constants';
 import store from '../store'
 
 export const receiveRefreshToken = refreshToken => ({
@@ -26,10 +26,25 @@ export const updateSignupError = signupError => ({
   type: SIGNUP_ERROR, signupError
 });
 
+export const receiveAuthenticatedUser = user => ({
+  type: AUTHENTICATED_USER, user
+})
+
+// can be utilized by any action-creators that hit protected routes
 export const handleAuthenticationError = (error, func) => {
   if (error.response && error.response.status === 401) store.dispatch(getAccessToken(func));
   else console.error(error);
 };
+
+export const getAuthenticatedUser = () => 
+  (dispatch, getState) =>
+    axios.get(`http://${IP}:1337/api/auth/user`, 
+      {headers: {'Authorization': `Bearer ${getState().auth.refreshToken}`}})
+      .then(res => res.data)
+      .then(body => {
+        dispatch(receiveAuthenticatedUser(body.user));
+      })
+      .catch(console.error)
 
 export const getAccessToken = (func) => 
   (dispatch, getState) =>

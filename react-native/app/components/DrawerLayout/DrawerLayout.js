@@ -20,9 +20,9 @@ export default class DrawerLayout extends Component {
 
 	componentDidMount(){
 
-	  // We need location and settings in order to run the
-	  // yelp search for restaurants
+		// general setup -> drawer should only be mounted once
 	  Promise.all([
+	  	this.props.getAuthenticatedUser(),
 	  	this.props.getCurrentLocation(),
 	    this.props.getSearchSettings()
 	    ])
@@ -38,6 +38,7 @@ export default class DrawerLayout extends Component {
 	render() {
 		const navigationState = this.props.navigationState;
 		const children = navigationState.children;
+		const current = children[children.length - 1];
 		const open = navigationState.open;
 
 		if(!this.state.initalized) {
@@ -63,9 +64,9 @@ export default class DrawerLayout extends Component {
 					ref={ref => this._drawer = ref}
 					>
 					<View style={styles.navBarContainer}>
-						<NavBar navigationState={navigationState}/>
+						<NavBar navigationState={navigationState} current={current}/>
 					</View>
-					<DefaultRenderer navigationState={children[children.length - 1]} onNavigate={this.props.onNavigate}/>
+					<DefaultRenderer navigationState={current} onNavigate={this.props.onNavigate}/>
 				</NativeDrawer>
 				);
 		};

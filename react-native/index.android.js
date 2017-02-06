@@ -6,7 +6,6 @@ import {Switch, Actions, Scene, Router} from 'react-native-router-flux';
 import queryString from 'query-string';
 import {persistStore} from 'redux-persist';
 
-
 import Splash from './app/components/Splash';
 import Login from './app/components/Login';
 import Filter from './app/components/Filter';
@@ -27,19 +26,18 @@ const connectedSwitch = connect(mapStateToProps)(Switch);
 const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
 
 const scenes = Actions.create(
-  <Scene key="root" component={connectedSwitch} selector={selector} >
-
+  <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
 
     <Scene key="loggedIn" component={DrawerLayout} open={false} hideNavBar>
-      <Scene key="swipe" component={TabBar} initial={true}/>
-      <Scene key="filter" component={Filter} title="Filter"/>
+      <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>
+      <Scene key="filter" component={Filter} title="Search Settings"/>
       <Scene key="detailView" component={DetailView}/>
     </Scene>
 
     <Scene key="notLoggedIn">
       <Scene key="splash" component={Splash} title="Splash" hideNavBar initial/>
-      <Scene key="login" component={Login} title="Login" hideNavBar={false}/>
-      <Scene key="signup" component={Signup} title="Signup" hideNavBar={false}/>
+      <Scene key="login" component={Login} title="Login"/>
+      <Scene key="signup" component={Signup} title="Signup"/>
     </Scene>
 
   </Scene>
@@ -88,7 +86,7 @@ export default class BiteSwipe extends Component {
   }
 
   render() {
-    if(!this.state.rehydrated || !this.state.animated) {
+    if(false) {
       return (
         <LoadingSplash animationCompleted={this.animationCompleted}/>
         );

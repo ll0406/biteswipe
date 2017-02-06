@@ -25,8 +25,9 @@ const Drawer = React.createClass({
 				case 'logout':
 					this.props.logout();
 					break;
+
 			};
-		}, 250);
+		}, 300);
 	},
 
 	onLongPress(type) {
@@ -35,12 +36,15 @@ const Drawer = React.createClass({
 
 	render() {
 
+		const user = this.props.user;
+		const profileName = user ? (user.name || user.email) : 'Vlad Pudding';
+
 		return (
 		    <MaterialDrawer theme='light'>
 		        <MaterialDrawer.Header image={<Image source={require('./nav.jpg')} />}>
 		            <View style={styles.header}>
 		            	<Avatar size={80} image={<Image source={{ uri: "https://theduran.com/wp-content/uploads/2016/12/putin-winking.jpg" }}/>} />
-		              <Text style={[styles.headerText, COLOR.paperGrey50, TYPO.paperFontSubhead]}>Vlad Pudding</Text>
+		              <Text style={[styles.headerText, COLOR.paperGrey50, TYPO.paperFontSubhead]}>{profileName}</Text>
 		            </View>
 		        </MaterialDrawer.Header>
 
@@ -56,12 +60,27 @@ const Drawer = React.createClass({
 		                onPress: () => this.onPress('search'),
 		                onLongPress: () => this.onLongPress('search')
 		              },
-		            	{
-		                value: 'Logout',
-		                onPress: () => this.onPress('logout'),
-		                onLongPress: () => this.onLongPress('logout')
-		              }
+		              {
+	                  value: 'User Settings',
+	                  onPress: () => this.onPress('user'),
+	                  onLongPress: () => this.onLongPress('user')
+	                },
+	              	{
+	                  value: 'Contact',
+	                  onPress: () => this.onPress('contact'),
+	                  onLongPress: () => this.onLongPress('contact')
+	                }
 		            ]}
+		        />
+		        <Divider style={styles.divider}/>
+		        <MaterialDrawer.Section
+		        	items={[
+		        			{
+		        		    value: 'Logout',
+		        		    onPress: () => this.onPress('logout'),
+		        		    onLongPress: () => this.onLongPress('logout')
+		        		  }
+		        		]}
 		        />
 		    </MaterialDrawer>
 		);
