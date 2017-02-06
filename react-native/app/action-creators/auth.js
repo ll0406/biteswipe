@@ -36,15 +36,6 @@ export const handleAuthenticationError = (error, func) => {
   else console.error(error);
 };
 
-export const getAuthenticatedUser = () => 
-  (dispatch, getState) =>
-    axios.get(`http://${IP}:1337/api/auth/user`, 
-      {headers: {'Authorization': `Bearer ${getState().auth.refreshToken}`}})
-      .then(res => res.data)
-      .then(body => {
-        dispatch(receiveAuthenticatedUser(body.user));
-      })
-      .catch(console.error)
 
 export const getAccessToken = (func) => 
   (dispatch, getState) =>
@@ -62,6 +53,19 @@ export const getAccessToken = (func) =>
         else console.error(error);
       });
 
+export const getAuthenticatedUser = () => 
+  (dispatch, getState) =>
+    axios.get(`http://${IP}:1337/api/auth/user`, 
+      {headers: {'Authorization': `Bearer ${getState().auth.refreshToken}`}})
+      .then(res => res.data)
+      .then(body => {
+        dispatch(receiveAuthenticatedUser(body.user));
+      })
+      .catch(error => {
+        if(error.response.status === 401) dispatch(logout);
+        else console.error(error);
+      });
+      
 export const signup = (name, email, password) => 
   dispatch =>
     axios.post(`http://${IP}:1337/api/auth/signup`,
