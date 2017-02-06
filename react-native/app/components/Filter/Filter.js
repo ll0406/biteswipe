@@ -6,7 +6,7 @@ import {
   Image,
   TextInput,
   Text,
-  Button, 
+  Button,
   Slider,
   StyleSheet
 } from 'react-native';
@@ -19,7 +19,7 @@ export default class Filter extends Component {
 
 	constructor(props){
 	  super(props);
-      
+
 
 	  this.updateFilterOption = this.updateFilterOption.bind(this);
 	};
@@ -49,7 +49,7 @@ export default class Filter extends Component {
 		          step={5}
 		          minimumValue={5}
           		  maximumValue={25}
-          		  value={5} 
+          		  value={5}
 		          {...this.state}
 		          onSlidingComplete={(value) => this.setState({ radius: value })} />
 			</View>

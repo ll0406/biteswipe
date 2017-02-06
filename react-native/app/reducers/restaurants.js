@@ -1,7 +1,9 @@
 import {RECEIVE_RESTAURANTS, RECEIVE_RESTAURANT} from '../constants';
 
+import dummyData from './dummyData';
+
 const initialState = {
-	list: [],
+	list: dummyData,
   restaurant: {}
 };
 
