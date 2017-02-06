@@ -19,6 +19,7 @@ const ResultsListItem = props => {
 					<Image style={styles.image} source={{ uri: restaurant.image_url }}>
 						<View style={styles.textContainer}>
 							<Text style={styles.name}>{restaurant.name}</Text>
+							<Text style={styles.address}>{restaurant.location.address1}</Text>
 						</View>
 					</Image>
 				</CardItem>
@@ -66,6 +67,10 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 20,
 		fontWeight: 'bold'
+	},
+	address: {
+		color: 'white',
+		fontSize: 15,
 	}
 });
 

@@ -14,10 +14,6 @@ export default class ResultsList extends Component {
 		};
 	}
 
-	componentDidMount() {
-		this.props.getRestaurants();
-	}
-
 	componentWillReceiveProps(newProps) {
 	  if(newProps.restaurants) {
 	    this.setState({
@@ -41,5 +37,4 @@ export default class ResultsList extends Component {
 			</View>
 			);
 	}
-
 };

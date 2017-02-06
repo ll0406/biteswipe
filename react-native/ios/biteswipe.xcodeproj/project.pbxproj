@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -48,6 +47,9 @@
 		EE0A514EAE1044C69DD44305 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ADA8C47728314799954A1196 /* Zocial.ttf */; };
 		F0DDAE1A51A04C148F68175C /* Skia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 147E2C381E2C42D1ADC55673 /* Skia.ttf */; };
 		F5521BEB7BFA47C2AD1F43B6 /* Georgia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 460730E637FA45638F53CC81 /* Georgia.ttf */; };
+		7692CF0F3A78458882783B72 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D1B7BCE0F6F4A06A5A3764E /* libRNSpinkit.a */; };
+		A09B323AF8D747ED8FE5F7BB /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E39C66F57F3641CD8E2A4998 /* libBVLinearGradient.a */; };
+		83DAB644038244A0A93A3E06 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1436176180143DF81C532B4 /* libAirMaps.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -298,6 +300,12 @@
 		F0F394E142804E4AB7229D3E /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		FB8E7F60A9C343BCBF149F7F /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		FE3E2F14C4C44A25BD947E9D /* Andale Mono.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Andale Mono.ttf"; path = "../node_modules/native-base/Fonts/Andale Mono.ttf"; sourceTree = "<group>"; };
+		2317F9CD461A495FB34724D0 /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; name = "RNSpinkit.xcodeproj"; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7D1B7BCE0F6F4A06A5A3764E /* libRNSpinkit.a */ = {isa = PBXFileReference; name = "libRNSpinkit.a"; path = "libRNSpinkit.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		0BB49205E0984FD4849C3082 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; name = "BVLinearGradient.xcodeproj"; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		E39C66F57F3641CD8E2A4998 /* libBVLinearGradient.a */ = {isa = PBXFileReference; name = "libBVLinearGradient.a"; path = "libBVLinearGradient.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		D713C6577DC946A3862A0019 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; name = "AirMaps.xcodeproj"; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		E1436176180143DF81C532B4 /* libAirMaps.a */ = {isa = PBXFileReference; name = "libAirMaps.a"; path = "libAirMaps.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,6 +334,9 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				C537ED4BE4D0403CBAEB5657 /* libRCTMaterialKit.a in Frameworks */,
 				BB8E5479C2A44E30B951F83E /* libRNVectorIcons.a in Frameworks */,
+				7692CF0F3A78458882783B72 /* libRNSpinkit.a in Frameworks */,
+				A09B323AF8D747ED8FE5F7BB /* libBVLinearGradient.a in Frameworks */,
+				83DAB644038244A0A93A3E06 /* libAirMaps.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +528,9 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				56C6BD1D418649448638906B /* RCTMaterialKit.xcodeproj */,
 				BA3C3B6751F64FE885CA579B /* RNVectorIcons.xcodeproj */,
+				2317F9CD461A495FB34724D0 /* RNSpinkit.xcodeproj */,
+				0BB49205E0984FD4849C3082 /* BVLinearGradient.xcodeproj */,
+				D713C6577DC946A3862A0019 /* AirMaps.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -985,6 +999,9 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BiteSwipe.app/BiteSwipe";
@@ -1001,6 +1018,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
