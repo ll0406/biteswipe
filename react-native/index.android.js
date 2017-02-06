@@ -26,15 +26,15 @@ const mapStateToProps = state => ({
 
 const connectedSwitch = connect(mapStateToProps)(Switch);
 
-const selector = props => (true ? 'loggedIn' : 'notLoggedIn');
+const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
 
 const scenes = Actions.create(
-  <Scene key="root" component={connectedSwitch} selector={selector} >
+  <Scene key="root" component={connectedSwitch} selector={selector} tabs>
 
     <Scene key="loggedIn">
       {/* <Scene key="filter" component={Filter} title="Filter" hideNavBar={true} /> */}
-      <Scene key="tabBar" component={TabBar} title="Nav" hideNavBar intial />
-      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant" />
+      <Scene key="tabBar" component={TabBar} title="Nav" hideNavBar />
+      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant" intial />
     </Scene>
 
     <Scene key="notLoggedIn">

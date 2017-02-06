@@ -1,38 +1,49 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 export const styles = StyleSheet.create({
-  swipeViewBackground: {
-    backgroundColor: '#F0F0F0',
-    flex:1,
-    elevation:0
-  },
-  cardWrapper: {
-    flex:1,
-    marginTop: 45
-  },
-  card: {
+  main: {
+    marginTop: 50,
     elevation: 2,
     alignItems: 'center',
-    width: Dimensions.get('window').width*.85,
-    borderRadius: 3,
-    backgroundColor: '#ffffff',
-    marginTop:25
+    backgroundColor: '#ffffff'
   },
-  cardContent: {
-    padding: 15,
+  card: {
+    marginTop: 10,
+    elevation: 2,
+    backgroundColor: '#ffffff',
+    padding: 10
   },
   cardTitle: {
     backgroundColor: "transparent",
     color: "#ffffff",
     fontSize: 24,
-    padding: 16,
-    position: "absolute",
-    top: 300
+    padding: 5,
+    position: 'absolute',
+    top: 0
   },
   cardImage: {
-    width: 350,
-    height: 350,
-    borderTopRightRadius: 3,
-    borderTopLeftRadius: 3,
+    width: Dimensions.get('window').width*1,
+    height: Dimensions.get('window').height*.5
+  },
+  reviewImage: {
+    width: 30,
+    height: 30
+  },
+  tab: {
+    flex: 1,
+    padding: 15
+  },
+  tabTitle: {
+    color: 'black'
+  },
+  reviewHeader: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  reviewName: {
+    marginLeft: 35
+  },
+  pushDown: {
+    marginTop: 10
   }
 })
