@@ -11,6 +11,7 @@ export default class extends Component {
 
   componentDidMount(){
     this.props.getRestaurant(this.props.id)
+    this.props.getReviews(this.props.id)
   };
 
   render () {

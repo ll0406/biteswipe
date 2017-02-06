@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 import Restaurant from './Restaurant';
 
-import {getRestaurant} from '../../action-creators/restaurants';
+import {getRestaurant, getReviews} from '../../action-creators/restaurants';
 
 const mapStateToProps = state => {
   return {
-    restaurant: state.restaurants.restaurant
+    restaurant: state.restaurants.restaurant,
+    reviews: state.restaurants.reviews
   };
 }
 
@@ -13,7 +14,10 @@ const mapDispatchToProps = dispatch => { 
   return { 
     getRestaurant: (id) => { 
       dispatch(getRestaurant(id))
-    } 
+    } ,
+    getReviews: (id) => {
+      dispatch(getReviews(id))
+    }
   };
 }
 

@@ -1,4 +1,4 @@
-import {RECEIVE_RESTAURANTS, RECEIVE_RESTAURANT, IP} from '../constants';
+import {RECEIVE_RESTAURANTS, RECEIVE_RESTAURANT, RECEIVE_REVIEWS, IP} from '../constants';
 import axios from 'axios';
 import {handleAuthenticationError} from './auth';
 
@@ -10,6 +10,11 @@ export const receiveRestaurants = restaurants => ({
 export const receiveRestaurant = restaurant => ({
 	type: RECEIVE_RESTAURANT,
 	restaurant
+});
+
+export const receiveReviews = reviews => ({
+	type: RECEIVE_REVIEWS,
+	reviews
 });
 
 export const getRestaurants = () =>
@@ -42,6 +47,20 @@ export const getRestaurant = (id) =>
 		.then(res => res.data)
 		.then(restaurant => {
 			dispatch(receiveRestaurant(restaurant));
+		})
+		.catch(error => handleAuthenticationError(error, getRestaurant));
+		}
+
+export const getReviews = (id) =>
+	(dispatch) => {
+		axios.get(`http://${IP}:1337/api/restaurants/restaurant/:id/reviews`, {
+			params: {
+				id: id
+			}
+		})
+		.then(res => res.data)
+		.then(reviews => {
+			dispatch(receiveReviews(reviews));
 		})
 		.catch(error => handleAuthenticationError(error, getRestaurant));
 		}
