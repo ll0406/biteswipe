@@ -7,15 +7,15 @@ import { Actions } from 'react-native-router-flux';
 import { HighlightsBox } from './HighlightsBox';
 import { RatingStars } from './RatingStars';
 
-export const SummaryCard = React.createClass({  
+export const SummaryCard = React.createClass({
 
   render () {
-    const goToDetailView = () => Actions.detailView({restaurant: this.props.restaurant});
+    const goToRestaurant = () => Actions.restaurant({id: this.props.restaurant.id});
     return (
       <View style={styles.card}>
-        <TouchableHighlight onPress={goToDetailView}>
-          <Image 
-            source={{uri: this.props.restaurant.image_url}} 
+        <TouchableHighlight onPress={goToRestaurant}>
+          <Image
+            source={{uri: this.props.restaurant.image_url}}
             style={styles.cardImage}/>
         </TouchableHighlight>
         <Text style={styles.cardTitle}>{this.props.restaurant.name}</Text>

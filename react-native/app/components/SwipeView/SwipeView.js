@@ -16,7 +16,6 @@ import { View, Content, Text, DeckSwiper, Card, Header } from 'native-base'
 export default class SwipeView extends Component {
 
   componentDidMount(){
-
     //We need location and settings in order to run the
     //yelp search for restaurants
     Promise.all([this.props.getCurrentLocation(),

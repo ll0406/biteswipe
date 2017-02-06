@@ -11,8 +11,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => { 
   return { 
-    getRestaurant: () => { 
-      dispatch(getRestaurant())
+    getRestaurant: (id) => { 
+      dispatch(getRestaurant(id))
     } 
   };
 }

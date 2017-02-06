@@ -10,7 +10,7 @@ export default class extends Component {
   };
 
   componentDidMount(){
-    this.props.getRestaurant()
+    this.props.getRestaurant(this.props.id)
   };
 
   render () {

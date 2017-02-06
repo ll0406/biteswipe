@@ -20,7 +20,6 @@ export default class Filter extends Component {
 	constructor(props){
 	  super(props);
 
-
 	  this.updateFilterOption = this.updateFilterOption.bind(this);
 	};
 

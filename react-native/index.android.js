@@ -34,7 +34,7 @@ const scenes = Actions.create(
     <Scene key="loggedIn">
       {/* <Scene key="filter" component={Filter} title="Filter" hideNavBar={true} /> */}
       <Scene key="tabBar" component={TabBar} title="Nav" hideNavBar intial />
-      <Scene key="detailView" component={DetailView} hideNavBar={false} title="Detail View" />
+      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant Name" />
     </Scene>
 
     <Scene key="notLoggedIn">

@@ -32,13 +32,16 @@ export const getRestaurants = () =>
 			.catch(error => handleAuthenticationError(error, getRestaurants));
 		}
 
-export const getRestaurant = () =>
-	(dispatch, getState) => {
-		console.log('in getRestaurant')
-		axios.get(`http://${IP}:1337/api/restaurants/restaurant`)
-			.then(res => res.data)
-			.then(restaurant => {
-				dispatch(receiveRestaurant(restaurant));
-			})
-			.catch(error => handleAuthenticationError(error, getRestaurant));
+export const getRestaurant = (id) =>
+	(dispatch) => {
+		axios.get(`http://${IP}:1337/api/restaurants/restaurant/:id`, {
+			params: {
+				id: id
+			}
+		})
+		.then(res => res.data)
+		.then(restaurant => {
+			dispatch(receiveRestaurant(restaurant));
+		})
+		.catch(error => handleAuthenticationError(error, getRestaurant));
 		}

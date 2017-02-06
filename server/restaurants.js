@@ -57,14 +57,11 @@ const yelp = (req, res, next) => {
 	});
 };
 
-// TODO: add in restaurant id
 const restaurant = (req, res, next) => {
-	console.log('in restaurant route')
-	axios.get('https://api.yelp.com/v3/businesses/gary-danko-san-francisco', {
+	axios.get(`https://api.yelp.com/v3/businesses/${req.query.id}`, {
 		headers: { Authorization: `Bearer ${env.YELP_TOKEN}`}})
 	.then(res => res.data)
 	.then(restaurant => {
-		console.log('restaurant detail', restaurant)
 		res.json(restaurant);
 	})
 	.catch(error => {
@@ -80,8 +77,7 @@ const restaurant = (req, res, next) => {
 router.get('/', yelp);
 
 // get restaurant detail by restaurant id
-// TODO: add id in url
-router.get('/restaurant', restaurant);
+router.get('/restaurant/:id', restaurant);
 
 // get restaurant reviews by restaurant id
 router.get('/:id/reviews', (req, res, next) => {
