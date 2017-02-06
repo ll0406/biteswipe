@@ -103,8 +103,8 @@ export default class Login extends Component {
     };
 
     return (
-      <View style={styles.container}>
-        <KeyboardAvoidingView style={[theme.cardStyle, styles.card]}>
+      <KeyboardAvoidingView style={styles.container} behavior="position">
+        <View style={[theme.cardStyle, styles.card]}>
 
           <SocialIcon
             title="Sign In With Facebook"
@@ -139,8 +139,8 @@ export default class Login extends Component {
 
           <Button title="Login" onPress={login} buttonStyle={styles.login}/>
           
-        </KeyboardAvoidingView>
-      </View>
+        </View>
+      </KeyboardAvoidingView>
     );
   };
   
