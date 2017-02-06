@@ -42,7 +42,6 @@ export const getRestaurant = (id) =>
 		axios.get(`http://${IP}:1337/api/restaurants/${id}`)
 		.then(res => res.data)
 		.then(restaurant => {
-			console.log('restaurant detail', restaurant)
 			dispatch(receiveRestaurant(restaurant));
 		})
 		.catch(error => handleAuthenticationError(error, getRestaurant));

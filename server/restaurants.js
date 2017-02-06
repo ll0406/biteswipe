@@ -58,7 +58,7 @@ const yelp = (req, res, next) => {
 };
 
 const restaurant = (req, res, next) => {
-	axios.get(`https://api.yelp.com/v3/businesses/${req.query.id}`, {
+	axios.get(`https://api.yelp.com/v3/businesses/${req.params.id}`, {
 		headers: { Authorization: `Bearer ${env.YELP_TOKEN}`}})
 	.then(res => res.data)
 	.then(restaurant => {
@@ -73,20 +73,12 @@ const restaurant = (req, res, next) => {
 	});
 };
 
-// get all restaurants matching filter
-router.get('/', yelp);
-
-// get restaurant detail by restaurant id
-router.get('/restaurant/:id', restaurant);
-
-// get restaurant reviews by restaurant id
-router.get('/:id/reviews', (req, res, next) => {
-	axios.get(`https://api.yelp.com/v3/businesses/${req.params.id}/reviews`, {
+const reviews = (req, res, next) => {
+	axios.get(`https://api.yelp.com/v3/businesses/${req.query.id}/reviews`, {
 		headers: { Authorization: `Bearer ${env.YELP_TOKEN}`}})
 	.then(res => res.data)
-	.then(restaurant => {
-		console.log('restaurant detail', restaurant)
-		res.json(restaurant);
+	.then(reviews => {
+		res.json(reviews.reviews);
 	})
 	.catch(error => {
 		if(error.response.status === 401) refreshYelpToken(req, res, next, req.refreshedYelpToken || false);
@@ -95,6 +87,15 @@ router.get('/:id/reviews', (req, res, next) => {
 			next(error);
 		}
 	})
-})
+}
+
+// get all restaurants matching filter
+router.get('/', yelp);
+
+// get restaurant detail by restaurant id
+router.get('/:id', restaurant);
+
+// get restaurant reviews by restaurant id
+router.get('/:id/reviews', reviews);
 
 module.exports = router;
