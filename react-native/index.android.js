@@ -14,6 +14,7 @@ import Home from './app/components/Home';
 import SwipeView from './app/components/SwipeView';
 import NavBar from './app/components/NavBar';
 import Loading from './app/components/Loading';
+import ResultsList from './app/components/ResultsList';
 
 import {receiveRefreshToken, receiveAccessToken, updateLoggedIn} from './app/action-creators/auth';
 
@@ -30,8 +31,8 @@ const scenes = Actions.create(
 
     <Scene key="loggedIn">
       <Scene key="filter" component={Filter} title="Filter" hideNavBar={true}/>
-      <Scene key="home" component={Home} hideNavBar={true}/>
-      <Scene key="swipe" component={SwipeView} hideNavBar={true} initial={true}/>
+      <Scene key="swipe" component={SwipeView} hideNavBar={true}/>
+      <Scene key="results" component={ResultsList} hideNavBar={true} initial={true}/>
     </Scene>
 
     <Scene key="notLoggedIn">

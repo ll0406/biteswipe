@@ -13,8 +13,8 @@ export const getRestaurants = () =>
 			{
 				headers: {'Authorization': `Bearer ${getState().auth.accessToken}`},
 				params: {
-				  latitude: getState().filter.location.latitude,
-				  longitude: getState().filter.location.longitude,
+				  latitude: getState().filter.location.latitude || 37.422,
+				  longitude: getState().filter.location.longitude || -122.084,
 				  radius: getState().filter.settings.radius,
 				  priceRange: getState().filter.settings.priceRange.join(','),
 				  categories: getState().filter.settings.categories.join(',')
