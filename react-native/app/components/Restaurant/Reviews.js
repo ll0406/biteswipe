@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import {
-  Text, Image
+  Text, Image, ScrollView
 } from 'react-native';
 import { View } from 'native-base';
 import TimeAgo from 'react-native-timeago';
@@ -12,6 +12,7 @@ export default class Reviews extends Component {
 
   render() {
     return (
+    <ScrollView>
       <View style={styles.tab}>
         {
           this.props.reviews.map( (review, index) => {
@@ -30,6 +31,7 @@ export default class Reviews extends Component {
           })
         }
       </View>
+    </ScrollView>
     );
   };
 };

@@ -5,8 +5,8 @@ const { width, height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   swipeViewBackground: {
-    backgroundColor: colors.background, 
-    flex:1, 
+    backgroundColor: colors.background,
+    flex:1,
     elevation:0,
   },
   cardWrapper: {
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
     marginBottom: 0
   },
   cardImage: {
-    width: 350, 
+    width: 350,
     height: 350,
     borderTopRightRadius: 3,
     borderTopLeftRadius: 3,
@@ -90,7 +90,7 @@ export const styles = StyleSheet.create({
     borderRadius: 5,
   },
   highlightsBoxIcon: {
-    width:40, 
+    width:40,
     height:40,
   },
   priceBox:{
