@@ -34,15 +34,12 @@ export default class Filter extends Component {
 		  {
 		    name: 'Restaurant Categories'
 		  }
-	  	])
-	  }
-	};
-
-    state = {
-	  radius: 5, 
-	  priceRange: [],
-	  categories: ['bars', 'french', 'mexican', 'newamerican'],
-	  query : ''
+	  	]),
+		radius: 5, 
+		priceRange: [],
+		categories: ['bars', 'french', 'mexican', 'newamerican'],
+		query : ''
+	  };
 	};
 
 	componentDidMount(){
@@ -65,14 +62,29 @@ export default class Filter extends Component {
 
 	  this.props.addSearchSettings(this.state.priceRange,this.state.radius);
 
-	 /*
-		 this.props.getRestaurants();
-		 let gen = this.props.restaurantGenerator(this.props.getRestaurants);
+	 
+      this.props.getRestaurants();
+		 
 
-		 console.log("J ", gen.next()); 
-		 console.log("o", gen.next()); 
-		 console.log("E", gen.next()); 
-	 */ 
+
+	  //    function * restaurantGenerator(){
+			
+	     	
+			// yield getRestaurants();
+			// yield getRestaurants();
+
+			
+	  //    };
+
+   //      let gen = this.props.restaurantGenerator(this.props.getRestaurants);
+
+
+           
+		
+		 // console.log("J ", gen.next()); 
+		 // console.log("o", gen.next()); 
+		 // console.log("E", gen.next()); 
+	  
 
 	}
 
@@ -92,6 +104,7 @@ export default class Filter extends Component {
 		</View>
 	  )
 	}
+
 
 	render(){
 

@@ -13,6 +13,7 @@ import Home from './app/components/Home';
 import SwipeView from './app/components/SwipeView';
 import NavBar from './app/components/NavBar';
 import Categories from './app/components/Categories/';
+import AdditionalCategories from './app/components/AdditionalCategories/';
 
 
 const mapStateToProps = state => ({
@@ -30,7 +31,8 @@ const scenes = Actions.create(
   <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
 
     <Scene key="loggedIn">
-      <Scene key="categories" component={Categories} title="Categories" hideNavBar={true} initial={true} />
+      <Scene key="categories" component={Categories} title="Categories" hideNavBar={true}  initial={true} />
+      <Scene key="additionalcategories" component={AdditionalCategories} title="AdditionalCategories" hideNavBar={true} />
       <Scene key="filter" component={Filter} title="Filter" hideNavBar={true}  />
       <Scene key="home" component={Home}/>
       <Scene key="tinder" component={SwipeView} hideNavBar={true}/>

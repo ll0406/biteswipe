@@ -53,7 +53,7 @@ class Categories extends Component {
 
   render() {
 
-    const goToDetailView = () => Actions.filter({restaurant: this.props.restaurant});
+    const goToDetailView = () => Actions.additionalcategories();
 
     return (
       <View>
