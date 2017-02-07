@@ -23,7 +23,7 @@ export default class DrawerLayout extends Component {
 		// general setup -> drawer should only be mounted once
 	  Promise.all([
 	  	this.props.getAuthenticatedUser(),
-	  	this.props.getCurrentLocation(),
+	  	// this.props.getCurrentLocation(),
 	    // this.props.getSearchSettings()
 	    ])
 	  .then(() => {
@@ -31,7 +31,8 @@ export default class DrawerLayout extends Component {
 	     this.setState({
 	     	initalized: true
 	     })
-	  });
+	  })
+	  .catch(err => console.error(err));
 	  
 	}
 
