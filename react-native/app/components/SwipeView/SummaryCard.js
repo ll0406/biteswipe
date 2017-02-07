@@ -15,14 +15,14 @@ export const SummaryCard = React.createClass({
     const goToRestaurant = () => Actions.restaurant({id: this.props.restaurant.id});
     return (
       <View style={styles.card}>
-        <TouchableHighlight onPress={goToDetailView}>
-          <Image 
-            source={{uri: this.props.restaurant.image_url}} 
+        <TouchableHighlight onPress={goToRestaurant}>
+          <Image
+            source={{uri: this.props.restaurant.image_url}}
             style={styles.cardImage}>
-            <LinearGradient 
-              colors={['transparent', '#777']} 
+            <LinearGradient
+              colors={['transparent', '#777']}
               start={{x:0, y:.8}}
-              style={styles.cardImage} />   
+              style={styles.cardImage} />
           </Image>
         </TouchableHighlight>
         <Text style={styles.cardTitle}>{this.props.restaurant.name}</Text>
@@ -32,17 +32,17 @@ export const SummaryCard = React.createClass({
           <View style={styles.ratingView}>
             <RatingStars rating={this.props.restaurant.rating}/>
             <View style={styles.yelpContainer}>
-              <TouchableHighlight 
+              <TouchableHighlight
                 style={styles.yelpButton}
-                onPress={() => Linking.openURL('https://www.yelp.com/sf')}> 
-                <Image 
-                  source={require('./img/Yelp.png')} 
+                onPress={() => Linking.openURL('https://www.yelp.com/sf')}>
+                <Image
+                  source={require('./img/Yelp.png')}
                   style={styles.yelpImg} />
               </TouchableHighlight>
           </View>
-          
+
           </View>
-          
+
         </View>
       </View>
     );
