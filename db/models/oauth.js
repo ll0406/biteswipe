@@ -42,7 +42,7 @@ OAuth.V2 = (accessToken, refreshToken, profile, done) =>
     .then(({ oauth }) =>
       db.model('users').findOrCreate({
         where: {
-          name: profile.displayName
+          name: profile.displayName,
         }
       }).spread(user => db.Promise.props({
         user,

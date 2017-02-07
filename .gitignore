@@ -13,3 +13,6 @@ npm-debug.log
 
 #Secrets
 .biteswipe.env.js
+
+# Miscellaneous
+.DS_Store
