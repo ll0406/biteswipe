@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { styles } from './styles';
 
 import { View, Text, Image, TouchableHighlight, Linking } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { HighlightsBox } from './HighlightsBox';
 import { RatingStars } from './RatingStars';
 
-export const SummaryCard = React.createClass({  
+import { styles } from './styles';
+
+export const SummaryCard = React.createClass({
+
   render () {
-    const restaurant = this.props.restaurant;
-    const goToRestaurant = () => Actions.restaurant({selectedRestaurant: restaurant});
+    const goToRestaurant = () => Actions.restaurant({restaurant: this.props.restaurant});
     return (
       <View style={styles.card}>
         <TouchableHighlight onPress={goToRestaurant}>

@@ -2,6 +2,8 @@ import React from 'react';
 import {Toolbar} from 'react-native-material-design';
 import {Actions} from 'react-native-router-flux';
 
+import {styles} from './styles';
+
 const NavBar = props => {
 
   const navigationState = props.navigationState;
@@ -42,6 +44,7 @@ const NavBar = props => {
   	    title={title}
   	    icon={icon}
   	    onIconPress={onIconPress}
+        style={styles.NavBar}
   	/>
   );
 };

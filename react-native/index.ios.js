@@ -17,6 +17,7 @@ import Loading from './app/components/Loading';
 import LoadingSplash from './app/components/LoadingSplash';
 import DrawerLayout from './app/components/DrawerLayout';
 
+
 import {receiveRefreshToken, receiveAccessToken, updateLoggedIn} from './app/action-creators/auth';
 
 const mapStateToProps = state => ({
@@ -88,7 +89,7 @@ export default class BiteSwipe extends Component {
   }
 
   render() {
-    if(!this.state.rehydrated || !this.state.animated) {
+    if(false) {
       return (
         <LoadingSplash animationCompleted={this.animationCompleted}/>
         );

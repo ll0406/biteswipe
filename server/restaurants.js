@@ -6,6 +6,7 @@ const querystring = require('querystring');
 let YELP_TOKEN = '';
 let YELP_TOKEN_EXPIRATION_DATE = '';
 
+
 const refreshYelpToken = (req, res, next, attempted) => {
 	if(attempted) return next();
 	axios.post('https://api.yelp.com/oauth2/token', querystring.stringify({

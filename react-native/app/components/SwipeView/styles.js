@@ -56,8 +56,9 @@ export const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     borderRadius: 10,
-    backgroundColor: 'lightgreen',
-    flexDirection: 'row'
+    backgroundColor: colors.primary,
+    flexDirection: 'row',
+    elevation: 4,
   },
   yelpContainer: {
     alignItems: 'center',
@@ -79,6 +80,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     borderRadius: 30
   },
+
   iconsBox: {
     backgroundColor: 'green',
     height: 40,
