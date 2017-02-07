@@ -14,6 +14,7 @@ import SwipeCards from 'react-native-swipe-cards';
     )
   };
 
+
 export default class SwipeView extends Component {
 
   componentDidMount(){
@@ -26,8 +27,6 @@ export default class SwipeView extends Component {
        this.props.getRestaurants()
     });
   }
-
- 
 
   render () {
 

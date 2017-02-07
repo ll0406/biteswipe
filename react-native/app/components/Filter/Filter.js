@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import store from '../../store';
 
-
 import {
   View,
   Image,
@@ -9,9 +8,14 @@ import {
   Text,
   Button, 
   Slider,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity,
+  ListView
 } from 'react-native';
 
+import { List, ListItem } from 'react-native-elements'
+import { Actions } from 'react-native-router-flux';
+import Autocomplete from 'react-native-autocomplete-input';
 import CheckBox from 'react-native-checkbox';
 import styles from './styles';
 
@@ -19,16 +23,26 @@ export default class Filter extends Component {
 
 	constructor(props){
 	  super(props);
-     
 	  this.updateFilterOption = this.updateFilterOption.bind(this);
 	  this.onDollarAmountPress = this.onDollarAmountPress.bind(this);
-	  this.logChange = this.logChange.bind(this);
+	  this.renderRow = this.renderRow.bind(this);
+
+	  const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+	  this.state = {
+	  	dataSource : ds.cloneWithRows([
+		  {
+		    name: 'Restaurant Categories'
+		  }
+	  	])
+	  };
 	};
 
     state = {
 	  radius: 5, 
 	  priceRange: [],
-	  categories: ['bars']
+	  categories: ['bars', 'french', 'mexican', 'newamerican'],
+	  query : ''
 	};
 
 	componentDidMount(){
@@ -49,22 +63,80 @@ export default class Filter extends Component {
 
 	  this.props.receiveSearchSettings(this.state);
 
-	  this.props.addSearchSettings(this.state.priceRange,this.state.radius,this.state.categories);
+	  this.props.addSearchSettings(this.state.priceRange,this.state.radius);
 
-	 // this.props.getRestaurants();
-	 //  let gen = this.props.restaurantGenerator(this.props.getRestaurants);
+	 /*
+		 this.props.getRestaurants();
+		 let gen = this.props.restaurantGenerator(this.props.getRestaurants);
 
-		// console.log("J ", gen.next()); 
-	 //    console.log("o", gen.next()); 
-	 //    console.log("E", gen.next()); 
-		 
+		 console.log("J ", gen.next()); 
+		 console.log("o", gen.next()); 
+		 console.log("E", gen.next()); 
+	 */ 
+
 	}
-	
+
+
+	renderRow (rowData, sectionID) {
+	  
+	  const goToDetailView = () => Actions.categories({restaurant: this.props.restaurant});
+	  
+	  return (
+	  	<View>
+		    <ListItem
+		      key={sectionID}
+		      title={rowData.name}
+		      subtitle={rowData.subtitle}
+		      onPress={goToDetailView}
+		    />
+		</View>
+	  )
+	}
+
+	// findFilm(query) {
+	//     if (query === '') {
+	//       return [];
+	//     }
+
+	//     const { films } = this.state;
+	//     const regex = new RegExp(`${query.trim()}`, 'i');
+	//     return films.filter(film => film.title.search(regex) >= 0);
+ //    }
+
+          //           <View>
+			       //  <Autocomplete
+				      //     autoCapitalize="none"
+				      //     autoCorrect={false}
+				      //     containerStyle={styles.autocompleteContainer}
+				      //     data={films.length === 1 && comp(query, films[0].title) ? [] : films}
+				      //     defaultValue={query}
+				      //     onChangeText={text => this.setState({ query: text })}
+				      //     placeholder="Add Restaurant Category:"
+				      //     renderItem={({ title, release_date }) => (
+				      //       <TouchableOpacity onPress={() => this.setState({ query: title })}>
+				      //         <Text style={styles.itemText}>
+				      //           {title} ({release_date.split('-')[0]})
+				      //         </Text>
+				      //       </TouchableOpacity>
+				      //     )}
+			       //   />
+		        // </View>
+
+
 	render(){
+
+
 		return(
 			<View  style={styles.container}>
 
 				<Text>BiteSwipe Filter Options:</Text>
+                <Text>Add Restaurant Category:</Text>
+			    <List>
+			      <ListView
+			        renderRow={this.renderRow}
+			        dataSource={this.state.dataSource}
+			      />
+			    </List>
 		        <Text style={styles.text} >
 		        	Radius: {this.state.radius}
 		        </Text>
@@ -75,7 +147,7 @@ export default class Filter extends Component {
           		  value={5} 
 		          {...this.state}
 		          onSlidingComplete={(value) => this.setState({ radius: value })} />
-			    <Text style={styles.text} >
+			    <Text style={styles.text}>
 		          Price Range:
 		        </Text>
 			    <View style={styles.buttonContainer}>

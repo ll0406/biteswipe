@@ -6,6 +6,7 @@ export const receiveRestaurants = restaurants => ({
 	restaurants
 });
 
+
 export const getRestaurants = () =>
 	(dispatch, getState) => {
 		axios.get(`http://${IP}:1337/api/restaurants`,
