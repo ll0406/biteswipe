@@ -18,6 +18,8 @@ import LoadingSplash from './app/components/LoadingSplash';
 import DrawerLayout from './app/components/DrawerLayout';
 
 
+import {colors} from './app/components/colors';
+
 import {receiveRefreshToken, receiveAccessToken, updateLoggedIn} from './app/action-creators/auth';
 
 const mapStateToProps = state => ({
@@ -89,7 +91,7 @@ export default class BiteSwipe extends Component {
   }
 
   render() {
-    if(false) {
+    if(!this.state.rehydrated || !this.state.animated) {
       return (
         <LoadingSplash animationCompleted={this.animationCompleted}/>
         );
@@ -109,13 +111,13 @@ export default class BiteSwipe extends Component {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: '#2196F3'
+    backgroundColor: colors.primary,
   },
   navTitle: {
-    color: 'white'
+    color: colors.primaryText,
   },
   navBarButton: {
-    tintColor: 'white'
+    tintColor: colors.primaryText,
   }
 });
 
