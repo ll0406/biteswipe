@@ -8,6 +8,7 @@ export const LOGGED_IN = 'LOGGED_IN';
 export const GETTING_ACCESS_TOKEN = 'GETTING_ACCESS_TOKEN';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const SIGNUP_ERROR = 'SIGNUP_ERROR';
+export const AUTHENTICATED_USER = 'AUTHENTICATED_USER';
 
 // restaurants
 export const RECEIVE_RESTAURANTS = 'RECEIVE_RESTAURANTS';
