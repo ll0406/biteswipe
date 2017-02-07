@@ -12,9 +12,13 @@ export class TabBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 0
+      selected: props.selected
     };
     this._onChangeTab = this._onChangeTab.bind(this);
+  }
+
+  componentWillUnmount() {
+    this.props.setCurrentTab(this.state.selected);
   }
 
   _onChangeTab(tab) {
@@ -24,12 +28,16 @@ export class TabBar extends Component {
   }
 
   render() {
+
+    const count = this.props.results.length;
+    const resultsLabel = count > 0 ? `Results (${count})` : 'Results';
+
     return (
       <Container>
         <View>
-            <Tabs locked={true} onChangeTab={this._onChangeTab} page={this.state.selected}>
+            <Tabs locked={true} onChangeTab={this._onChangeTab} initialPage={this.state.selected}>
                 <SwipeView tabLabel='Swipe' />
-                <Results tabLabel='Results' />
+                <Results tabLabel={resultsLabel} />
             </Tabs>
         </View>
     </Container>
