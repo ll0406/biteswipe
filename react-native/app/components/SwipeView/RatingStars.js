@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, StyleSheet, Button, Linking } from 'react-native';
 
 export const RatingStars = (props) => {
 
@@ -35,17 +35,30 @@ export const RatingStars = (props) => {
   }
 
   return (
-    <View style={{flexDirection:'row'}}>
+    <View style={styles.box}>
       {
         images.map( (imgIdx, i) => {
           return (
             <Image
               source={starImages[imgIdx]}
               key={i}
-              style={{width: 25, height:25}} />
+              style={styles.starImg} />
           )
         })
       }
     </View>
   )
 }
+
+const styles = StyleSheet.create({ 
+  box: {
+    padding: 5,
+    flexDirection:'row',
+    backgroundColor: 'lightgray',
+  },
+  starImg: {
+    width: 25, 
+    height:25, 
+    margin: 1
+  } 
+});
