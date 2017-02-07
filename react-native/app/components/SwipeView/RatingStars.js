@@ -2,8 +2,6 @@ import React from 'react';
 
 import { View, Text, Image, StyleSheet, Button, Linking } from 'react-native';
 
-export const RatingStars = (props) => {
-
   var starImages = [
     require('./img/stars/31x31_0.png'),
     require('./img/stars/31x31_1.png'),
@@ -17,10 +15,14 @@ export const RatingStars = (props) => {
     require('./img/stars/31x31_4_5.png'),
   ]
 
+export const RatingStars = (props) => {
+
   let images = [ ], 
     tempScore = props.rating, 
     imgIdx = Math.floor(props.rating);
 
+  //
+  //
   for (let i = 0; i < 5; i++){
     if (tempScore >= 1) {
       images[i] = imgIdx;

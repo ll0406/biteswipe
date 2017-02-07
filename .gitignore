@@ -13,6 +13,9 @@ npm-debug.log
 
 #Secrets
 .biteswipe.env.js
+keystore_notes
+gradle.properties
 
 # Miscellaneous
 .DS_Store
+
