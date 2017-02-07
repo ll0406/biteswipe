@@ -9,10 +9,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import { HighlightsBox } from './HighlightsBox';
 import { RatingStars } from './RatingStars';
 
-export const SummaryCard = React.createClass({  
+export const SummaryCard = React.createClass({
 
   render () {
-    const goToDetailView = () => Actions.detailView({restaurant: this.props.restaurant});
+    const goToRestaurant = () => Actions.restaurant({id: this.props.restaurant.id});
     return (
       <View style={styles.card}>
         <TouchableHighlight onPress={goToDetailView}>
@@ -48,9 +48,3 @@ export const SummaryCard = React.createClass({
     );
   }
 })
-
-
-
-      //  <Button 
-      //     title="Yelppp"
-      //     
