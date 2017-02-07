@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { styles } from './styles';
 
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { Tabs, Container } from 'native-base';
+import { Tabs } from 'native-base';
 import Carousel from 'react-native-looped-carousel';
 
 import Reviews from './Reviews';
