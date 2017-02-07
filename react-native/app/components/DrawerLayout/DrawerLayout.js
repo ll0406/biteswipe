@@ -24,7 +24,7 @@ export default class DrawerLayout extends Component {
 	  Promise.all([
 	  	this.props.getAuthenticatedUser(),
 	  	this.props.getCurrentLocation(),
-	    this.props.getSearchSettings()
+	    // this.props.getSearchSettings()
 	    ])
 	  .then(() => {
 	     this.props.getRestaurants()
