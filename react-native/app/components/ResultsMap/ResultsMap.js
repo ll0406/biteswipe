@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Button} from 'react-native';
+import {View} from 'react-native';
 import MapView from 'react-native-maps';
 
 import styles from './styles';
@@ -7,25 +7,37 @@ import styles from './styles';
 export default class ResultsMap extends Component {
 	constructor(props) {
 		super(props);
-		this.onPress = this.onPress.bind(this);
+		this.state = {
+			region: {}
+		};
+		this._onRegionChangeComplete = this._onRegionChangeComplete.bind(this);
 	}
 
-	onPress() {
+	componentDidMount() {
 		const markers = this.props.restaurants.map((restaurant, index) => `Marker${index}`);
-		this.map.fitToSuppliedMarkers(markers, false);
+		setTimeout(() => {
+			this.map.fitToSuppliedMarkers(markers, false);
+		}, 250);
+	}	
+
+	componentWillReceiveProps(newProps) {
+		if(newProps.restaurants) {
+			const markers = newProps.restaurants.map((restaurant, index) => `Marker${index}`);
+			setTimeout(() => {
+				this.map.fitToSuppliedMarkers(markers, false);
+			}, 250);
+		}
 	}
 
 	render() {
-		console.log('map', this.props.restaurants);
 		return (
 			<View style ={styles.container}>
-				<Button title="press this" onPress={this.onPress}/>
 			  <MapView
 			  	ref={ref => this.map = ref}
 			    style={styles.map}
 			    region={{
-			      latitude: this.props.location.latitude || 37.422,
-			      longitude: this.props.location.longitude || -122.084,
+			      latitude: this.props.location.latitude,
+			      longitude: this.props.location.longitude,
 			      latitudeDelta: 0.01,
 			      longitudeDelta: 0.01
 			    }}>

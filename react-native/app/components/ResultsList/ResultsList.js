@@ -18,8 +18,8 @@ export default class ResultsList extends Component {
 	  if(newProps.restaurants) {
 	    this.setState({
 	      dataSource: this.state.dataSource.cloneWithRows(newProps.restaurants)
-	    })
-	  }
+	    });
+	  };
 	}
 
 	_rowHasChanged(row1, row2) {

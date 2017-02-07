@@ -3,7 +3,7 @@ import {RECEIVE_RESTAURANTS, ADD_TO_RESULTS, REMOVE_FROM_RESULTS} from '../const
 import dummyData from './dummyData';
 
 const initialState = {
-	list: dummyData,
+	list: [],
 	results: []
 };
 
