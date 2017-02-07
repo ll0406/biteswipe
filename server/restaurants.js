@@ -2,7 +2,6 @@ const router = require('express').Router();
 const axios = require('axios');
 const env = require('APP').env;
 const querystring = require('querystring');
-const {updateSecretsFile} = require('./utils');
 
 let YELP_TOKEN = '';
 let YELP_TOKEN_EXPIRATION_DATE = '';
@@ -20,7 +19,6 @@ const refreshYelpToken = (req, res, next, attempted) => {
 	})
 	.then(res => res.data)
 	.then(body => {
-
 		// update currently loaded tokens
 		// store in memory (not secrets file)
 		YELP_TOKEN = body.access_token;
