@@ -31,7 +31,7 @@ export default class ResultsList extends Component {
 			<View style={styles.container}>
 				<SwipeListView
 					dataSource={this.state.dataSource}
-        	renderRow={restaurant => <ResultsListItem restaurant={restaurant}/>}
+        	renderRow={restaurant => <ResultsListItem restaurant={restaurant} removeFromResults={this.props.removeFromResults}/>}
         	enableEmptySections
         	/>
 			</View>

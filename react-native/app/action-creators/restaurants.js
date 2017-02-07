@@ -1,10 +1,20 @@
-import {RECEIVE_RESTAURANTS, IP} from '../constants';
+import {RECEIVE_RESTAURANTS, ADD_TO_RESULTS, REMOVE_FROM_RESULTS, IP} from '../constants';
 import axios from 'axios';
 import {handleAuthenticationError} from './auth';
 
 export const receiveRestaurants = restaurants => ({
 	type: RECEIVE_RESTAURANTS,
 	restaurants
+});
+
+export const addToResults = restaurant => ({
+	type: ADD_TO_RESULTS,
+	restaurant
+});
+
+export const removeFromResults = restaurant => ({
+	type: REMOVE_FROM_RESULTS,
+	restaurant
 });
 
 export const getRestaurants = () =>

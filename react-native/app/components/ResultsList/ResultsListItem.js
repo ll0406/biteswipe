@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, Dimensions, StyleSheet} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Dimensions, StyleSheet} from 'react-native';
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {Card, CardItem} from 'native-base';
 
@@ -11,7 +11,9 @@ const ResultsListItem = props => {
 		<SwipeRow rightOpenValue={-120} disableRightSwipe>
 			<View style={styles.rowBack}>
 				<View style={styles.rowBackContainer}>
-					<Text style={styles.rowBackText}>Delete</Text>
+					<TouchableOpacity onPress={() => props.removeFromResults(restaurant)}>
+						<Text style={styles.rowBackText}>Delete</Text>
+					</TouchableOpacity>
 				</View>
 			</View>
 			<Card style={styles.rowFront}>

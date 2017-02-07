@@ -1,11 +1,9 @@
 import {connect} from 'react-redux';
 import Results from './Results';
-import {getRestaurants} from '../../action-creators/restaurants';
 
 const mapStateToProps = state => ({
-	restaurants: state.restaurants.list,
-	location: state.filter.location
+	restaurants: state.restaurants.results
 });
-const mapDispatchToProps = { getRestaurants };
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Results);

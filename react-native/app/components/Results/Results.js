@@ -16,10 +16,6 @@ export default class Results extends Component {
 		this.onPress = this.onPress.bind(this);
 	}
 
-	componentDidMount() {
-		this.props.getRestaurants();
-	}
-
 	onPress(boolean) {
 		this.setState({
 			map: boolean

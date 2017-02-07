@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import SwipeView from './SwipeView';
 
-import {getRestaurants } from '../../action-creators/restaurants';
+import {getRestaurants, addToResults} from '../../action-creators/restaurants';
 import {getCurrentLocation, getSearchSettings} from '../../action-creators/filter';
 
 const mapStateToProps = state => {
@@ -11,6 +11,6 @@ const mapStateToProps = state => {
   };
 }
 
-const mapDispatchToProps = { getRestaurants, getCurrentLocation, getSearchSettings };
+const mapDispatchToProps = { getRestaurants, getCurrentLocation, getSearchSettings, addToResults };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SwipeView);

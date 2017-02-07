@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import { SummaryCard } from './SummaryCard';
 import { styles } from './styles';
 
-import { View, Text, Button } from 'react-native';
-
-import SwipeCards from 'react-native-swipe-cards';
+import { Button } from 'react-native';
+import { View, Content, Text, DeckSwiper, Card, Header } from 'native-base'
 
   const NoMoreCards = () => {
     return (
@@ -15,9 +14,15 @@ import SwipeCards from 'react-native-swipe-cards';
   };
 
 export default class SwipeView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      swipeCount: 0
+    };
+    this.onSwipeRight = this.onSwipeRight.bind(this);
+  }
 
   componentDidMount(){
-
     //We need location and settings in order to run the
     //yelp search for restaurants
     Promise.all([this.props.getCurrentLocation(),
@@ -27,22 +32,27 @@ export default class SwipeView extends Component {
     });
   }
 
+  onSwipeRight() {
+    const restaurants = this.props.restaurants;
+    const swipeCount = this.state.swipeCount;
+    this.props.addToResults(restaurants[swipeCount]);
+    this.setState({
+      swipeCount: swipeCount + 1
+    });
+  }
+
   render() {
 
     const getRestaurants = () => {
       this.props.getRestaurants();
     }
+
     return (
       <View style={styles.swipeViewBackground}>
-        <SwipeCards
-          cards={this.props.restaurants}
-          renderCard={(cardData) => <SummaryCard restaurant={cardData} />}
-          renderNoMoreCards={() => <NoMoreCards />}
-          />
-        <Button
-          color="blue"
-          title="Get Restaurants"
-          onPress={getRestaurants}
+        <DeckSwiper
+          dataSource={this.props.restaurants}
+          renderItem={(cardData) => <SummaryCard restaurant={cardData} />}
+          onSwipeRight={() => this.onSwipeRight()}
         />
       </View>
     )

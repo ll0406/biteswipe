@@ -16,6 +16,7 @@ export default class ResultsMap extends Component {
 	}
 
 	render() {
+		console.log('map', this.props.restaurants);
 		return (
 			<View style ={styles.container}>
 				<Button title="press this" onPress={this.onPress}/>
