@@ -1,12 +1,13 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const {width, height} = Dimensions.get('window');
+import { colors } from '../colors';
+const { width, height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   swipeViewBackground: {
-    backgroundColor: '#F0F0F0', 
+    backgroundColor: colors.background, 
     flex:1, 
-    elevation:0
+    elevation:0,
   },
   cardWrapper: {
     marginTop: 45,
@@ -14,24 +15,23 @@ export const styles = StyleSheet.create({
     alignSelf: 'auto',
   },
   card: {
-    elevation: 4,
+    elevation: 6,
     alignItems: 'center',
     justifyContent: 'center',
     width: width*.85,
     borderRadius: 3,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.pureWhite,
     marginTop:25,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   cardContent: {
     paddingTop: 5,
     paddingBottom: 15,
     alignItems: 'center',
-    // justifyContent: 'center',
   },
   cardTitle: {
     backgroundColor: "transparent",
-    color: "#ffffff",
+    color: colors.pureWhite,
     fontSize: 24,
     padding: 16,
     position: "absolute",
@@ -48,17 +48,41 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 3,
     borderTopLeftRadius: 3,
   },
+  imageGradient: {
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 200,
+  },
+
+
+  yelpImg: {
+    width: 60,
+    height: 40,
+    resizeMode: 'contain',
+  },
+  yelpContainer: {
+    alignItems: 'center',
+    left: 30,
+  },
+  yelpButton: {
+    padding:2,
+    backgroundColor:'#d32323',
+    elevation: 4,
+  },
 
 
   highlightsBox: {
     margin: 10,
     padding: 10,
     borderRadius: 10,
-    backgroundColor: 'lightgreen',
+    backgroundColor: colors.primary,
     flexDirection: 'row',
   },
   iconsBox: {
-    backgroundColor: 'green',
+    backgroundColor: colors.lightPrimary,
     height: 40,
     minWidth: 40,
     marginLeft: 2,
@@ -77,26 +101,34 @@ export const styles = StyleSheet.create({
     borderRadius: 2,
   },
   priceBold: {
-    color: '#FFFFFF',
+    fontSize: 19,
+    color: colors.primaryText,
   },
   priceLight: {
-    color: '#000000',
-  
+    fontSize: 19,
+    color: colors.secondaryText,
   },
+
   distanceDot: {
     marginLeft: 5,
-    backgroundColor: 'orange',
+    backgroundColor: colors.accent,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     width: 40,
     height: 40,
     borderWidth: 1,
-    borderColor: 'red'
+    borderColor: colors.darkPrimary,
   },
   distanceDotText: {
     lineHeight: 14
   },
+
+  ratingView: {
+    flexDirection: 'row',
+  },
+
   ratingView: {
   }
+
 })

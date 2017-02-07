@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import {  StyleSheet } from 'react-native';
 
-import { Container, Content, Tabs,View, Text } from 'native-base';
+import { Container, Content, Tabs, View, Text } from 'native-base';
+
+import myTheme from './light.js'
 
 import SwipeView from '../SwipeView';
 import Results from '../Results';
@@ -12,7 +14,7 @@ export class TabBar extends Component {
 
   render() {
     return (
-      <Container>
+      <Container theme={myTheme}>
         <View>
             <Tabs locked={true}>
                 <History tabLabel='History' />
@@ -24,22 +26,3 @@ export class TabBar extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});

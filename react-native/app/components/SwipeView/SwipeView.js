@@ -3,7 +3,7 @@ import { SummaryCard } from './SummaryCard';
 import { styles } from './styles';
 
 import { Button } from 'react-native';
-import { View, Content, Text, DeckSwiper, Card, Header } from 'native-base'
+import { View, DeckSwiper } from 'native-base'
 
 import {Actions} from 'react-native-router-flux';
 
