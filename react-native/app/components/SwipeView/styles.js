@@ -1,6 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-
 const {width, height} = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
@@ -9,18 +8,16 @@ export const styles = StyleSheet.create({
     flex:1, 
     elevation:0
   },
-
   cardWrapper: {
     marginTop: 45,
     flex: 1,
     alignSelf: 'auto',
   },
-
   card: {
     elevation: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    width: width*.85,
+    width: width * 0.85,
     borderRadius: 3,
     backgroundColor: '#ffffff',
     marginTop:25,
@@ -46,7 +43,7 @@ export const styles = StyleSheet.create({
     marginBottom: 0
   },
   cardImage: {
-    width: 350, 
+    width: width * 0.85, 
     height: 350,
     borderTopRightRadius: 3,
     borderTopLeftRadius: 3,
@@ -86,7 +83,6 @@ export const styles = StyleSheet.create({
     color: '#000000',
   
   },
-
   distanceDot: {
     marginLeft: 5,
     backgroundColor: 'orange',
@@ -98,13 +94,9 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'red'
   },
-
   distanceDotText: {
     lineHeight: 14
   },
-
   ratingView: {
   }
-
-
 })

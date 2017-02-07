@@ -1,33 +1,35 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View} from 'react-native';
 import MapView from 'react-native-maps';
+import TimerMixin from 'react-timer-mixin';
 
 import styles from './styles';
 
-export default class ResultsMap extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
+const ResultsMap = React.createClass({
+	mixins: [TimerMixin],
+
+	getInitialState() {
+	  return {
 			region: {}
 		};
-		this._onRegionChangeComplete = this._onRegionChangeComplete.bind(this);
-	}
+	},
 
 	componentDidMount() {
 		const markers = this.props.restaurants.map((restaurant, index) => `Marker${index}`);
-		setTimeout(() => {
+		// dirty hax
+		this.setTimeout(() => {
 			this.map.fitToSuppliedMarkers(markers, false);
-		}, 250);
-	}	
+		}, 100);
+	},	
 
 	componentWillReceiveProps(newProps) {
 		if(newProps.restaurants) {
 			const markers = newProps.restaurants.map((restaurant, index) => `Marker${index}`);
-			setTimeout(() => {
+			this.setTimeout(() => {
 				this.map.fitToSuppliedMarkers(markers, false);
-			}, 250);
+			}, 100);
 		}
-	}
+	},
 
 	render() {
 		return (
@@ -53,4 +55,6 @@ export default class ResultsMap extends Component {
 			</View>
 			);
 	}
-};
+});
+
+export default ResultsMap;

@@ -6,18 +6,14 @@ import {Switch, Actions, Scene, Router} from 'react-native-router-flux';
 import queryString from 'query-string';
 import {persistStore} from 'redux-persist';
 
-
 import Splash from './app/components/Splash';
 import Login from './app/components/Login';
 import Filter from './app/components/Filter';
 import Signup from './app/components/Signup';
-import Home from './app/components/Home';
-import SwipeView from './app/components/SwipeView';
+import LoadingSplash from './app/components/LoadingSplash';
+import DrawerLayout from './app/components/DrawerLayout';
 import TabBar from './app/components/TabBar';
 import DetailView from './app/components/DetailView';
-
-import Loading from './app/components/Loading';
-import Results from './app/components/Results';
 
 import {receiveRefreshToken, receiveAccessToken, updateLoggedIn} from './app/action-creators/auth';
 
@@ -30,17 +26,18 @@ const connectedSwitch = connect(mapStateToProps)(Switch);
 const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
 
 const scenes = Actions.create(
-  <Scene key="root" component={connectedSwitch} selector={selector} >
+  <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
 
-    <Scene key="loggedIn">
-      <Scene key="tabBar" component={TabBar} title="Nav" hideNavBar intial />
-      <Scene key="detailView" component={DetailView} hideNavBar={false} title="Detail View" />
+    <Scene key="loggedIn" component={DrawerLayout} open={false} hideNavBar>
+      <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>
+      <Scene key="filter" component={Filter} title="Search Settings"/>
+      <Scene key="detailView" component={DetailView}/>
     </Scene>
 
     <Scene key="notLoggedIn">
       <Scene key="splash" component={Splash} title="Splash" hideNavBar initial/>
-      <Scene key="login" component={Login} title="Login" hideNavBar/>
-      <Scene key="signup" component={Signup} title="Signup" hideNavBar/>
+      <Scene key="login" component={Login} title="Login"/>
+      <Scene key="signup" component={Signup} title="Signup"/>
     </Scene>
 
   </Scene>
@@ -51,8 +48,10 @@ export default class BiteSwipe extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rehydrated: false
+      rehydrated: false,
+      animated: false
     };
+    this.animationCompleted = this.animationCompleted.bind(this);
   }
 
   componentWillMount() {
@@ -80,10 +79,16 @@ export default class BiteSwipe extends Component {
     }
   }
 
+  animationCompleted() {
+    this.setState({
+      animated: true
+    })
+  }
+
   render() {
-    if(!this.state.rehydrated) {
+    if(!this.state.rehydrated || !this.state.animated) {
       return (
-        <Loading/>
+        <LoadingSplash animationCompleted={this.animationCompleted}/>
         );
     } else {      
       return (

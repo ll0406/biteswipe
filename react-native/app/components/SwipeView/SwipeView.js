@@ -22,18 +22,6 @@ export default class SwipeView extends Component {
     this.onSwipeRight = this.onSwipeRight.bind(this);
   }
 
-  componentDidMount(){
-    //We need location and settings in order to run the
-    //yelp search for restaurants
-    Promise.all([
-      this.props.getCurrentLocation(),
-      // this.props.getSearchSettings()
-    ])
-    .then(gotSettings => {
-       this.props.getRestaurants()
-    });
-  }
-
   onSwipeRight() {
     const restaurants = this.props.restaurants;
     const swipeCount = this.state.swipeCount;

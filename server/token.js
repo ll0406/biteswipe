@@ -56,7 +56,7 @@ const authenticateAccessToken = (req, res, next) => {
 };
 
 const generateRefreshToken = (req, res, next) => {
-  const refreshToken = req.user.id + '.' + crypto.randomBytes(40).toString('hex')
+  const refreshToken = req.user.id + '.' + crypto.randomBytes(40).toString('hex');
   User.update({refresh_token: refreshToken}, {where: {id: req.user.id}})
   .then(user => {
     if(!user) res.sendStatus(404);
@@ -73,18 +73,24 @@ const generateAccessToken = (req, res, next) => {
   next();
 };
 
-const respond = (req, res) => {
+const respondWithTokens = (req, res) => {
   res.status(200).json({
     refreshToken: req.refreshToken,
     accessToken: req.accessToken
   });
 };
 
-const redirect = (req, res) => {
+const redirectWithTokens = (req, res) => {
   // logout of current session (only used for OAuth)
   req.logout();
   const url = `biteswipe://callback?page=login&refreshToken=${req.refreshToken}&accessToken=${req.accessToken}`;
   res.redirect(url);
+};
+
+const respondWithUser = (req, res) => {
+  res.status(200).json({
+    user: req.user
+  });
 };
 
 module.exports = {
@@ -92,6 +98,7 @@ module.exports = {
   authenticateAccessToken,
   generateRefreshToken,
   generateAccessToken,
-  respond,
-  redirect
+  respondWithTokens,
+  redirectWithTokens,
+  respondWithUser
 };
