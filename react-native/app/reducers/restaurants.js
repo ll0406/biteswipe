@@ -1,9 +1,11 @@
-import {RECEIVE_RESTAURANTS} from '../constants';
+import {RECEIVE_RESTAURANTS, RECEIVE_RESTAURANT, RECEIVE_REVIEWS} from '../constants';
 
 import dummyData from './dummyData';
 
 const initialState = {
-	list: dummyData
+	list: dummyData,
+  restaurant: {},
+  reviews: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,10 +14,18 @@ const reducer = (state = initialState, action) => {
 		case RECEIVE_RESTAURANTS:
 			newState.list = action.restaurants;
 			break;
+    case RECEIVE_RESTAURANT:
+      newState.restaurant = action.restaurant;
+      break;
+    case RECEIVE_REVIEWS:
+      newState.reviews = action.reviews;
+      break;
+    default:
+      return state;
 	};
 
 	return newState;
 
 };
 
-export default reducer; 
+export default reducer;

@@ -13,6 +13,12 @@ export const AUTHENTICATED_USER = 'AUTHENTICATED_USER';
 // restaurants
 export const RECEIVE_RESTAURANTS = 'RECEIVE_RESTAURANTS';
 
+// restaurants
+export const RECEIVE_RESTAURANT = 'RECEIVE_RESTAURANT';
+
+// reviews
+export const RECEIVE_REVIEWS = 'RECEIVE_REVIEWS';
+
 //in filter settings, we will need to determine the user's location
 export const RECEIVE_LOCATION = 'RECEIVE_LOCATION';
 

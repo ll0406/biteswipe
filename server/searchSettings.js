@@ -5,6 +5,7 @@ const env = require('APP').env;
 const searchSettings = require('APP/db/models/searchSettings')
 
 router.get('/', (req, res, next) => {
+  console.log("did it even get here")
   searchSettings.find({
     where: {
       user_id: 2 //req.user.id
