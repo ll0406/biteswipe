@@ -19,7 +19,7 @@ const ResultsMap = React.createClass({
 		// dirty hax
 		this.setTimeout(() => {
 			this.map.fitToSuppliedMarkers(markers, false);
-		}, 100);
+		}, 250);
 	},	
 
 	componentWillReceiveProps(newProps) {
@@ -27,7 +27,7 @@ const ResultsMap = React.createClass({
 			const markers = newProps.restaurants.map((restaurant, index) => `Marker${index}`);
 			this.setTimeout(() => {
 				this.map.fitToSuppliedMarkers(markers, false);
-			}, 100);
+			}, 250);
 		}
 	},
 

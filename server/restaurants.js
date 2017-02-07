@@ -4,6 +4,9 @@ const env = require('APP').env;
 const querystring = require('querystring');
 const {updateSecretsFile} = require('./utils');
 
+let YELP_TOKEN = '';
+let YELP_TOKEN_EXPIRATION_DATE = '';
+
 const refreshYelpToken = (req, res, next, attempted) => {
 	if(attempted) return next();
 	axios.post('https://api.yelp.com/oauth2/token', querystring.stringify({
@@ -17,17 +20,13 @@ const refreshYelpToken = (req, res, next, attempted) => {
 	})
 	.then(res => res.data)
 	.then(body => {
-		// update secrets file (if server restarts)
-		const keys = ['YELP_TOKEN', 'YELP_TOKEN_EXPIRATION_DATE'];
-		const expiration = Date.now() + Number(body.expires_in) * 1000;
-		const values = [body.access_token, expiration];
-		updateSecretsFile(keys, values);
 
-		// update currently loaded env
-		env.YELP_TOKEN = body.access_token;
-		env.YELP_TOKEN_EXPIRATION_DATE = body.expiration;
+		// update currently loaded tokens
+		// store in memory (not secrets file)
+		YELP_TOKEN = body.access_token;
+		YELP_TOKEN_EXPIRATION_DATE = body.expiration;
 		req.refreshedYelpToken = true;
-
+		// run request again
 		yelp(req, res, next);
 	})
 	.catch(next);
@@ -35,7 +34,7 @@ const refreshYelpToken = (req, res, next, attempted) => {
 
 const yelp = (req, res, next) => {
 	axios.get('https://api.yelp.com/v3/businesses/search?term=food&', {
-		headers: { Authorization: `Bearer ${env.YELP_TOKEN}`},
+		headers: { Authorization: `Bearer ${YELP_TOKEN}`},
 		params: {
 			latitude: req.query.latitude,
 			longitude: req.query.longitude,

@@ -15,7 +15,7 @@ OAuth.setupStrategy({
   config: {
     clientID: env.FACEBOOK_CLIENT_ID,
     clientSecret: env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: 'http://10.0.2.2:1337/api/auth/facebook/callback'
+    callbackURL: env.FACEBOOK_CALLBACK
   },
   passport
 })
@@ -26,7 +26,7 @@ OAuth.setupStrategy({
   config: {
     clientID: env.GOOGLE_CLIENT_ID,
     clientSecret: env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://10.0.2.2.nip.io:1337/api/auth/google/callback'
+    callbackURL: env.GOOGLE_CALLBACK
   },
   passport
 })
@@ -37,7 +37,7 @@ OAuth.setupStrategy({
   config: {
     consumerKey: env.TWITTER_CONSUMER_KEY,
     consumerSecret: env.TWITTER_CONSUMER_SECRET,
-    callbackURL: 'http://10.0.2.2:1337/api/auth/twitter/callback'
+    callbackURL: env.TWITTER_CALLBACK
   },
   passport
 })
