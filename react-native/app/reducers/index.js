@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
 
 const rootReducer = combineReducers({
-	filter: require('./filter').default,
 	auth: require('./auth').default,
+	filter: require('./filter').default,
 	restaurants: require('./restaurants').default
 });
 

@@ -28,7 +28,7 @@ const Email = t.subtype(t.String, email => {
   return regex.test(email);
 });
 
-var Password = t.subtype(t.String, function (password) {
+const Password = t.subtype(t.String, password => {
   return password.length >= 6;
 });
 
@@ -53,6 +53,9 @@ export default class Signup extends Component {
         password: ''
       },
       options: {
+        email: {
+          autoCapitalize: 'none'
+        },
         fields: {
           password: {
             password: true,

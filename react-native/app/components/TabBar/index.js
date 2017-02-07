@@ -1,9 +1,6 @@
 import { connect } from 'react-redux';
-
 import { TabBar } from './TabBar';
 
-const mapStateToProps = state => {
-  return {};
-}
+const mapStateToProps = state => ({});
 
 export default connect(mapStateToProps)(TabBar);
