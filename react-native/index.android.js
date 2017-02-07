@@ -12,7 +12,7 @@ import Signup from './app/components/Signup';
 import Home from './app/components/Home';
 import SwipeView from './app/components/SwipeView';
 import NavBar from './app/components/NavBar';
-import Categories from './app/components/Categories/Categories.js';
+import Categories from './app/components/Categories/';
 
 
 const mapStateToProps = state => ({

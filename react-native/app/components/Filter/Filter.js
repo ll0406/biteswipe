@@ -35,7 +35,7 @@ export default class Filter extends Component {
 		    name: 'Restaurant Categories'
 		  }
 	  	])
-	  };
+	  }
 	};
 
     state = {
@@ -92,36 +92,6 @@ export default class Filter extends Component {
 		</View>
 	  )
 	}
-
-	// findFilm(query) {
-	//     if (query === '') {
-	//       return [];
-	//     }
-
-	//     const { films } = this.state;
-	//     const regex = new RegExp(`${query.trim()}`, 'i');
-	//     return films.filter(film => film.title.search(regex) >= 0);
- //    }
-
-          //           <View>
-			       //  <Autocomplete
-				      //     autoCapitalize="none"
-				      //     autoCorrect={false}
-				      //     containerStyle={styles.autocompleteContainer}
-				      //     data={films.length === 1 && comp(query, films[0].title) ? [] : films}
-				      //     defaultValue={query}
-				      //     onChangeText={text => this.setState({ query: text })}
-				      //     placeholder="Add Restaurant Category:"
-				      //     renderItem={({ title, release_date }) => (
-				      //       <TouchableOpacity onPress={() => this.setState({ query: title })}>
-				      //         <Text style={styles.itemText}>
-				      //           {title} ({release_date.split('-')[0]})
-				      //         </Text>
-				      //       </TouchableOpacity>
-				      //     )}
-			       //   />
-		        // </View>
-
 
 	render(){
 

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Filter from './Filter';
+import Categories from './Categories';
 
 import {getRestaurants} from '../../action-creators/restaurants';
 import {getCurrentLocation, getSearchSettings, addSearchSettings, receiveSearchSettings} from '../../action-creators/filter';
@@ -31,4 +31,4 @@ const mapDispatchToProps = dispatch => { 
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);

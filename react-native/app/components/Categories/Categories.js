@@ -10,6 +10,10 @@ import {
   ListView
 } from 'react-native';
 
+import { List, ListItem } from 'react-native-elements'
+import { Actions } from 'react-native-router-flux';
+
+
 class Categories extends Component {
 
 
@@ -20,9 +24,7 @@ class Categories extends Component {
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows([
-        'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin'
-      ])
+      dataSource: ds.cloneWithRows(this.props.settings.categories)
     };
   }
 
@@ -50,12 +52,18 @@ class Categories extends Component {
 
 
   render() {
-   
+
+    const goToDetailView = () => Actions.filter({restaurant: this.props.restaurant});
+
     return (
       <View>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}
+        />
+        <ListItem
+          title={"More..."}
+          onPress={goToDetailView}
         />
       </View>
     );
