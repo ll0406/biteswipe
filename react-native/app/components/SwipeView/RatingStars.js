@@ -17,7 +17,6 @@ export const RatingStars = (props) => {
     require('./img/stars/31x31_4_5.png'),
   ]
 
-
   let images = [ ], 
     tempScore = props.rating, 
     imgIdx = Math.floor(props.rating);

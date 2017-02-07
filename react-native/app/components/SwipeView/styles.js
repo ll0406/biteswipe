@@ -62,13 +62,18 @@ export const styles = StyleSheet.create({
 
 
   yelpImg: {
-    left: 20,
     width: 60,
     height: 40,
+    resizeMode: 'contain',
   },
   yelpContainer: {
-
-    alignSelf: 'flex-end',
+    alignItems: 'center',
+    left: 30,
+  },
+  yelpButton: {
+    padding:2,
+    backgroundColor:'#d32323',
+    elevation: 4,
   },
 
 
@@ -107,6 +112,7 @@ export const styles = StyleSheet.create({
     color: colors.secondaryText,
   },
 
+
   distanceDot: {
     marginLeft: 5,
     backgroundColor: colors.accent,
@@ -118,10 +124,10 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.darkPrimary,
   },
-
   distanceDotText: {
     lineHeight: 14
   },
+
 
   ratingView: {
     flexDirection: 'row',

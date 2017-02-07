@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { styles } from './styles';
 
-import { View, Text, Image, TouchableHighlight, Button } from 'react-native';
+import { View, Text, Image, TouchableHighlight, Button, Linking } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -31,13 +31,26 @@ export const SummaryCard = React.createClass({
           <HighlightsBox restaurant={this.props.restaurant}/>
           <View style={styles.ratingView}>
             <RatingStars rating={this.props.restaurant.rating}/>
-          
-            <Image source={require('./img/Yelp.png')} style={styles.yelpImg} />
-
+            <View style={styles.yelpContainer}>
+              <TouchableHighlight 
+                style={styles.yelpButton}
+                onPress={() => Linking.openURL('https://www.yelp.com/sf')}> 
+                <Image 
+                  source={require('./img/Yelp.png')} 
+                  style={styles.yelpImg} />
+              </TouchableHighlight>
           </View>
-
+          
+          </View>
+          
         </View>
       </View>
     );
   }
 })
+
+
+
+      //  <Button 
+      //     title="Yelppp"
+      //     
