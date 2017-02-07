@@ -21,6 +21,9 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     top: 300
   },
+  container: {
+    flex: 1
+  },
   cardImage: {
     width: Dimensions.get('window').width*1,
     height: Dimensions.get('window').height*.5

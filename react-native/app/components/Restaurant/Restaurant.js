@@ -3,9 +3,11 @@ import { styles } from './styles';
 
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { Tabs } from 'native-base';
+import Carousel from 'react-native-looped-carousel';
 
 import Reviews from './Reviews';
 import Info from './Info';
+import CarouselItem from './CarouselItem';
 
 export default class extends Component {
 
@@ -19,12 +21,20 @@ export default class extends Component {
   };
 
   render () {
-    {/* 3 more photos to scroll through on carousel */}
     return (
       <View style={styles.main}>
-        <Image
-          source={{uri: this.props.restaurant.image_url}}
-          style={styles.cardImage}/>
+        { this.props.restaurant.photos ? <Carousel
+          style={styles.cardImage}
+          delay={10000}
+          autoplay={true}>
+          {
+            this.props.restaurant.photos.map( (photo, index) => {
+              return (
+                <CarouselItem key={index} image={photo}></CarouselItem>
+              )
+            })
+          }
+        </Carousel> : <Text></Text> }
         <Text style={styles.cardTitle}>{this.props.restaurant.name}</Text>
         <View>
           <Tabs >
