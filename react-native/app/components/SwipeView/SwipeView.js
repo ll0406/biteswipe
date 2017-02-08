@@ -16,7 +16,7 @@ const NoMoreCards = () => {
 };
 
 export default class SwipeView extends Component {
-  
+
   componentDidMount(){
     //We need location and settings in order to run the
     //yelp search for restaurants

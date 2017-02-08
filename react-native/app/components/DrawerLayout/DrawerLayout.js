@@ -32,7 +32,7 @@ export default class DrawerLayout extends Component {
 	     	initalized: true
 	     })
 	  });
-	  
+
 	}
 
 	render() {
@@ -41,7 +41,7 @@ export default class DrawerLayout extends Component {
 		const current = children[children.length - 1];
 		const open = navigationState.open;
 
-		if(!this.state.initalized) {
+		if(false) {
 			return (
 				<Loading/>
 				);
@@ -56,8 +56,8 @@ export default class DrawerLayout extends Component {
 					tapToClose={true}
 					openDrawerOffset={drawerOffset}
 					tweenHandler={ratio => ({
-					  	main: { 
-					  		opacity:( 2 - ratio) / 2 
+					  	main: {
+					  		opacity:( 2 - ratio) / 2
 					  	}
 						})
 					}

@@ -29,8 +29,9 @@ export const getCurrentLocation = () => {
 };
 
 export const getSearchSettings = () => {
-  return dispatch => {
-    return axios.get('http://10.0.2.2:1337/api/searchSettings')
+  return (dispatch, getState) => {
+    return axios.get('http://10.0.2.2:1337/api/searchSettings', {
+        headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}})
     .then(res => res.data)
     .then(settings => {
        dispatch(receiveSearchSettings(settings));

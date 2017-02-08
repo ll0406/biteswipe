@@ -29,7 +29,7 @@ const authenticateRefreshToken = (req, res, next) => {
 const authenticateAccessToken = (req, res, next) => {
 
   // skip authentication if not testing (remove this line in production)
-  if(!require('APP').isTesting) return next();
+  // if(!require('APP').isTesting) return next();
 
   const header = req.headers['authorization'];
   if(!header) return res.status(401).send('Authorization header not found');
@@ -40,11 +40,11 @@ const authenticateAccessToken = (req, res, next) => {
   // stupid async stuff
   jwt.verify(accessToken, env.SERVER_SECRET, (err, decoded) => {
     if(err) res.status(401).send('Invalid Access token');
-    else {      
+    else {
       User.findById(decoded.id)
       .then(user => {
         if(!user) res.sendStatus(401);
-        else {    
+        else {
           req.user = user;
           next();
         }
@@ -60,7 +60,7 @@ const generateRefreshToken = (req, res, next) => {
   User.update({refresh_token: refreshToken}, {where: {id: req.user.id}})
   .then(user => {
     if(!user) res.sendStatus(404);
-    else {    
+    else {
       req.refreshToken = refreshToken;
       next();
     }
