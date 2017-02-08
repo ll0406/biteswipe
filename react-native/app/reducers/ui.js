@@ -10,6 +10,8 @@ const reducer = (state = initialState, action) => {
 		case SET_CURRENT_TAB:
 			newState.tab = action.tab;
 			break;
+		default:
+			return state;
 	};
 	return newState;
 };

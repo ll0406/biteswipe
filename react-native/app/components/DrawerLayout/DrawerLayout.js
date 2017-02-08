@@ -5,7 +5,7 @@ import {Actions, DefaultRenderer} from 'react-native-router-flux';
 import Drawer from '../Drawer';
 import NavBar from '../NavBar';
 import Loading from '../Loading';
-import {AUTH_USER_ERROR, LOCATION_ERROR, SEARCH_SETTINGS_ERROR} from '../../errors';
+import {AUTH_USER_ERROR, LOCATION_ERROR, SEARCH_SETTINGS_ERROR, RESTAURANTS_ERROR} from '../../errors';
 
 import styles from './styles';
 
@@ -21,25 +21,32 @@ export default class DrawerLayout extends Component {
 
 	componentDidMount(){
 
+		let promises = [];
+		if(!this.props.user) promises.push(this.props.getAuthenticatedUser());
+		if(!this.props.location) promises.push(this.props.getCurrentLocation());
+		if(!this.props.settings) promises.push(this.props.getSearchSettings());
+
 		// general setup -> drawer should only be mounted once
-	  Promise.all([
-	  		this.props.getAuthenticatedUser(),
-	  		this.props.getCurrentLocation(),
-	    	this.props.getSearchSettings()
-	    ])
-	  .then(() => this.props.getRestaurants())
+	  Promise.all(promises)
+	  .then(() => {
+	  	if(this.props.restaurants.length) return;
+	  	else this.props.getRestaurants();
+	  })
 	  .then(() => {
 	  	this.setState({
 	  		initalized: true
 	  	});	  	
 	  })
 	  .catch(error => {
+	  	// custom error handling
 	  	switch(error.type) {
 	  		case AUTH_USER_ERROR:
 	  			break;
 	  		case LOCATION_ERROR:
 	  			break;
 	  		case SEARCH_SETTINGS_ERROR:
+	  			break;
+	  		case RESTAURANTS_ERROR:
 	  			break;
 	  	}
 	  	this.setState({

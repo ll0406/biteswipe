@@ -58,7 +58,7 @@ export default class ResultsList extends Component {
 		        			</View>
 		        			<Card style={styles.rowFront}>
 		        				<CardItem style={styles.cardItem}>
-		        					<TouchableOpacity onPress={() => Actions.detailView({restaurant: restaurant})}>        					
+		        					<TouchableOpacity onPress={() => Actions.detailView({restaurant: restaurant})} activeOpacity={1}>        					
 			        					<Image style={styles.image} source={{ uri: restaurant.image_url }}>
 			        						<View style={styles.textContainer}>
 			        							<Text style={styles.name}>{restaurant.name}</Text>

@@ -55,11 +55,11 @@ export const getRestaurants = () =>
 				.then(res => res.data)
 				.then(body => {
 					if(!body.businesses.length) dispatch(setAvailable(false));
-					else dispatch(receiveRestaurants(body.businesses));
+					else dispatch(receiveRestaurants(body.businesses.sort(() => 0.5 - Math.random())));
 					resolve();
 				})
 				.catch(error => {
-					error.type = 'get_restaurants';
+					error.type = 'RESTAURANTS_ERROR';
 					handleAuthenticationError(error, getRestaurants, reject)
 				});
 		});

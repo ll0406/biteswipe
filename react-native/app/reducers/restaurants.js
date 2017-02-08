@@ -36,6 +36,8 @@ const reducer = (state = initialState, action) => {
 		case REMOVE_FROM_RESULTS:
 			newState.results = newState.results.filter(restaurant => restaurant.id !== action.restaurant.id);
 			break;
+		default:
+			return state;
 	};
 
 	return newState;
