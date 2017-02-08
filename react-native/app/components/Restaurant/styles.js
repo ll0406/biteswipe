@@ -2,7 +2,6 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 export const styles = StyleSheet.create({
   main: {
-    marginTop: 50,
     elevation: 2,
     alignItems: 'center',
     backgroundColor: '#ffffff'
@@ -17,7 +16,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "transparent",
     color: "#ffffff",
     fontSize: 24,
-    padding: 5,
+    padding: 8,
     position: 'absolute',
     top: 300
   },
@@ -35,6 +34,7 @@ export const styles = StyleSheet.create({
   },
   tab: {
     flex: 1,
+    height: 850,
     padding: 15
   },
   tabTitle: {
