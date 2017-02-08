@@ -57,7 +57,6 @@ const yelp = (req, res, next) => {
 };
 
 const restaurant = (req, res, next) => {
-	console.log('restaurant', req.params.id)
 	axios.get(`https://api.yelp.com/v3/businesses/${req.params.id}`, {
 		headers: { Authorization: `Bearer ${YELP_TOKEN}`}})
 	.then(res => res.data)

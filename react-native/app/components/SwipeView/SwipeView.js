@@ -51,7 +51,7 @@ export default class SwipeView extends Component {
           <DeckSwiper
             dataSource={slicedRestaurants}
             renderItem={(cardData) => <SummaryCard restaurant={cardData}/>}
-            onSwipeRight={(obj) => this.onSwipeRight(obj)}
+            onSwipeRight={() => this.onSwipeRight()}
             onSwipeLeft={() => this.onSwipeLeft()}
           />
         </View>
