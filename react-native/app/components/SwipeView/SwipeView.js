@@ -4,7 +4,7 @@ import { styles } from './styles';
 import NoMoreCards from './NoMoreCards';
 
 import { Button } from 'react-native';
-import { View, Content, Text, DeckSwiper, Card, Header } from 'native-base';
+import { View, DeckSwiper } from 'native-base'
 
 export default class SwipeView extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ export default class SwipeView extends Component {
       this.props.getRestaurants();
     };
   }
-
+  
   render() {
 
     // only slice on when screen has been initialized

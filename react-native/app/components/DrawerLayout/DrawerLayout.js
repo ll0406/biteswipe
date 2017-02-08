@@ -21,7 +21,6 @@ export default class DrawerLayout extends Component {
 
 	componentDidMount(){
 
-		console.log('drawer did mount')
 		let promises = [];
 		if(!this.props.user) promises.push(this.props.getAuthenticatedUser());
 		if(!this.props.location) promises.push(this.props.getCurrentLocation());
@@ -54,7 +53,7 @@ export default class DrawerLayout extends Component {
 	  		initalized: true
 	  	});
 	  });
-	  
+
 	}
 
 	render() {
@@ -79,8 +78,8 @@ export default class DrawerLayout extends Component {
 					tapToClose={true}
 					openDrawerOffset={drawerOffset}
 					tweenHandler={ratio => ({
-					  	main: { 
-					  		opacity:( 2 - ratio) / 2 
+					  	main: {
+					  		opacity:( 2 - ratio) / 2
 					  	}
 						})
 					}

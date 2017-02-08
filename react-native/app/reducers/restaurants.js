@@ -1,10 +1,7 @@
 import {
 	RECEIVE_RESTAURANTS, CLEAR_RESTAURANTS, INCREMENT_SWIPE_COUNTER, SET_AVAILABLE, 
-	CLEAR_SWIPE_COUNTER, ADD_TO_RESULTS, REMOVE_FROM_RESULTS
+	CLEAR_SWIPE_COUNTER, ADD_TO_RESULTS, REMOVE_FROM_RESULTS, RECEIVE_RESTAURANT, RECEIVE_REVIEWS
 } from '../constants';
-
-import dummyData from './dummyData';
-
 const initialState = {
 	list: [],
 	results: [],
@@ -36,12 +33,18 @@ const reducer = (state = initialState, action) => {
 		case REMOVE_FROM_RESULTS:
 			newState.results = newState.results.filter(restaurant => restaurant.id !== action.restaurant.id);
 			break;
-		default:
-			return state;
+    case RECEIVE_RESTAURANT:
+      newState.restaurant = action.restaurant;
+      break;
+    case RECEIVE_REVIEWS:
+      newState.reviews = action.reviews;
+      break;
+    default:
+      return state;
 	};
 
 	return newState;
 
 };
 
-export default reducer; 
+export default reducer;

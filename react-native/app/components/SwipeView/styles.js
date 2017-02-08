@@ -15,10 +15,8 @@ export const styles = StyleSheet.create({
   },
   card: {
     elevation: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
     width: width * 0.85,
-    height: height * 0.7,
+    height: height * 0.75,
     borderRadius: 3,
     backgroundColor: '#ffffff',
     margin: 25,
@@ -29,22 +27,28 @@ export const styles = StyleSheet.create({
     paddingBottom: 15,
     alignItems: 'center'
   },
+  cardTitleContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end'
+  },
   cardTitle: {
-    backgroundColor: "transparent",
     color: "#ffffff",
     fontSize: 24,
     padding: 16,
-    position: "absolute",
-    top: 300
   },
   cardSubTitle: {
-    marginTop: 0,
+    alignSelf: 'center',
+    marginTop: 10,
     paddingTop: 0,
-    marginBottom: 0
+    marginBottom: 0,
+    fontWeight: 'bold',
+    fontSize: 16
   },
   cardImage: {
     width: width * 0.85, 
-    height: 350,
+    height: height * 0.45,
     borderTopRightRadius: 3,
     borderTopLeftRadius: 3
   },
@@ -54,6 +58,26 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'lightgreen',
     flexDirection: 'row'
+  },
+  yelpContainer: {
+    alignItems: 'center',
+    left: 30,
+  },
+  yelpButton: {
+    padding: 2,
+    backgroundColor:'#d32323',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 4,
+    height: 60,
+    width: 60,
+    borderRadius: 30
+  },
+  yelpImg: {
+    height: 60,
+    width: 60,
+    resizeMode: 'contain',
+    borderRadius: 30
   },
   iconsBox: {
     backgroundColor: 'green',
@@ -94,6 +118,8 @@ export const styles = StyleSheet.create({
   distanceDotText: {
     lineHeight: 14
   },
-  ratingView: {
+  rowContainer: {
+    flexDirection: 'row',
+    marginTop: 10
   }
 })

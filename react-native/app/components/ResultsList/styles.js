@@ -23,7 +23,10 @@ export default StyleSheet.create({
 		padding: 40
 	},
 	rowFront: {
-		flex: 1
+		flex: 1,
+		borderRadius: 3,
+		backgroundColor: 'white',
+		elevation: 4
 	},
 	cardItem: {
 		alignItems: 'center'		

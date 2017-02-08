@@ -10,10 +10,12 @@ import Splash from './app/components/Splash';
 import Login from './app/components/Login';
 import Filter from './app/components/Filter';
 import Signup from './app/components/Signup';
+import SwipeView from './app/components/SwipeView';
+import Restaurant from './app/components/Restaurant';
+import TabBar from './app/components/TabBar';
+import Loading from './app/components/Loading';
 import LoadingSplash from './app/components/LoadingSplash';
 import DrawerLayout from './app/components/DrawerLayout';
-import TabBar from './app/components/TabBar';
-import DetailView from './app/components/DetailView';
 
 import {receiveRefreshToken, receiveAccessToken, updateLoggedIn} from './app/action-creators/auth';
 
@@ -31,7 +33,7 @@ const scenes = Actions.create(
     <Scene key="loggedIn" component={DrawerLayout} open={false} hideNavBar>
       <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>
       <Scene key="filter" component={Filter} title="Search Settings"/>
-      <Scene key="detailView" component={DetailView}/>
+      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant" intial />
     </Scene>
 
     <Scene key="notLoggedIn">
@@ -90,7 +92,7 @@ export default class BiteSwipe extends Component {
       return (
         <LoadingSplash animationCompleted={this.animationCompleted}/>
         );
-    } else {      
+    } else {
       return (
           <Provider store={store}>
             <Router

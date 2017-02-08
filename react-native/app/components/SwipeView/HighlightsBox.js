@@ -7,11 +7,21 @@ export const HighlightsBox = props => {
 
   displayIcons = () => {
     let hasBooze = (category) => {
-      return (category.alias === 'bars' || category.alias === 'sportsbars' || category.alias === 'irish_pubs') 
+      return (category.alias === 'bars' 
+        || category.alias === 'sportsbars' 
+        || category.alias === 'irish_pubs') 
+    }
+
+    let hasPizza = (category) => {
+      return (category.alias === 'bars' 
+        || category.alias === 'sportsbars' 
+        || category.alias === 'irish_pubs') 
     }
 
     if ( props.restaurant.categories.some(hasBooze) ) {
       return(<Image source={require('./img/beer_ico.png')} style={styles.highlightsBoxIcon} />);
+    } else {
+      return(<Image style={styles.highlightsBoxIcon} />);
     }
   }
 

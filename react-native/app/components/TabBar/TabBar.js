@@ -4,6 +4,8 @@ import {  StyleSheet } from 'react-native';
 
 import { Container, Content, Tabs, View, Text } from 'native-base';
 
+import myTheme from './light.js'
+
 import SwipeView from '../SwipeView';
 import Results from '../Results';
 import History from '../History';
@@ -33,7 +35,7 @@ export class TabBar extends Component {
     const resultsLabel = count > 0 ? `Results (${count})` : 'Results'
 
     return (
-      <Container>
+      <Container theme={myTheme}>
         <View>
             <Tabs locked={true} onChangeTab={this._onChangeTab} initialPage={this.state.selected}>
                 <SwipeView tabLabel="Swipe" isSelected={this.state.selected === 0}/>

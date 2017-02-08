@@ -31,6 +31,7 @@ const refreshYelpToken = (req, res, next, attempted) => {
 };
 
 const yelp = (req, res, next) => {
+	console.log('yelp')
 	axios.get('https://api.yelp.com/v3/businesses/search?term=food&', {
 		headers: { Authorization: `Bearer ${YELP_TOKEN}`},
 		params: {
@@ -56,6 +57,47 @@ const yelp = (req, res, next) => {
 	});
 };
 
+const restaurant = (req, res, next) => {
+	console.log('restaurant')
+	axios.get(`https://api.yelp.com/v3/businesses/${req.params.id}`, {
+		headers: { Authorization: `Bearer ${YELP_TOKEN}`}})
+	.then(res => res.data)
+	.then(restaurant => {
+		res.json(restaurant);
+	})
+	.catch(error => {
+		if(error.response.status === 401) refreshYelpToken(req, res, next, req.refreshedYelpToken || false);
+		else {
+			req.refreshedYelpToken = false;
+			next(error);
+		}
+	});
+};
+
+const reviews = (req, res, next) => {
+	console.log('reviews')
+	axios.get(`https://api.yelp.com/v3/businesses/${req.params.id}/reviews`, {
+		headers: { Authorization: `Bearer ${YELP_TOKEN}`}})
+	.then(res => res.data)
+	.then(reviews => {
+		res.json(reviews.reviews);
+	})
+	.catch(error => {
+		if(error.response.status === 401) refreshYelpToken(req, res, next, req.refreshedYelpToken || false);
+		else {
+			req.refreshedYelpToken = false;
+			next(error);
+		}
+	})
+}
+
+// get all restaurants matching filter
 router.get('/', yelp);
+
+// get restaurant detail by restaurant id
+router.get('/:id', restaurant);
+
+// get restaurant reviews by restaurant id
+router.get('/:id/reviews', reviews);
 
 module.exports = router;

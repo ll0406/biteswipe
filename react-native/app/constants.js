@@ -21,9 +21,16 @@ export const ADD_TO_RESULTS = 'ADD_TO_RESULTS';
 export const REMOVE_FROM_RESULTS = 'REMOVE_FROM_RESULTS';
 export const SET_AVAILABLE = 'SET_AVAILABLE';
 
+// restaurants
+export const RECEIVE_RESTAURANT = 'RECEIVE_RESTAURANT';
+
+// reviews
+export const RECEIVE_REVIEWS = 'RECEIVE_REVIEWS';
+
 //in filter settings, we will need to determine the user's location
 export const RECEIVE_LOCATION = 'RECEIVE_LOCATION';
 export const RECEIVE_SETTINGS = 'RECEIVE_SETTINGS';
+export const SET_SETTINGS = 'SET_SETTINGS';
 
 // ui
 export const SET_CURRENT_TAB = 'SET_CURRENT_TAB';
