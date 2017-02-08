@@ -1,45 +1,61 @@
 import React, {Component} from 'react';
 import { SummaryCard } from './SummaryCard';
 import { styles } from './styles';
+import NoMoreCards from './NoMoreCards';
 
 import { Button } from 'react-native';
 import { View, DeckSwiper } from 'native-base'
 
-import {Actions} from 'react-native-router-flux';
-
-const NoMoreCards = () => {
-  return (
-    <View>
-      <Text>No more cards</Text>
-    </View>
-  )
-};
-
 export default class SwipeView extends Component {
-
-  componentDidMount(){
-    //We need location and settings in order to run the
-    //yelp search for restaurants
-    Promise.all([this.props.getCurrentLocation(),
-        this.props.getSearchSettings()])
-    .then(gotSettings => {
-       this.props.getRestaurants()
-    });
+  constructor(props) {
+    super(props);
+    this.state = {
+      startIndex: props.swipeCounter
+    };
+    this.onSwipeRight = this.onSwipeRight.bind(this);
+    this.onSwipeLeft = this.onSwipeLeft.bind(this);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if(nextProps.restaurants.length !== this.props.restaurants.length) return true;
+    if(nextProps.swipeCounter === this.props.restaurants.length) return true;
+    return false;
+  }
+
+  onSwipeRight() {
+    this.props.addToResults(this.props.restaurants[this.props.swipeCounter]);
+    this.onSwipeLeft();
+  }
+
+  onSwipeLeft() {
+    this.props.incrementSwipeCounter();
+    if(this.props.restaurants.length - this.props.swipeCounter < 5 && this.props.available) {
+      this.props.getRestaurants();
+    };
+  }
+  
   render() {
 
-    const getRestaurants = () => {
-      this.props.getRestaurants();
-    }
+    // only slice on when screen has been initialized
+    const slicedRestaurants = this.props.restaurants.slice(this.state.startIndex);
 
-    return (
-      <View style={styles.swipeViewBackground}>
-        <DeckSwiper
-          dataSource={this.props.restaurants}
-          renderItem={(cardData) => <SummaryCard restaurant={cardData} />}
-        />
-      </View>
-    )
+    if(!slicedRestaurants.length || this.props.swipeCounter === this.props.restaurants.length) {
+      return (
+        <View style={styles.swipeViewBackground}>
+          <NoMoreCards getRestaurants={this.props.getRestaurants}/>
+        </View>
+        );
+    } else {
+      return (
+        <View style={styles.swipeViewBackground}>
+          <DeckSwiper
+            dataSource={slicedRestaurants}
+            renderItem={(cardData) => <SummaryCard restaurant={cardData}/>}
+            onSwipeRight={() => this.onSwipeRight()}
+            onSwipeLeft={() => this.onSwipeLeft()}
+          />
+        </View>
+      );
+    };
   }
-}
+};

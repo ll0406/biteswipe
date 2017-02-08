@@ -28,9 +28,6 @@ const authenticateRefreshToken = (req, res, next) => {
 
 const authenticateAccessToken = (req, res, next) => {
 
-  // skip authentication if not testing (remove this line in production)
-  if(!require('APP').isTesting) return next();
-
   const header = req.headers['authorization'];
   if(!header) return res.status(401).send('Authorization header not found');
 
@@ -56,7 +53,7 @@ const authenticateAccessToken = (req, res, next) => {
 };
 
 const generateRefreshToken = (req, res, next) => {
-  const refreshToken = req.user.id + '.' + crypto.randomBytes(40).toString('hex')
+  const refreshToken = req.user.id + '.' + crypto.randomBytes(40).toString('hex');
   User.update({refresh_token: refreshToken}, {where: {id: req.user.id}})
   .then(user => {
     if(!user) res.sendStatus(404);

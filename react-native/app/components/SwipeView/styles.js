@@ -1,13 +1,12 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-import { colors } from '../colors';
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   swipeViewBackground: {
-    backgroundColor: colors.background,
-    flex:1,
-    elevation:0,
+    backgroundColor: '#F0F0F0', 
+    flex:1, 
+    elevation:0
   },
   cardWrapper: {
     marginTop: 45,
@@ -15,120 +14,112 @@ export const styles = StyleSheet.create({
     alignSelf: 'auto',
   },
   card: {
-    elevation: 6,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: width*.85,
+    elevation: 4,
+    width: width * 0.85,
+    height: height * 0.75,
     borderRadius: 3,
-    backgroundColor: colors.pureWhite,
-    marginTop:25,
-    alignSelf: 'center',
+    backgroundColor: '#ffffff',
+    margin: 25,
+    alignSelf: 'center'
   },
   cardContent: {
     paddingTop: 5,
     paddingBottom: 15,
-    alignItems: 'center',
+    alignItems: 'center'
+  },
+  cardTitleContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end'
   },
   cardTitle: {
-    backgroundColor: "transparent",
-    color: colors.pureWhite,
+    color: "#ffffff",
     fontSize: 24,
     padding: 16,
-    position: "absolute",
-    top: 300
   },
   cardSubTitle: {
-    marginTop: 0,
+    alignSelf: 'center',
+    marginTop: 10,
     paddingTop: 0,
-    marginBottom: 0
+    marginBottom: 0,
+    fontWeight: 'bold',
+    fontSize: 16
   },
   cardImage: {
-    width: 350,
-    height: 350,
+    width: width * 0.85, 
+    height: height * 0.45,
     borderTopRightRadius: 3,
-    borderTopLeftRadius: 3,
+    borderTopLeftRadius: 3
   },
-  imageGradient: {
-    flex: 1,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 200,
-  },
-
-
-  yelpImg: {
-    width: 60,
-    height: 40,
-    resizeMode: 'contain',
+  highlightsBox: {
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: 'lightgreen',
+    flexDirection: 'row'
   },
   yelpContainer: {
     alignItems: 'center',
     left: 30,
   },
   yelpButton: {
-    padding:2,
+    padding: 2,
     backgroundColor:'#d32323',
+    alignItems: 'center',
+    justifyContent: 'center',
     elevation: 4,
+    height: 60,
+    width: 60,
+    borderRadius: 30
   },
-
-
-  highlightsBox: {
-    margin: 10,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: colors.primary,
-    flexDirection: 'row',
+  yelpImg: {
+    height: 60,
+    width: 60,
+    resizeMode: 'contain',
+    borderRadius: 30
   },
   iconsBox: {
-    backgroundColor: colors.lightPrimary,
+    backgroundColor: 'green',
     height: 40,
     minWidth: 40,
     marginLeft: 2,
     marginRight: 5,
-    borderRadius: 5,
+    borderRadius: 5
   },
   highlightsBoxIcon: {
-    width:40,
-    height:40,
+    width:40, 
+    height:40
   },
   priceBox:{
     justifyContent: 'center',
     alignItems: 'center',
     width: 80,
     height: 40,
-    borderRadius: 2,
+    borderRadius: 2
   },
   priceBold: {
-    fontSize: 19,
-    color: colors.primaryText,
+    color: '#FFFFFF'
   },
   priceLight: {
-    fontSize: 19,
-    color: colors.secondaryText,
+    color: '#000000'
   },
-
   distanceDot: {
     marginLeft: 5,
-    backgroundColor: colors.accent,
+    backgroundColor: 'orange',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     width: 40,
     height: 40,
     borderWidth: 1,
-    borderColor: colors.darkPrimary,
+    borderColor: 'red'
   },
   distanceDotText: {
     lineHeight: 14
   },
-
-  ratingView: {
+  rowContainer: {
     flexDirection: 'row',
-  },
-
-  ratingView: {
+    marginTop: 10
   }
-
 })

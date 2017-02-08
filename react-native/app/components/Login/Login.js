@@ -21,7 +21,7 @@ import {
 } from 'react-native-elements';
 
 import Hr from 'react-native-hr';
-import {IP} from '../../constants';
+import {ADDRESS} from '../../constants';
 import {Actions} from 'react-native-router-flux';
 
 import t from 'tcomb-form-native';
@@ -89,8 +89,8 @@ export default class Login extends Component {
 
     const oauth = (strategy) => {
       Linking
-      .openURL(`http://${IP}:1337/api/auth/${strategy}/login`)
-      .catch(err => console.error);
+      .openURL(`${ADDRESS}/api/auth/${strategy}/login`)
+      .catch(err => console.log);
     }
 
     const login = () => {
@@ -102,25 +102,28 @@ export default class Login extends Component {
 
     return (
       <View style={styles.container}>
-        <KeyboardAvoidingView style={[theme.cardStyle, styles.card]}>
+        <KeyboardAvoidingView style={[theme.cardStyle, styles.card]} behavior="position">
 
           <SocialIcon
             title="Sign In With Facebook"
             button
             type="facebook"
             onPress={() => oauth("facebook")}
+            onLongPress={() => oauth("facebook")}
           />
           <SocialIcon
             title="Sign In With Google"
             button
             type="google-plus-official"
             onPress={() => oauth("google")}
+            onLongPress={() => oauth("google")}
           />
           <SocialIcon
             title="Sign In With Twitter"
             button
             type="twitter"
             onPress={() => oauth("twitter")}
+            onLongPress={() => oauth("twitter")}
           />
 
           <View style={styles.hr}>

@@ -8,10 +8,10 @@ const initialState = {
   gettingAccessToken: false,
   loginError: '',
   signupError: '',
-  user: {}
+  user: null
 };
 
-const reducer = (state=initialState, action) => {
+const reducer = (state = initialState, action) => {
 	let newState = Object.assign({}, state);
   switch(action.type) {
   	case REFRESH_TOKEN:
@@ -35,12 +35,8 @@ const reducer = (state=initialState, action) => {
     case AUTHENTICATED_USER:
       newState.user = action.user;
       break;
-    case REHYDRATE:
-      const auth = action.payload.auth;
-      if(auth) {
-        newState = auth;
-      }
-      break;
+    default:
+      return state;
   }
   return newState;
 };

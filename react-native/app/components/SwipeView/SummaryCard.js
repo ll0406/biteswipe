@@ -1,48 +1,44 @@
 import React, { Component } from 'react';
 import { styles } from './styles';
 
-import { View, Text, Image, TouchableHighlight, Button, Linking } from 'react-native';
+import { View, Text, Image, TouchableHighlight, Linking } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-
-import LinearGradient from 'react-native-linear-gradient';
 
 import { HighlightsBox } from './HighlightsBox';
 import { RatingStars } from './RatingStars';
 
-export const SummaryCard = React.createClass({
-
+export const SummaryCard = React.createClass({  
   render () {
-    const goToRestaurant = () => Actions.restaurant({id: this.props.restaurant.id});
+    const restaurant = this.props.restaurant;
+    const goToRestaurant = () => Actions.restaurant({selectedRestaurant: restaurant});
     return (
       <View style={styles.card}>
         <TouchableHighlight onPress={goToRestaurant}>
-          <Image
-            source={{uri: this.props.restaurant.image_url}}
+          <Image 
+            source={{uri: restaurant.image_url}} 
             style={styles.cardImage}>
-            <LinearGradient
-              colors={['transparent', '#777']}
-              start={{x:0, y:.8}}
-              style={styles.cardImage} />
+            <View style={styles.cardTitleContainer}>
+              <Text style={styles.cardTitle}>{restaurant.name}</Text>
+            </View>
           </Image>
         </TouchableHighlight>
-        <Text style={styles.cardTitle}>{this.props.restaurant.name}</Text>
-        <Text style={styles.cardSubTitle}>{this.props.restaurant.categories[0].title}</Text>
+        <Text style={styles.cardSubTitle}>{restaurant.categories[0].title}</Text>
         <View style={styles.cardContent}>
-          <HighlightsBox restaurant={this.props.restaurant}/>
-          <View style={styles.ratingView}>
-            <RatingStars rating={this.props.restaurant.rating}/>
+          <HighlightsBox restaurant={restaurant}/>
+          <View style={styles.rowContainer}>
+            <View style={styles.ratingView}>
+              <RatingStars rating={restaurant.rating}/>
+            </View>
             <View style={styles.yelpContainer}>
               <TouchableHighlight
                 style={styles.yelpButton}
-                onPress={() => Linking.openURL('https://www.yelp.com/sf')}>
+                onPress={() => Linking.openURL(restaurant.url)}>
                 <Image
                   source={require('./img/Yelp.png')}
                   style={styles.yelpImg} />
               </TouchableHighlight>
+            </View>
           </View>
-
-          </View>
-
         </View>
       </View>
     );

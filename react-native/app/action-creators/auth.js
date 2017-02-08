@@ -1,5 +1,10 @@
 import axios from 'axios';
-import {REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, LOGIN_ERROR, SIGNUP_ERROR, AUTHENTICATED_USER, IP} from '../constants';
+import {
+  REFRESH_TOKEN, ACCESS_TOKEN, LOGGED_IN, GETTING_ACCESS_TOKEN, 
+  LOGIN_ERROR, SIGNUP_ERROR, AUTHENTICATED_USER, ADDRESS
+} from '../constants';
+import {AUTH_USER_ERROR} from '../errors';
+import {persistStore} from 'redux-persist'
 import store from '../store'
 
 export const receiveRefreshToken = refreshToken => ({
@@ -31,15 +36,17 @@ export const receiveAuthenticatedUser = user => ({
 })
 
 // can be utilized by any action-creators that hit protected routes
-export const handleAuthenticationError = (error, func) => {
-  if (error.response && error.response.status === 401) store.dispatch(getAccessToken(func));
-  else console.error(error);
+export const handleAuthenticationError = (error, func, reject) => {
+  if (error.response && error.response.status === 401) store.dispatch(getAccessToken(func, reject));
+  else {
+    console.log(error);
+    if(reject) reject(error);
+  };
 };
 
-
-export const getAccessToken = (func) =>
+export const getAccessToken = (func, reject) => 
   (dispatch, getState) =>
-    axios.get(`http://${IP}:1337/api/auth/token`,
+    axios.get(`${ADDRESS}/api/auth/token`, 
       {headers: {'Authorization': `Bearer ${getState().auth.refreshToken}`}})
       .then(res => res.data)
       .then(body => {
@@ -49,26 +56,34 @@ export const getAccessToken = (func) =>
         if(func) dispatch(func());
       })
       .catch(error => {
-        if(error.response.status === 401) dispatch(logout);
-        else console.error(error);
+        if(error.response && error.response.status === 401) dispatch(logout);
+        else console.log(error);
+        // if passed in from promise, eventually reject
+        if(reject) reject(error);
       });
 
-export const getAuthenticatedUser = () =>
-  (dispatch, getState) =>
-    axios.get(`http://${IP}:1337/api/auth/user`,
-      {headers: {'Authorization': `Bearer ${getState().auth.refreshToken}`}})
-      .then(res => res.data)
-      .then(body => {
-        dispatch(receiveAuthenticatedUser(body.user));
-      })
-      .catch(error => {
-        if(error.response.status === 401) dispatch(logout);
-        else console.error(error);
-      });
-
-export const signup = (name, email, password) =>
+export const getAuthenticatedUser = () => 
+  (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+      axios.get(`${ADDRESS}/api/auth/user`, 
+        {headers: {'Authorization': `Bearer ${getState().auth.refreshToken}`}})
+        .then(res => res.data)
+        .then(body => {
+          dispatch(receiveAuthenticatedUser(body.user));
+          resolve();
+        })
+        .catch(error => {
+          if(error.response && error.response.status === 401) dispatch(logout);
+          else console.log(error);
+          error.type = AUTH_USER_ERROR;
+          reject(error);
+        });
+    });
+  };
+      
+export const signup = (name, email, password) => 
   dispatch =>
-    axios.post(`http://${IP}:1337/api/auth/signup`,
+    axios.post(`${ADDRESS}/api/auth/signup`,
       {name, email, password})
       .then(res => res.data)
       .then(body => {
@@ -79,13 +94,13 @@ export const signup = (name, email, password) =>
         dispatch(updateSignupError(''));
       })
       .catch(error => {
-        console.error(error);
+        console.log(error);
         dispatch(updateSignupError('Email has already been used'));
       });
 
 export const login = (username, password) =>
   dispatch =>
-    axios.post(`http://${IP}:1337/api/auth/local/login`,
+    axios.post(`${ADDRESS}/api/auth/local/login`,
       {username, password})
       .then(res => res.data)
       .then(body => {
@@ -96,18 +111,18 @@ export const login = (username, password) =>
         dispatch(updateSignupError(''));
       })
       .catch(error => {
-        console.error(error);
+        console.log(error);
         dispatch(updateLoginError('Invalid email/password'));
       });
 
 export const logout = () =>
   (dispatch, getState) =>
-    axios.post(`http://${IP}:1337/api/auth/logout`,
+    axios.post(`${ADDRESS}/api/auth/logout`, 
       {refreshToken: getState().auth.refreshToken})
       .then(() => {
         dispatch(receiveRefreshToken(''));
         dispatch(receiveAccessToken(''));
         dispatch(updateLoggedIn(false));
       })
-      .catch(console.error);
+      .catch(console.log);
 

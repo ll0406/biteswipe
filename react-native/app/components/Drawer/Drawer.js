@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Text, Image} from 'react-native';
 import {Avatar, Drawer as MaterialDrawer, Divider, COLOR, TYPO} from 'react-native-material-design';
 import {Actions} from 'react-native-router-flux';
@@ -25,7 +25,6 @@ const Drawer = React.createClass({
 				case 'logout':
 					this.props.logout();
 					break;
-
 			};
 		}, 300);
 	},

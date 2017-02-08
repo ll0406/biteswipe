@@ -25,8 +25,8 @@ const NavBar = props => {
       icon = 'menu';
       onIconPress = open;
       break;
-    case 'detailView':
-      title = current.restaurant.name || 'No restaurant selected';
+    case 'restaurant':
+      title = current.selectedRestaurant.name || 'No restaurant selected';
       icon = 'keyboard-backspace';
       onIconPress = back;
       break;

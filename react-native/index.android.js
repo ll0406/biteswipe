@@ -16,7 +16,6 @@ import TabBar from './app/components/TabBar';
 import Loading from './app/components/Loading';
 import LoadingSplash from './app/components/LoadingSplash';
 import DrawerLayout from './app/components/DrawerLayout';
-import DetailView from './app/components/DetailView';
 
 import {receiveRefreshToken, receiveAccessToken, updateLoggedIn} from './app/action-creators/auth';
 
@@ -29,19 +28,18 @@ const connectedSwitch = connect(mapStateToProps)(Switch);
 const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
 
 const scenes = Actions.create(
-  <Scene key="root" component={connectedSwitch} selector={selector} tabs>
+  <Scene key="root" component={connectedSwitch} selector={selector} tabs unmountScenes>
+
+    <Scene key="notLoggedIn">
+      <Scene key="splash" component={Splash} title="Splash" hideNavBar initial/>
+      <Scene key="login" component={Login} title="Login" hideNavBar={false}/>
+      <Scene key="signup" component={Signup} title="Signup" hideNavBar={false}/>
+    </Scene>
 
     <Scene key="loggedIn" component={DrawerLayout} open={false} hideNavBar>
       <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>
       <Scene key="filter" component={Filter} title="Search Settings"/>
-      <Scene key="detailView" component={DetailView}/>
       <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant" intial />
-    </Scene>
-
-    <Scene key="notLoggedIn">
-      <Scene key="splash" component={Splash} title="Splash" hideNavBar initial/>
-      <Scene key="login" component={Login} title="Login"/>
-      <Scene key="signup" component={Signup} title="Signup"/>
     </Scene>
 
   </Scene>
