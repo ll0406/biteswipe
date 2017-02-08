@@ -50,7 +50,7 @@ const ResultsMap = React.createClass({
 			    			identifier={`Marker${index}`}
 			    			coordinate={restaurant.coordinates}
 			    			title={restaurant.name}
-			    			description={restaurant.location.display_address}
+			    			description={restaurant.location.display_address1}
 			    		/>)
 			    }
 			  </MapView>

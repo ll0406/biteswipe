@@ -1,8 +1,7 @@
 import {Platform} from 'react-native';
 const PROD = 'https://biteswipe.herokuapp.com';
 const DEV = Platform.OS === 'ios' ? 'http://127.0.0.1:1337' : 'http://10.0.2.2:1337';
-// export const ADDRESS = __DEV__ ? DEV : PROD;
-export const ADDRESS = PROD;
+export const ADDRESS = __DEV__ ? DEV : PROD;
 
 // auth
 export const REFRESH_TOKEN = 'REFRESH_TOKEN';

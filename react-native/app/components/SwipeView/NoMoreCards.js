@@ -3,14 +3,15 @@ import {View, Text, Image, TouchableOpacity, Dimensions, StyleSheet} from 'react
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Actions} from 'react-native-router-flux';
 
-const NoMoreCards = () => {
+const NoMoreCards = props => {
 
+	const getRestaurants = () => props.getRestaurants();
 	const filter = () => Actions.filter();
 
   return (
   	<View style={styles.card}>
   		<Text style={styles.text}>No Restaurants Found</Text>
-  		<TouchableOpacity onPress={filter}>
+  		<TouchableOpacity onPress={getRestaurants}>
 	  		<Image source={require('./img/veggies.jpg')} style={styles.image}>
 	  			<View style={styles.imageIconContainer}>
 	  				<Icon name="refresh" size={100} color="white"/>

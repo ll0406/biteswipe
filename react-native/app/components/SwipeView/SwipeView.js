@@ -17,7 +17,8 @@ export default class SwipeView extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if(this.props.restaurants.length !== nextProps.restaurants.length) return true;
+    if(nextProps.restaurants.length !== this.props.restaurants.length) return true;
+    if(nextProps.swipeCounter === this.props.restaurants.length) return true;
     return false;
   }
 
@@ -35,12 +36,13 @@ export default class SwipeView extends Component {
 
   render() {
 
-    const slicedRestaurants = this.props.restaurants;
+    // only slice on when screen has been initialized
+    const slicedRestaurants = this.props.restaurants.slice(this.state.startIndex);
 
     if(!slicedRestaurants.length || this.props.swipeCounter === this.props.restaurants.length) {
       return (
         <View style={styles.swipeViewBackground}>
-          <NoMoreCards available={this.props.available}/>
+          <NoMoreCards getRestaurants={this.props.getRestaurants}/>
         </View>
         );
     } else {

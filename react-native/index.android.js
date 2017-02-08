@@ -26,7 +26,7 @@ const connectedSwitch = connect(mapStateToProps)(Switch);
 const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
 
 const scenes = Actions.create(
-  <Scene key="root" component={connectedSwitch} selector={selector} tabs={true}>
+  <Scene key="root" component={connectedSwitch} selector={selector} tabs unmountScenes>
 
     <Scene key="loggedIn" component={DrawerLayout} open={false} hideNavBar>
       <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>

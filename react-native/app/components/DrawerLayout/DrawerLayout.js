@@ -21,16 +21,17 @@ export default class DrawerLayout extends Component {
 
 	componentDidMount(){
 
+		console.log('drawer did mount')
 		let promises = [];
 		if(!this.props.user) promises.push(this.props.getAuthenticatedUser());
 		if(!this.props.location) promises.push(this.props.getCurrentLocation());
-		if(!this.props.settings) promises.push(this.props.getSearchSettings());
+		// if(!this.props.settings) promises.push(this.props.getSearchSettings());
 
 		// general setup -> drawer should only be mounted once
 	  Promise.all(promises)
 	  .then(() => {
-	  	if(this.props.restaurants.length) return;
-	  	else this.props.getRestaurants();
+	  	if(this.props.restaurants.length) return null;
+	  	else return this.props.getRestaurants();
 	  })
 	  .then(() => {
 	  	this.setState({
