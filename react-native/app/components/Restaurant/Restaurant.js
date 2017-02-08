@@ -8,27 +8,72 @@ import Carousel from 'react-native-looped-carousel';
 import Reviews from './Reviews';
 import Info from './Info';
 import CarouselItem from './CarouselItem';
+import Loading from '../Loading';
 
 export default class extends Component {
 
   constructor(props) {
-    super(props)
+    super(props);
+    this.state = {
+      loading: true
+    };
+    this.load = this.load.bind(this);
   }
 
   componentDidMount() {
-    this.props.getRestaurant(this.props.selectedRestaurant.id);
-    this.props.getReviews(this.props.selectedRestaurant.id);
+    Promise.all([
+      this.props.getRestaurant(this.props.selectedRestaurant.id),
+      this.props.getReviews(this.props.selectedRestaurant.id)
+      ])
+    .then(() => {
+      this.setState({
+        loading: false
+      })
+    })
+    .catch(console.log)
   }
 
   componentWillReceiveProps(nextProps) {
     if(this.props.restaurant.id !== nextProps.restaurant.id) {
-      this.props.getRestaurant(this.props.selectedRestaurant.id);
-      this.props.getReviews(this.props.selectedRestaurant.id);
+      // reset loading screen
+      this.setState({
+        loading: true
+      });
+
+      Promise.all([
+        this.props.getRestaurant(this.props.selectedRestaurant.id),
+        this.props.getReviews(this.props.selectedRestaurant.id)
+        ])
+      .then(() => {
+        this.setState({
+          loading: false
+        });
+      })
+      .catch(console.log)
+
     };
   }
 
+  load() {
+    Promise.all([
+      this.props.getRestaurant(this.props.selectedRestaurant.id),
+      this.props.getReviews(this.props.selectedRestaurant.id)
+      ])
+    .then(() => {
+      this.setState({
+        loading: false
+      });
+    })
+    .catch(console.log)
+  }
+
   render() {
-    return (
+    if(this.state.loading) {
+      return (
+        <Loading />
+      )
+    } else {
+      return (
       <View style={styles.main}>
         { this.props.restaurant.photos ? <Carousel
           style={styles.cardImage}
@@ -50,6 +95,6 @@ export default class extends Component {
           </Tabs>
         </View>
       </View>
-    );
+    )}
   }
 }

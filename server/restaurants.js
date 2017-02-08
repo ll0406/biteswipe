@@ -6,7 +6,7 @@ const querystring = require('querystring');
 let YELP_TOKEN = '';
 let YELP_TOKEN_EXPIRATION_DATE = '';
 
-const refreshYelpToken = (req, res, next, attempted) => {
+const refreshYelpToken = (req, res, next, attempted, func) => {
 	if(attempted) return next();
 	axios.post('https://api.yelp.com/oauth2/token', querystring.stringify({
 		grant_type: 'client_credentials',
@@ -25,7 +25,7 @@ const refreshYelpToken = (req, res, next, attempted) => {
 		YELP_TOKEN_EXPIRATION_DATE = body.expiration;
 		req.refreshedYelpToken = true;
 		// run request again
-		yelp(req, res, next);
+		if(func) func(req, res, next);
 	})
 	.catch(next);
 };
@@ -48,7 +48,7 @@ const yelp = (req, res, next) => {
 		res.json(body);
 	})
 	.catch(error => {
-		if(error.response.status === 401) refreshYelpToken(req, res, next, req.refreshedYelpToken || false);
+		if(error.response.status === 401) refreshYelpToken(req, res, next, req.refreshedYelpToken || false, yelp);
 		else {
 			req.refreshedYelpToken = false;
 			next(error);
@@ -57,6 +57,7 @@ const yelp = (req, res, next) => {
 };
 
 const restaurant = (req, res, next) => {
+	console.log('restaurant', req.params.id)
 	axios.get(`https://api.yelp.com/v3/businesses/${req.params.id}`, {
 		headers: { Authorization: `Bearer ${YELP_TOKEN}`}})
 	.then(res => res.data)
@@ -64,7 +65,7 @@ const restaurant = (req, res, next) => {
 		res.json(restaurant);
 	})
 	.catch(error => {
-		if(error.response.status === 401) refreshYelpToken(req, res, next, req.refreshedYelpToken || false);
+		if(error.response.status === 401) refreshYelpToken(req, res, next, req.refreshedYelpToken || false, restaurant);
 		else {
 			req.refreshedYelpToken = false;
 			next(error);
@@ -73,7 +74,6 @@ const restaurant = (req, res, next) => {
 };
 
 const reviews = (req, res, next) => {
-	console.log('reviews')
 	axios.get(`https://api.yelp.com/v3/businesses/${req.params.id}/reviews`, {
 		headers: { Authorization: `Bearer ${YELP_TOKEN}`}})
 	.then(res => res.data)
@@ -81,7 +81,7 @@ const reviews = (req, res, next) => {
 		res.json(reviews.reviews);
 	})
 	.catch(error => {
-		if(error.response.status === 401) refreshYelpToken(req, res, next, req.refreshedYelpToken || false);
+		if(error.response.status === 401) refreshYelpToken(req, res, next, req.refreshedYelpToken || false, reviews);
 		else {
 			req.refreshedYelpToken = false;
 			next(error);
