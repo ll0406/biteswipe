@@ -49,6 +49,8 @@ const ResultsMap = React.createClass({
 			    			key={index}
 			    			identifier={`Marker${index}`}
 			    			coordinate={restaurant.coordinates}
+			    			title={restaurant.name}
+			    			description={restaurant.location.display_address}
 			    		/>)
 			    }
 			  </MapView>

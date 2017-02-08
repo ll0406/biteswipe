@@ -57,6 +57,7 @@ export default class DrawerLayout extends Component {
 	}
 
 	render() {
+
 		const navigationState = this.props.navigationState;
 		const children = navigationState.children;
 		const current = children[children.length - 1];
