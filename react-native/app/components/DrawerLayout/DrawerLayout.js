@@ -32,7 +32,7 @@ export default class DrawerLayout extends Component {
 	     	initalized: true
 	     })
 	  });
-	  
+
 	}
 
 	render() {
@@ -56,8 +56,8 @@ export default class DrawerLayout extends Component {
 					tapToClose={true}
 					openDrawerOffset={drawerOffset}
 					tweenHandler={ratio => ({
-					  	main: { 
-					  		opacity:( 2 - ratio) / 2 
+					  	main: {
+					  		opacity:( 2 - ratio) / 2
 					  	}
 						})
 					}

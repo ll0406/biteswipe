@@ -9,7 +9,8 @@ api
   .use('/auth', require('./auth'))
   .use(authenticateAccessToken)
   .use('/users', require('./users'))
-  .use('/restaurants', require('./restaurants'));
+  .use('/restaurants', require('./restaurants'))
+  .use('/searchSettings', require('./searchSettings'))
 
 // No routes matched? 404.
 api.use((req, res) => res.status(404).end());

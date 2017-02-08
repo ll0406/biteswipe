@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 const db = require('APP/db');
 
 const User = db.define('users', {
-  name: Sequelize.STRING,  
+  name: Sequelize.STRING,
   email: {
     type: Sequelize.STRING,
     validate: {
@@ -26,6 +26,7 @@ const User = db.define('users', {
   hooks: {
     beforeCreate: setEmailAndPassword,
     beforeUpdate: setEmailAndPassword,
+    afterCreate: setSettings
   },
   instanceMethods: {
     authenticate(plaintext) {
@@ -34,7 +35,7 @@ const User = db.define('users', {
           (err, result) =>
             err ? reject(err) : resolve(result))
         )
-    } 
+    }
   }
 });
 
@@ -50,5 +51,15 @@ function setEmailAndPassword(user) {
 	  })
   )
 };
+
+function setSettings(user) {
+  db.model('searchSettings').findOrCreate({
+    where: {user_id: user.id},
+    defaults: {
+      categories: ['pizza', 'newamerican', 'italian', 'chinese', 'sushi', 'mexican', 'burgers', 'indpak'],
+      priceRange: [1,2,3,4]
+    }
+  })
+}
 
 module.exports = User;

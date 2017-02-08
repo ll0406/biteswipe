@@ -38,8 +38,9 @@ export const getRestaurants = () =>
 		}
 
 export const getRestaurant = (id) =>
-	(dispatch) => {
-		axios.get(`http://${IP}:1337/api/restaurants/${id}`)
+	(dispatch, getState) => {
+		axios.get(`http://${IP}:1337/api/restaurants/${id}`, {
+        headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}})
 		.then(res => res.data)
 		.then(restaurant => {
 			dispatch(receiveRestaurant(restaurant));
@@ -48,8 +49,9 @@ export const getRestaurant = (id) =>
 		}
 
 export const getReviews = (id) =>
-	(dispatch) => {
+	(dispatch, getState) => {
 		axios.get(`http://${IP}:1337/api/restaurants/:id/reviews`, {
+			headers: {'Authorization': `Bearer ${getState().auth.accessToken}`},
 			params: {
 				id: id
 			}
