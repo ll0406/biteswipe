@@ -41,7 +41,7 @@ export default class DrawerLayout extends Component {
 		const current = children[children.length - 1];
 		const open = navigationState.open;
 
-		if(false) {
+		if(!this.state.initalized) {
 			return (
 				<Loading/>
 				);

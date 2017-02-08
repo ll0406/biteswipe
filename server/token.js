@@ -29,7 +29,7 @@ const authenticateRefreshToken = (req, res, next) => {
 const authenticateAccessToken = (req, res, next) => {
 
   // skip authentication if not testing (remove this line in production)
-  // if(!require('APP').isTesting) return next();
+  if(!require('APP').isTesting) return next();
 
   const header = req.headers['authorization'];
   if(!header) return res.status(401).send('Authorization header not found');
