@@ -20,19 +20,17 @@ export default class extends Component {
     this.props.getReviews(this.props.selectedRestaurant.id);
   }
 
-<<<<<<< HEAD
   componentWillReceiveProps(nextProps) {
     if(this.props.restaurant.id !== nextProps.restaurant.id) {
       this.props.getRestaurant(this.props.selectedRestaurant.id);
       this.props.getReviews(this.props.selectedRestaurant.id);
     };
   }
-=======
+  
   componentDidMount(){
     this.props.getRestaurant(this.props.restaurant.id)
     this.props.getReviews(this.props.restaurant.id)
   };
->>>>>>> refactors
 
   render() {
     return (

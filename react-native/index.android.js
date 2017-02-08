@@ -19,8 +19,6 @@ import DrawerLayout from './app/components/DrawerLayout';
 
 import {colors} from './app/components/colors';
 
-import {colors} from './app/components/colors';
-
 import {receiveRefreshToken, receiveAccessToken, updateLoggedIn} from './app/action-creators/auth';
 
 const mapStateToProps = state => ({
