@@ -1,5 +1,7 @@
 import {combineReducers} from 'redux';
 import {LOGGED_IN} from '../constants';
+import {persistStore} from 'redux-persist';
+import store from '../store';
 
 const appReducer = combineReducers({
 	auth: require('./auth').default,

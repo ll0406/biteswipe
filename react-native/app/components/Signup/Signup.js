@@ -107,7 +107,7 @@ export default class Signup extends Component {
 
     return (
       <View style={styles.container}>
-        <KeyboardAvoidingView style={[theme.cardStyle, styles.card]}>
+        <KeyboardAvoidingView style={[theme.cardStyle, styles.card]} behavior="position">
 
           <Form
             ref="form"

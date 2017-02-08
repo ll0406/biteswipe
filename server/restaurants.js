@@ -31,7 +31,6 @@ const refreshYelpToken = (req, res, next, attempted) => {
 };
 
 const yelp = (req, res, next) => {
-	console.log('yelp')
 	axios.get('https://api.yelp.com/v3/businesses/search?term=food&', {
 		headers: { Authorization: `Bearer ${YELP_TOKEN}`},
 		params: {
@@ -58,7 +57,6 @@ const yelp = (req, res, next) => {
 };
 
 const restaurant = (req, res, next) => {
-	console.log('restaurant')
 	axios.get(`https://api.yelp.com/v3/businesses/${req.params.id}`, {
 		headers: { Authorization: `Bearer ${YELP_TOKEN}`}})
 	.then(res => res.data)

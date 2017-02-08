@@ -25,7 +25,6 @@ const Drawer = React.createClass({
 				case 'logout':
 					this.props.logout();
 					break;
-
 			};
 		}, 300);
 	},

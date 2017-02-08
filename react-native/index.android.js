@@ -30,16 +30,16 @@ const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
 const scenes = Actions.create(
   <Scene key="root" component={connectedSwitch} selector={selector} tabs unmountScenes>
 
-    <Scene key="loggedIn" component={DrawerLayout} open={false} hideNavBar>
-      <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>
-      <Scene key="filter" component={Filter} title="Search Settings"/>
-      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant" intial />
-    </Scene>
-
     <Scene key="notLoggedIn">
       <Scene key="splash" component={Splash} title="Splash" hideNavBar initial/>
       <Scene key="login" component={Login} title="Login" hideNavBar={false}/>
       <Scene key="signup" component={Signup} title="Signup" hideNavBar={false}/>
+    </Scene>
+
+    <Scene key="loggedIn" component={DrawerLayout} open={false} hideNavBar>
+      <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>
+      <Scene key="filter" component={Filter} title="Search Settings"/>
+      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant" intial />
     </Scene>
 
   </Scene>

@@ -23,8 +23,9 @@ export const clearSwipeCounter = () => ({
 	type: CLEAR_SWIPE_COUNTER
 });
 
-export const setAvailable = () => ({
-	type: SET_AVAILABLE
+export const setAvailable = available => ({
+	type: SET_AVAILABLE,
+	available
 });
 
 export const addToResults = restaurant => ({

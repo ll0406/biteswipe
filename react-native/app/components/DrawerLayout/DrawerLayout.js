@@ -24,7 +24,7 @@ export default class DrawerLayout extends Component {
 		let promises = [];
 		if(!this.props.user) promises.push(this.props.getAuthenticatedUser());
 		if(!this.props.location) promises.push(this.props.getCurrentLocation());
-		// if(!this.props.settings) promises.push(this.props.getSearchSettings());
+		if(!this.props.settings) promises.push(this.props.getSearchSettings());
 
 		// general setup -> drawer should only be mounted once
 	  Promise.all(promises)
