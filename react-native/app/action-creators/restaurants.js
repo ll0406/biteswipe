@@ -1,7 +1,3 @@
-<<<<<<< c97989caf412f5791db79dcbe05d0478e3118e08
-=======
-import {RECEIVE_RESTAURANTS, RECEIVE_RESTAURANT, RECEIVE_REVIEWS, ADDRESS} from '../constants';
->>>>>>> refactor ip/address
 import axios from 'axios';
 import {
 	RECEIVE_RESTAURANTS, CLEAR_RESTAURANTS, INCREMENT_SWIPE_COUNTER, SET_AVAILABLE, CLEAR_SWIPE_COUNTER, 
@@ -54,7 +50,6 @@ export const receiveReviews = reviews => ({
 
 export const getRestaurants = () =>
 	(dispatch, getState) => {
-<<<<<<< c97989caf412f5791db79dcbe05d0478e3118e08
 		return new Promise((resolve, reject) => {
 			axios.get(`${ADDRESS}/api/restaurants`,
 				{
@@ -108,46 +103,4 @@ export const getReviews = (id) =>
 			})
 			.catch(error => handleAuthenticationError(error, getRestaurant, reject));
 			});
-=======
-		axios.get(`${ADDRESS}/api/restaurants`,
-			{
-				headers: {'Authorization': `Bearer ${getState().auth.accessToken}`},
-				params: {
-				  latitude: getState().filter.location.latitude,
-				  longitude: getState().filter.location.longitude,
-				  radius: getState().filter.settings.radius,
-				  priceRange: getState().filter.settings.priceRange.join(','),
-				  categories: getState().filter.settings.categories.join(',')
-				}
-			})
-			.then(res => res.data)
-			.then(body => {
-				dispatch(receiveRestaurants(body.businesses));
-			})
-			.catch(error => handleAuthenticationError(error, getRestaurants));
-		}
-
-export const getRestaurant = (id) =>
-	(dispatch) => {
-		axios.get(`${ADDRESS}/api/restaurants/${id}`)
-		.then(res => res.data)
-		.then(restaurant => {
-			dispatch(receiveRestaurant(restaurant));
-		})
-		.catch(error => handleAuthenticationError(error, getRestaurant));
-		}
-
-export const getReviews = (id) =>
-	(dispatch) => {
-		axios.get(`${ADDRESS}/api/restaurants/:id/reviews`, {
-			params: {
-				id: id
-			}
-		})
-		.then(res => res.data)
-		.then(reviews => {
-			dispatch(receiveReviews(reviews));
-		})
-		.catch(error => handleAuthenticationError(error, getRestaurant));
->>>>>>> refactor ip/address
 		}

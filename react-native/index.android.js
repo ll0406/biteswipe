@@ -19,6 +19,8 @@ import DrawerLayout from './app/components/DrawerLayout';
 
 import {colors} from './app/components/colors';
 
+import {colors} from './app/components/colors';
+
 import {receiveRefreshToken, receiveAccessToken, updateLoggedIn} from './app/action-creators/auth';
 
 const mapStateToProps = state => ({
@@ -41,7 +43,7 @@ const scenes = Actions.create(
     <Scene key="loggedIn" component={DrawerLayout} open={false} hideNavBar>
       <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>
       <Scene key="filter" component={Filter} title="Search Settings"/>
-      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant" />
+      <Scene key="restaurant" component={Restaurant} />
     </Scene>
 
   </Scene>

@@ -53,7 +53,6 @@ export default class DrawerLayout extends Component {
 	  		initalized: true
 	  	});
 	  });
-
 	}
 
 	render() {

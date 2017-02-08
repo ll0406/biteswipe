@@ -52,14 +52,6 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 3,
     borderTopLeftRadius: 3
   },
-  highlightsBox: {
-    margin: 10,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: colors.primary,
-    flexDirection: 'row',
-    elevation: 4,
-  },
   yelpContainer: {
     alignItems: 'center',
     left: 30,
@@ -79,6 +71,15 @@ export const styles = StyleSheet.create({
     width: 60,
     resizeMode: 'contain',
     borderRadius: 30
+  },
+
+  highlightsBox: {
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: colors.primary,
+    flexDirection: 'row',
+    elevation: 4,
   },
 
   iconsBox: {

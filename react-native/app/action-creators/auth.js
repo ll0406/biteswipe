@@ -5,6 +5,7 @@ import {
 } from '../constants';
 import {AUTH_USER_ERROR} from '../errors';
 import {persistStore} from 'redux-persist'
+
 import store from '../store'
 
 export const receiveRefreshToken = refreshToken => ({
