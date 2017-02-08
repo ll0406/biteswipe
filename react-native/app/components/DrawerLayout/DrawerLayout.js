@@ -5,6 +5,7 @@ import {Actions, DefaultRenderer} from 'react-native-router-flux';
 import Drawer from '../Drawer';
 import NavBar from '../NavBar';
 import Loading from '../Loading';
+import {AUTH_USER_ERROR, LOCATION_ERROR, SEARCH_SETTINGS_ERROR} from '../../errors';
 
 import styles from './styles';
 
@@ -22,15 +23,28 @@ export default class DrawerLayout extends Component {
 
 		// general setup -> drawer should only be mounted once
 	  Promise.all([
-	  	this.props.getAuthenticatedUser(),
-	  	this.props.getCurrentLocation(),
-	    // this.props.getSearchSettings()
+	  		this.props.getAuthenticatedUser(),
+	  		this.props.getCurrentLocation(),
+	    	this.props.getSearchSettings()
 	    ])
+	  .then(() => this.props.getRestaurants())
 	  .then(() => {
-	     this.props.getRestaurants()
-	     this.setState({
-	     	initalized: true
-	     })
+	  	this.setState({
+	  		initalized: true
+	  	});	  	
+	  })
+	  .catch(error => {
+	  	switch(error.type) {
+	  		case AUTH_USER_ERROR:
+	  			break;
+	  		case LOCATION_ERROR:
+	  			break;
+	  		case SEARCH_SETTINGS_ERROR:
+	  			break;
+	  	}
+	  	this.setState({
+	  		initalized: true
+	  	});
 	  });
 	  
 	}

@@ -39,7 +39,8 @@ const yelp = (req, res, next) => {
 			radius: req.query.radius,
 			price: req.query.price,
 			categories: req.query.categories,
-			open_now: true
+			open_now: true,
+			offset: req.query.offset
 		}
 	})
 	.then(res => res.data)

@@ -1,58 +1,59 @@
 import React, {Component} from 'react';
 import { SummaryCard } from './SummaryCard';
 import { styles } from './styles';
+import NoMoreCards from './NoMoreCards';
 
 import { Button } from 'react-native';
-import { View, Content, Text, DeckSwiper, Card, Header } from 'native-base'
-
-const NoMoreCards = () => {
-  return (
-    <View>
-      <Text>No more cards</Text>
-    </View>
-  )
-};
+import { View, Content, Text, DeckSwiper, Card, Header } from 'native-base';
 
 export default class SwipeView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      swipeCount: 0
+      startIndex: props.swipeCounter
     };
     this.onSwipeRight = this.onSwipeRight.bind(this);
+    this.onSwipeLeft = this.onSwipeLeft.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if(this.props.restaurants.length !== nextProps.restaurants.length) return true;
+    return false;
   }
 
   onSwipeRight() {
-    const restaurants = this.props.restaurants;
-    const swipeCount = this.state.swipeCount;
-    this.props.addToResults(restaurants[swipeCount]);
-    this.setState({
-      swipeCount: swipeCount + 1
-    });
+    this.props.addToResults(this.props.restaurants[this.props.swipeCounter]);
+    this.onSwipeLeft();
+  }
+
+  onSwipeLeft() {
+    this.props.incrementSwipeCounter();
+    if(this.props.restaurants.length - this.props.swipeCounter < 5 && this.props.available) {
+      this.props.getRestaurants();
+    };
   }
 
   render() {
 
-    const getRestaurants = () => {
-      this.props.getRestaurants();
-    };
+    const slicedRestaurants = this.props.restaurants;
 
-    const restaurants = this.props.restaurants;
-
-    if(!restaurants.length) {
+    if(!slicedRestaurants.length || this.props.swipeCounter === this.props.restaurants.length) {
       return (
-        <NoMoreCards />
+        <View style={styles.swipeViewBackground}>
+          <NoMoreCards available={this.props.available}/>
+        </View>
         );
     } else {
       return (
         <View style={styles.swipeViewBackground}>
           <DeckSwiper
-            dataSource={restaurants}
+            dataSource={slicedRestaurants}
             renderItem={(cardData) => <SummaryCard restaurant={cardData}/>}
-            onSwipeRight={() => this.onSwipeRight()}
+            onSwipeRight={(obj) => this.onSwipeRight(obj)}
+            onSwipeLeft={() => this.onSwipeLeft()}
           />
         </View>
       );
     };
   }
-}
+};

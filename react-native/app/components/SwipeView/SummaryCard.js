@@ -8,7 +8,6 @@ import { HighlightsBox } from './HighlightsBox';
 import { RatingStars } from './RatingStars';
 
 export const SummaryCard = React.createClass({  
-
   render () {
     const goToDetailView = () => Actions.detailView({restaurant: this.props.restaurant});
     return (

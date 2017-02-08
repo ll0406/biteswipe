@@ -16,6 +16,11 @@ export default class Results extends Component {
 		this.onPress = this.onPress.bind(this);
 	}
 
+	shouldComponentUpdate(newProps, newState) {
+		if(newProps.isSelected) return true;
+		return false;
+	}
+
 	onPress(boolean) {
 		this.setState({
 			map: boolean

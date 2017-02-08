@@ -11,8 +11,6 @@ import {
   StyleSheet
 } from 'react-native';
 
-import CheckBox from 'react-native-checkbox';
-
 import styles from './styles';
 
 export default class Filter extends Component {

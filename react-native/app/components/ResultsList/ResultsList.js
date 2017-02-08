@@ -3,6 +3,7 @@ import {View, ListView, Text, Image, TouchableOpacity, Dimensions, StyleSheet} f
 import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
 import {Card, CardItem} from 'native-base';
 import {Actions} from 'react-native-router-flux';
+import EmptyResults from './EmptyResults';
 
 import styles from './styles';
 
@@ -36,36 +37,42 @@ export default class ResultsList extends Component {
 	render() {
 		// weird bug -> deleted items propogate "swiped" status to next item in list
 		// fix requires inline SwipeRow as opposed to separate component (rowMap !== null)
-		return(
-			<View style={{flex: 1}}>
-				<SwipeListView
-					dataSource={this.state.dataSource}
-					enableEmptySections
-        	renderRow={(restaurant, secId, rowId, rowMap) => 
-	        		(<SwipeRow rightOpenValue={-120} disableRightSwipe>
-	        			<View style={styles.rowBack}>
-	        				<View style={styles.rowBackContainer}>
-	        					<TouchableOpacity onPress={() => this._deleteRow(restaurant, secId, rowId, rowMap)}>
-	        						<Text style={styles.rowBackText}>Delete</Text>
-	        					</TouchableOpacity>
-	        				</View>
-	        			</View>
-	        			<Card style={styles.rowFront}>
-	        				<CardItem style={styles.cardItem}>
-	        					<TouchableOpacity onPress={() => Actions.detailView({restaurant: restaurant})}>        					
-		        					<Image style={styles.image} source={{ uri: restaurant.image_url }}>
-		        						<View style={styles.textContainer}>
-		        							<Text style={styles.name}>{restaurant.name}</Text>
-		        							<Text style={styles.address}>{restaurant.location.address1}</Text>
-		        						</View>
-		        					</Image>
-	        					</TouchableOpacity>
-	        				</CardItem>
-	        			</Card>
-	        		</SwipeRow>)
-	        	}
-        	/>
-			</View>
-			);
+		if(!this.state.dataSource.getRowCount()) {
+			return(
+				<EmptyResults/>
+				);
+		} else {		
+			return(
+				<View style={styles.container}>
+					<SwipeListView
+						dataSource={this.state.dataSource}
+						enableEmptySections
+	        	renderRow={(restaurant, secId, rowId, rowMap) => 
+		        		(<SwipeRow rightOpenValue={-120} disableRightSwipe>
+		        			<View style={styles.rowBack}>
+		        				<View style={styles.rowBackContainer}>
+		        					<TouchableOpacity onPress={() => this._deleteRow(restaurant, secId, rowId, rowMap)}>
+		        						<Text style={styles.rowBackText}>Delete</Text>
+		        					</TouchableOpacity>
+		        				</View>
+		        			</View>
+		        			<Card style={styles.rowFront}>
+		        				<CardItem style={styles.cardItem}>
+		        					<TouchableOpacity onPress={() => Actions.detailView({restaurant: restaurant})}>        					
+			        					<Image style={styles.image} source={{ uri: restaurant.image_url }}>
+			        						<View style={styles.textContainer}>
+			        							<Text style={styles.name}>{restaurant.name}</Text>
+			        							<Text style={styles.address}>{restaurant.location.address1}</Text>
+			        						</View>
+			        					</Image>
+		        					</TouchableOpacity>
+		        				</CardItem>
+		        			</Card>
+		        		</SwipeRow>)
+		        	}
+	        	/>
+				</View>
+				);
+		};
 	}
 };

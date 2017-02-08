@@ -36,8 +36,8 @@ const scenes = Actions.create(
 
     <Scene key="notLoggedIn">
       <Scene key="splash" component={Splash} title="Splash" hideNavBar initial/>
-      <Scene key="login" component={Login} title="Login"/>
-      <Scene key="signup" component={Signup} title="Signup"/>
+      <Scene key="login" component={Login} title="Login" hideNavBar={false}/>
+      <Scene key="signup" component={Signup} title="Signup" hideNavBar={false}/>
     </Scene>
 
   </Scene>

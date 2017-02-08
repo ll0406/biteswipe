@@ -18,16 +18,16 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: width * 0.85,
+    height: height * 0.7,
     borderRadius: 3,
     backgroundColor: '#ffffff',
-    marginTop:25,
+    margin: 25,
     alignSelf: 'center'
   },
   cardContent: {
     paddingTop: 5,
     paddingBottom: 15,
-    alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center'
   },
   cardTitle: {
     backgroundColor: "transparent",
@@ -46,16 +46,14 @@ export const styles = StyleSheet.create({
     width: width * 0.85, 
     height: 350,
     borderTopRightRadius: 3,
-    borderTopLeftRadius: 3,
+    borderTopLeftRadius: 3
   },
-
-
   highlightsBox: {
     margin: 10,
     padding: 10,
     borderRadius: 10,
     backgroundColor: 'lightgreen',
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   iconsBox: {
     backgroundColor: 'green',
@@ -63,25 +61,24 @@ export const styles = StyleSheet.create({
     minWidth: 40,
     marginLeft: 2,
     marginRight: 5,
-    borderRadius: 5,
+    borderRadius: 5
   },
   highlightsBoxIcon: {
     width:40, 
-    height:40,
+    height:40
   },
   priceBox:{
     justifyContent: 'center',
     alignItems: 'center',
     width: 80,
     height: 40,
-    borderRadius: 2,
+    borderRadius: 2
   },
   priceBold: {
-    color: '#FFFFFF',
+    color: '#FFFFFF'
   },
   priceLight: {
-    color: '#000000',
-  
+    color: '#000000'
   },
   distanceDot: {
     marginLeft: 5,

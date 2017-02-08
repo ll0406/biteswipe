@@ -5,6 +5,7 @@ const imageMargin = 10;
 
 export default StyleSheet.create({
 	container: {
+		flex: 1,
 		backgroundColor: '#EEEEEE'
 	},
 	rowBack: {

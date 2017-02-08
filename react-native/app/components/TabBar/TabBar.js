@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import {  StyleSheet } from 'react-native';
 
-import { Container, Content, Tabs,View, Text } from 'native-base';
+import { Container, Content, Tabs, View, Text } from 'native-base';
 
 import SwipeView from '../SwipeView';
 import Results from '../Results';
@@ -30,14 +30,14 @@ export class TabBar extends Component {
   render() {
 
     const count = this.props.results.length;
-    const resultsLabel = count > 0 ? `Results (${count})` : 'Results';
+    const resultsLabel = count > 0 ? `Results (${count})` : 'Results'
 
     return (
       <Container>
         <View>
             <Tabs locked={true} onChangeTab={this._onChangeTab} initialPage={this.state.selected}>
-                <SwipeView tabLabel='Swipe' />
-                <Results tabLabel={resultsLabel} />
+                <SwipeView tabLabel="Swipe" isSelected={this.state.selected === 0}/>
+                <Results tabLabel={resultsLabel} isSelected={this.state.selected === 1}/>
             </Tabs>
         </View>
     </Container>
