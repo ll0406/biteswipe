@@ -1,9 +1,5 @@
 html {
-  background: url(restaurant.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  background: url('restaurant.jpg') center / cover;
 }
 body {
   margin-top: 5%;
