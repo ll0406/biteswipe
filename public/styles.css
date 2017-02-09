@@ -1,0 +1,64 @@
+html {
+  background: url(restaurant.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+body {
+  margin-top: 5%;
+  font-family: Lato, sans-serif;
+}
+a {
+  text-decoration: none;
+}
+.header {
+  text-align: center;
+}
+h1 {
+  color: #f7ff76;
+  font-size: 70px;
+  line-height: 50px;
+  margin-bottom: 5px;
+}
+.tagline {
+  color: white;
+  margin-bottom: 20px;
+}
+.myButton {
+  background-color: #4CAF50;
+  color: white;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+  border: none;
+  border-radius: 2px;
+  position: relative;
+  height: 36px;
+  margin: 5px 0 0 0;
+  min-width: 64px;
+  padding: 0 16px;
+  display: inline-block;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  overflow: hidden;
+  will-change: box-shadow;
+  transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  line-height: 36px;
+  vertical-align: middle;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  color: #b3b3b3;
+  font-size: 14px;
+  margin-left: 8px;
+}
+.footer a {
+  color: #b3b3b3;
+}
