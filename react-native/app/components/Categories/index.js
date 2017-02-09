@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import Categories from './Categories';
 
 import {getRestaurants} from '../../action-creators/restaurants';
-import {getCurrentLocation, getSearchSettings, addSearchSettings, receiveSearchSettings} from '../../action-creators/filter';
+import {getCurrentLocation, getSearchSettings, addSearchSettings, receiveSearchSettings, addCategory, removeCategory} from '../../action-creators/filter';
+import {getCategories} from '../../action-creators/categories';
 
 const mapStateToProps = state => {
   return {
@@ -12,7 +13,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => { 
-  return { 
+  return {     
+    getCategories: () => {
+      dispatch(getCategories())
+    },
     getCurrentLocation: () => { 
       dispatch(getCurrentLocation())
     } ,
@@ -27,6 +31,12 @@ const mapDispatchToProps = dispatch => { 
     }, 
     receiveSearchSettings: (localSettings) => {
       dispatch(receiveSearchSettings(localSettings))
+    },
+    addCategory: (category) => {
+      dispatch(addCategory(category))
+    },
+    removeCategory: (category) => {
+      dispatch(removeCategory(category))
     }
   }
 }

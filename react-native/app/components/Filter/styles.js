@@ -15,17 +15,9 @@ var styles = StyleSheet.create({
     flexDirection: "row"
   },
     container: {
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#DFDFC5',
     flex: 1,
     paddingTop: 25
-  },
-  autocompleteContainer: {
-    flex: 1,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 1
   },
   itemText: {
     fontSize: 15,

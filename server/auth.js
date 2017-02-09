@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const User = require('APP/db/models/user');
 const OAuth = require('APP/db/models/oauth');
 const auth = require('express').Router();
-const {authenticateRefreshToken, generateRefreshToken, generateAccessToken, respond, redirect} = require('./token');
+const {authenticateRefreshToken, generateRefreshToken, generateAccessToken, respondWithTokens, redirectWithTokens, respondWithUser} = require('./token');
 
 OAuth.setupStrategy({
   provider: 'facebook',
@@ -15,8 +15,7 @@ OAuth.setupStrategy({
   config: {
     clientID: env.FACEBOOK_CLIENT_ID,
     clientSecret: env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: 'http://10.0.2.2:1337/api/auth/facebook/callback'
-    // callbackURL: 'http://127.0.0.1:1337/api/auth/facebook/callback'
+    callbackURL: env.FACEBOOK_CALLBACK
   },
   passport
 })
@@ -27,8 +26,7 @@ OAuth.setupStrategy({
   config: {
     clientID: env.GOOGLE_CLIENT_ID,
     clientSecret: env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://10.0.2.2.nip.io:1337/api/auth/google/callback'
-    // callbackURL: 'http://127.0.0.1.nip.io:1337/api/auth/google/callback'
+    callbackURL: env.GOOGLE_CALLBACK
   },
   passport
 })
@@ -39,8 +37,7 @@ OAuth.setupStrategy({
   config: {
     consumerKey: env.TWITTER_CONSUMER_KEY,
     consumerSecret: env.TWITTER_CONSUMER_SECRET,
-    callbackURL: 'http://10.0.2.2:1337/api/auth/twitter/callback'
-    // callbackURL: 'http://127.0.0.1:1337/api/auth/twitter/callback'
+    callbackURL: env.TWITTER_CALLBACK
   },
   passport
 })
@@ -90,23 +87,23 @@ passport.use(new (require('passport-local').Strategy) (
   }
 ))
 
-auth.post('/local/login', passport.authenticate('local', {session: false}), generateRefreshToken, generateAccessToken, respond)
+auth.post('/local/login', passport.authenticate('local', {session: false}), generateRefreshToken, generateAccessToken, respondWithTokens)
 
-auth.get('/:strategy/login', (req, res, next) => passport.authenticate(req.params.strategy, {scope: ['profile']})(req, res, next))
+auth.get('/:strategy/login', (req, res, next) => passport.authenticate(req.params.strategy, {scope: ['email']})(req, res, next))
 
-auth.get('/:strategy/callback', (req, res, next) => passport.authenticate(req.params.strategy)(req, res, next), generateRefreshToken, generateAccessToken, redirect)
+auth.get('/:strategy/callback', (req, res, next) => passport.authenticate(req.params.strategy)(req, res, next), generateRefreshToken, generateAccessToken, redirectWithTokens)
 
 auth.post('/signup', (req, res, next) => {
   User.create(req.body)
   .then(user => {
     if(!user) res.sendStatus(404)
-    else req.login(user, (err) => {
-      if(err) next(err)
-      else next()
-    })
+    else {
+      req.user = user;
+      next();
+    }
   })
   .catch(next)
-}, generateRefreshToken, generateAccessToken, respond)
+}, generateRefreshToken, generateAccessToken, respondWithTokens)
 
 auth.post('/logout', (req, res, next) => {
   User.update({refresh_token: ''}, {where: {refresh_token: req.body.refreshToken}})
@@ -117,6 +114,8 @@ auth.post('/logout', (req, res, next) => {
   .catch(next)
 })
 
-auth.get('/token', authenticateRefreshToken, generateAccessToken, respond)
+auth.get('/token', authenticateRefreshToken, generateAccessToken, respondWithTokens)
+
+auth.get('/user', authenticateRefreshToken, respondWithUser)
 
 module.exports = auth

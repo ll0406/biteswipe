@@ -21,30 +21,44 @@ class Categories extends Component {
     super(props);
 
     this._renderRow = this._renderRow.bind(this);
-
+    
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(this.props.settings.categories)
+      dataSource: ds.cloneWithRows(this.props.settings.categories),
+      trueSwitchIsOn: true,
+      falseSwitchIsOn: false,
     };
+
+    this.props.getCategories();
+
   }
 
-  state = {
-    trueSwitchIsOn: true,
-    falseSwitchIsOn: false,
+  selectOrDeselectCategory(value, rowData){
+     console.log("select/deselect: value ", value);     
+     console.log("select/deselect: rowData ", rowData);
+     
+     if(value){
+      this.props.addCategory(rowData);
+     } 
+     else {
+      this.props.removeCategory(rowData);
+     }
   };
 
-  componentDidMount() {
-
-  }
 
   _renderRow(rowData){
       return(
         <View>
           <Text>{rowData}</Text>
           <Switch
-              onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
+
+              onValueChange={(value) => {
+                this.selectOrDeselectCategory(value, rowData);
+              }}
+
               style={{marginBottom: 10}}
-              value={this.state.falseSwitchIsOn} 
+              value={this.props.settings.categories.indexOf(rowData) !== -1} 
+
           />
         </View>
       )
@@ -54,9 +68,9 @@ class Categories extends Component {
   render() {
 
     const goToDetailView = () => Actions.additionalcategories();
-
     return (
       <View>
+        <Text>Current Restaurant Categories</Text>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}

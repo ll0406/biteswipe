@@ -7,12 +7,12 @@ import {
 
 import styles from './styles';
 
-export default class Home extends Component {
+export default class History extends Component {
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Home</Text>
+        <Text>History</Text>
       </View>
     );
   };

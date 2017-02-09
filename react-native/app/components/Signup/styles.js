@@ -6,7 +6,6 @@ import {
 
 const { width, height } = Dimensions.get('window');
 const offset = Platform.OS === 'ios' ? 64 : 54;
-const textInputStyle = Platform.OS === 'ios' ? {marginTop: 30, marginBottom: 30, height: 20} : {marginTop: 30, marginBottom: 30};
 
 export default StyleSheet.create({
   container: {
@@ -19,9 +18,6 @@ export default StyleSheet.create({
     marginLeft: width * 0.05,
     padding: 20
   },
-  name: textInputStyle,
-  email: textInputStyle,
-  password: textInputStyle,
   signup: {
     backgroundColor: '#009688',
     marginTop: 20,

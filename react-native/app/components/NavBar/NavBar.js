@@ -1,14 +1,49 @@
 import React from 'react';
+import {Toolbar} from 'react-native-material-design';
+import {Actions} from 'react-native-router-flux';
 
-// import { styles } from './styles';
-import { getTheme } from 'react-native-material-kit';
+const NavBar = props => {
 
-import { View, Text } from 'react-native';
+  const navigationState = props.navigationState;
+  const current = props.current;
 
-export const NavBar = props => {
+  const open = () => {
+    Actions.refresh({ key: navigationState.key, open: value => !value });
+  };
+
+  const back = () => {
+    Actions.pop();
+  };
+
+  let title;
+  let icon;
+  let onIconPress;
+
+  switch(current.name) {
+    case 'swipe':
+      title = current.title;
+      icon = 'menu';
+      onIconPress = open;
+      break;
+    case 'restaurant':
+      title = current.selectedRestaurant.name || 'No restaurant selected';
+      icon = 'keyboard-backspace';
+      onIconPress = back;
+      break;
+    default:
+      title = current.title;
+      icon = 'keyboard-backspace';
+      onIconPress = back;
+      break;
+  };
+
   return (
-    <View>
-        <Text> Nav bar lol </Text>
-    </View>
+  	<Toolbar
+  	    title={title}
+  	    icon={icon}
+  	    onIconPress={onIconPress}
+  	/>
   );
-}
+};
+
+export default NavBar;

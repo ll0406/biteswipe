@@ -1,5 +1,7 @@
 import axios from 'axios';
-import {RECEIVE_LOCATION, RECEIVE_SETTINGS} from '../constants';
+import {LOCATION_ERROR, SEARCH_SETTINGS_ERROR} from '../errors';
+import {handleAuthenticationError} from './auth';
+import {RECEIVE_LOCATION, RECEIVE_SETTINGS, ADD_CATEGORY, REMOVE_CATEGORY, ADDRESS} from '../constants';
 
 export const receiveLocation = location =>
 ({
@@ -15,30 +17,51 @@ export const receiveSearchSettings = settings =>
 });
 
 
+export const addCategory = categoryToAdd => ({
+  type: ADD_CATEGORY,
+  categoryToAdd
+});
+
+export const removeCategory = categoryToRemove => ({
+  type: REMOVE_CATEGORY,
+  categoryToRemove
+});
+
 export const getCurrentLocation = () => {
   return dispatch => {
-    return new Promise ((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        const location = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        };
-        dispatch(receiveLocation(location));
-        resolve();
-      }, reject);
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const location = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          };
+          dispatch(receiveLocation(location));
+          resolve();
+      }, 
+        error => {
+          error.type = LOCATION_ERROR;
+          reject(error)
+      });
     });
 	};
 };
 
 export const getSearchSettings = () => {
   return dispatch => {
-    return axios.get('http://10.0.2.2:1337/api/searchSettings')
-    .then(res => res.data)
-    .then(settings => {
-       dispatch(receiveSearchSettings(settings));
-    })
-    .catch(console.error);
-  }
+    return new Promise((resolve, reject) => {
+      axios.get(`${ADDRESS}/api/searchSettings`)
+        .then(res => res.data)
+        .then(settings => {
+           dispatch(receiveSearchSettings(settings));
+           resolve();
+        })
+        .catch(error => {
+          error.type = SEARCH_SETTINGS_ERROR;
+          handleAuthenticationError(error, getSearchSettings, reject)
+        }); 
+    });
+  };
 };
 
 // TODO: post updated searchSettings from Filter.js updateFilterOption()

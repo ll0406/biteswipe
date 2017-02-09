@@ -1,16 +1,15 @@
 import { connect } from 'react-redux';
-
 import SwipeView from './SwipeView';
-
-import {getRestaurants } from '../../action-creators/restaurants';
-import {getCurrentLocation, getSearchSettings} from '../../action-creators/filter';
+import {getRestaurants, removeRestaurant, incrementSwipeCounter, addToResults} from '../../action-creators/restaurants';
 
 const mapStateToProps = state => {
   return {
+    swipeCounter: state.restaurants.swipeCounter,
+    available: state.restaurants.available,
     restaurants: state.restaurants.list
   };
-}
+};
 
-const mapDispatchToProps = { getRestaurants, getCurrentLocation, getSearchSettings };
+const mapDispatchToProps = { getRestaurants, removeRestaurant, incrementSwipeCounter, addToResults };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SwipeView);
