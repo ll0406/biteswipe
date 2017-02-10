@@ -60,11 +60,30 @@ export const getSearchSettings = () => {
   };
 };
 
-// TODO: post updated searchSettings from Filter.js updateFilterOption()
 export const addSearchSettings = (priceRange, radius) => {
   return (dispatch, getState) => {
-    return axios.put(`${ADDRESS}/api/searchSettings`, { priceRange: priceRange, radius: radius, categories: getState().categories })
-    .then(res => res.data)
-    .catch(console.error);
+    return new Promise((resolve, reject) => {
+      const settings = { priceRange: priceRange, radius: radius, categories: getState().filter.settings.categories };
+      dispatch(receiveSearchSettings(settings));
+      axios.put(`${ADDRESS}/api/searchSettings`, settings,
+        { headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}})
+        .then(res => res.data)
+        .then(() => {
+          resolve();
+        })
+        .catch(error => {
+          error.type = SEARCH_SETTINGS_ERROR;
+          handleAuthenticationError(error, addSearchSettings, reject)
+        }); 
+    }); 
   }
-}; 
+};
+
+
+
+
+
+
+
+
+

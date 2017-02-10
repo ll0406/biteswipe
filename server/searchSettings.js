@@ -16,10 +16,12 @@ router.get('/', (req, res, next) => {
 });
 
 router.put('/', (req, res, next) => {
+  console.log("searchSettings REQ BODY: ", req.body);
   searchSettings.update(req.body, { where: { user_id: req.user.id} })
-  .then(settings => {
-		res.json(settings);
+  .then(() => {
+		res.sendStatus(204);
 	})
+  .catch(next);
 });
 
 router.post('/', (req, res, next) => {

@@ -101,6 +101,6 @@ export const getReviews = (id) =>
 				dispatch(receiveReviews(reviews));
 				resolve();
 			})
-			.catch(error => handleAuthenticationError(error, getRestaurant, reject));
+			.catch(error => handleAuthenticationError(error, getReviews, reject));
 			});
 		}

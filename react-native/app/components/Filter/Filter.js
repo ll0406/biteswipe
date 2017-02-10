@@ -44,11 +44,6 @@ export default class Filter extends Component {
 	  };
 	};
 
-	componentDidMount(){
-		this.props.getCurrentLocation();
-		//this.props.getSearchSettings();
-	};
-
 	onDollarAmountPress(value){
 		let indexLocation = this.state.priceRange.indexOf(value);
 	    indexLocation === -1 ? this.state.priceRange.push(value) : this.state.priceRange.splice(indexLocation, 1);
@@ -57,65 +52,33 @@ export default class Filter extends Component {
 	}
 
 	updateFilterOption(){
-
-	  //TRANSITION THIS STUFF TO SWIPEVIEW?
-
-
-	  this.props.addSearchSettings(this.state.priceRange,this.state.radius);
-
-	 
-      this.props.getRestaurants();
-		 
-
-      //This is just here to use as a reference for the edits I need to make above!
-
-	    // Promise.all([this.props.getCurrentLocation(),
-	    //     this.props.getSearchSettings()])
-	    // .then(gotSettings => {
-	    //    this.props.getRestaurants()
-	    // });
-
-
-	 //Generators stuff: will be moved until after the beta!
-
-	  //    function * restaurantGenerator(){
-			
-	     	
-			// yield getRestaurants();
-			// yield getRestaurants();
-
-			
-	  //    };
-
-   //      let gen = this.props.restaurantGenerator(this.props.getRestaurants);
-
-
-           
-		
-		 // console.log("J ", gen.next()); 
-		 // console.log("o", gen.next()); 
-		 // console.log("E", gen.next()); 
-	  
-
+	    Promise.all([
+	       //this.props.getCurrentLocation(),
+	       this.props.addSearchSettings(this.state.priceRange,this.state.radius)
+	     ])
+	    .then(() => {
+	       this.props.clearSwipeCounter();
+	       this.props.clearRestaurants();
+	       return this.props.getRestaurants();
+	    })
+	    .then(() => {
+	    	Actions.pop();
+	    })
+	    .catch(console.log);	  
 	}
 
-
 	renderRow (rowData, sectionID) {
-	  
-	  const goToDetailView = () => Actions.categories({ addCategory : this.addCategory, removeCategory : this.removeCategory});
-	  
+	  const goToCategories = () => Actions.categories({ addCategory : this.addCategory, removeCategory : this.removeCategory});	  
 	  return (
 	  	<View>
 		    <ListItem
 		      key={sectionID}
 		      title={rowData.name}
 		      subtitle={rowData.subtitle}
-		      onPress={goToDetailView}
+		      onPress={goToCategories}
 		    />
 		</View>
-	  )
-   	
-   	  this.props.getRestaurants();
+	  )   	
 	}
 
 	render(){

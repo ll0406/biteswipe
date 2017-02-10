@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Filter from './Filter';
 
-import {getRestaurants} from '../../action-creators/restaurants';
+import {getRestaurants, clearRestaurants, clearSwipeCounter} from '../../action-creators/restaurants';
 import {getCurrentLocation, getSearchSettings, addSearchSettings, receiveSearchSettings} from '../../action-creators/filter';
 
 const mapStateToProps = state => {
@@ -14,19 +14,25 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => { 
   return { 
     getCurrentLocation: () => { 
-      dispatch(getCurrentLocation())
+      return dispatch(getCurrentLocation())
     } ,
     getRestaurants: () => {
-      dispatch(getRestaurants())
+      return dispatch(getRestaurants())
     },
     getSearchSettings: () => { 
-      dispatch(getSearchSettings())
+      return dispatch(getSearchSettings())
     } ,
-    addSearchSettings: (priceRange, radius, categories) => {       //update to the db 
-      dispatch(addSearchSettings(priceRange, radius, categories))
+    addSearchSettings: (priceRange, radius) => {       //update to the db 
+      return dispatch(addSearchSettings(priceRange, radius))
     }, 
     receiveSearchSettings: (localSettings) => {
-      dispatch(receiveSearchSettings(localSettings))
+      return dispatch(receiveSearchSettings(localSettings))
+    },
+    clearRestaurants: () => {
+      return dispatch(clearRestaurants())
+    },
+    clearSwipeCounter: () => {
+      return dispatch(clearSwipeCounter())
     }
   }
 }
