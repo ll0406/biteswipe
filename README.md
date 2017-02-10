@@ -7,4 +7,4 @@ Capstone Project for Fullstack Academy.
 
 Team Members: Joe Cumins, Dennis Deng, Mark Hario, & Rachel Bird. :octocat:
 
-![Alt text](/public/img/landing-page.png?raw=true "Main Screen")
+![Biteswipe Landing Page](/public/landing-page.png?raw=true "Main Screen")
