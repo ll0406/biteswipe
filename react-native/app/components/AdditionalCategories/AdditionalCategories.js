@@ -33,44 +33,79 @@ class AdditionalCategories extends Component {
     const categoryTitles = props.categories.map(function(category, index){
       return category.title;
     });
+
+    const categorySwitchStates = {};    
+
+    props.chosenCategories.forEach((category) => {
+       categorySwitchStates[category] = true; 
+    })
     
     this.state = {
+      ds,
       dataSource: ds.cloneWithRows(categoryTitles),
-      falseSwitchIsOn: false,
-      trueSwitchIsOn: true,
+      categorySwitchStates,
+      categoryTitles
     };
 
   }
 
-  componentWillReceiveProps(nextProps){
+  componentDidMount(){
+    this.props.getCategories();
+  }
+
+  componentWillReceiveProps(newProps){
+    if(newProps.chosenCategories){
+     
+     const categorySwitchStates = {};    
+
+     newProps.chosenCategories.forEach((category) => {
+       categorySwitchStates[category] = true; 
+     })
+
+     const dataSource = this.state.ds.cloneWithRows(this.state.categoryTitles.slice());
+     this.setState({categorySwitchStates, dataSource});
+    }
+  }
+
+  componentWillUnmount(){
+    const categorySwitchStates = this.state.categorySwitchStates;
+    const categories = [];
+
+    Object.keys(categorySwitchStates).forEach((category) => {
+      if(categorySwitchStates[category]) categories.push(category);
+    });
+
+    this.props.setCategories(categories);
   }
 
   selectOrDeselectCategory(value, rowData){
-     console.log("select/deselect: value ", value);     
-     console.log("select/deselect: rowData ", rowData);
-     
-     if(value){
-      this.props.addCategory(rowData);
-     } 
-     else {
-      this.props.removeCategory(rowData);
-     }
+     let categorySwitchStates = this.state.categorySwitchStates;
+
+     categorySwitchStates[rowData] = value;
+
+     const dataSource = this.state.ds.cloneWithRows(this.state.categoryTitles.slice());
+
+     this.setState({categorySwitchStates, dataSource});
 
   };
 
 
+
   _renderRow(rowData){
+      const onSwitch = this.state.categorySwitchStates[rowData] ? this.state.categorySwitchStates[rowData] : false;
+      
+      console.log("rowdata?? ", rowData);
+
       return(
         <View>
           <Text>{rowData}</Text>
           <Switch
               onValueChange={(value) => {
-                this.setState({falseSwitchIsOn: value});
                 this.selectOrDeselectCategory(value, rowData);
               }}
 
               style={{marginBottom: 10}}
-              value={this.props.chosenCategories.indexOf(rowData) !== -1} 
+              value={onSwitch} 
 
           />
         </View>

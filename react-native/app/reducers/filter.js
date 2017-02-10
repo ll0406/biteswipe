@@ -15,6 +15,7 @@ const reducer = (state = initialState, action) => {
 	
   let newState = Object.assign({}, state);
 
+
 	switch(action.type) {
 		case RECEIVE_LOCATION:
 			newState.location = action.location;
@@ -23,7 +24,7 @@ const reducer = (state = initialState, action) => {
       newState.settings = action.settings;
       break;
     case SET_CATEGORIES:
-      newState.categories = action.categories;
+      newState.settings.categories = action.categories;
       break;
     default:
       return state

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import AdditionalCategories from './AdditionalCategories';
-import {addCategory, removeCategory} from '../../action-creators/filter';
+import {setCategories} from '../../action-creators/filter';
+import {getCategories} from '../../action-creators/categories';
 
 const mapStateToProps = state => {
   return {
@@ -11,11 +12,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => { 
   return { 
-    addCategory: (category) => {
-      dispatch(addCategory(category))
+    setCategories: (categories) => {
+      dispatch(setCategories(categories));
     },
-    removeCategory: (category) => {
-      dispatch(removeCategory(category))
+    getCategories: () => {
+      dispatch(getCategories());
     }
   }
 }

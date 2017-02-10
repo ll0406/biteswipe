@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import Categories from './Categories';
 import {setCategories} from '../../action-creators/filter';
-import {getCategories} from '../../action-creators/categories';
 
 const mapStateToProps = state => {
   return {
@@ -11,9 +10,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => { 
   return {     
-    getCategories: () => {
-      dispatch(getCategories())
-    },
     setCategories: (categories) => {
       dispatch(setCategories(categories))
     }
