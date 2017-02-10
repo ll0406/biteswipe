@@ -1,4 +1,5 @@
 # [BiteSwipe](https://biteswipe.herokuapp.com/)
+
 #### Swipe through restaurants near you and choose your favorites.
 
 Mobile app built with React Native.
