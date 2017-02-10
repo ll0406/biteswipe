@@ -1,12 +1,26 @@
-html {
-  background: url(restaurant.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+#main {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+#container {
+  background: url(restaurant.jpg) center / cover;
+  width: 100%;
+  height: 100%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
 }
 body {
-  margin-top: 5%;
   font-family: Lato, sans-serif;
 }
 a {
@@ -57,7 +71,7 @@ h1 {
   bottom: 0;
   color: #b3b3b3;
   font-size: 14px;
-  margin-left: 8px;
+  margin-left: 12px;
 }
 .footer a {
   color: #b3b3b3;
