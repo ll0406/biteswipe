@@ -1,4 +1,4 @@
-import {RECEIVE_CATEGORIES, IP} from '../constants';
+import {RECEIVE_CATEGORIES, ADDRESS} from '../constants';
 import axios from 'axios';
 
 export const receiveCategories = categories => ({
@@ -8,8 +8,9 @@ export const receiveCategories = categories => ({
 
 
 export const getCategories = () =>
-	(dispatch) => {
-		axios.get(`http://${IP}:1337/api/categories`)
+	(dispatch, getState) => {
+		axios.get(`${ADDRESS}/api/categories`, 
+		 { headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}})
 			.then(res => res.data)
 			.then(categories => {
 				console.log("get Catagories File!: ", categories);

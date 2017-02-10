@@ -16,7 +16,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.put('/', (req, res, next) => {
-  searchSettings.update(req.body, { where: { user_id: 2} })
+  searchSettings.update(req.body, { where: { user_id: req.user.id} })
   .then(settings => {
 		res.json(settings);
 	})

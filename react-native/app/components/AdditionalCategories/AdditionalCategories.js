@@ -30,16 +30,19 @@ class AdditionalCategories extends Component {
 
     console.log("this.props.categories: ", this.props.categories);
 
-    this.categoryTitles = this.props.categories.map(function(category, index){
+    const categoryTitles = props.categories.map(function(category, index){
       return category.title;
     });
     
     this.state = {
-      dataSource: ds.cloneWithRows(this.categoryTitles),
+      dataSource: ds.cloneWithRows(categoryTitles),
       falseSwitchIsOn: false,
       trueSwitchIsOn: true,
     };
 
+  }
+
+  componentWillReceiveProps(nextProps){
   }
 
   selectOrDeselectCategory(value, rowData){
@@ -62,11 +65,12 @@ class AdditionalCategories extends Component {
           <Text>{rowData}</Text>
           <Switch
               onValueChange={(value) => {
+                this.setState({falseSwitchIsOn: value});
                 this.selectOrDeselectCategory(value, rowData);
               }}
 
               style={{marginBottom: 10}}
-              value={this.props.settings.categories.indexOf(rowData) !== -1} 
+              value={this.props.chosenCategories.indexOf(rowData) !== -1} 
 
           />
         </View>
@@ -76,7 +80,7 @@ class AdditionalCategories extends Component {
 
   render(){
         
-      console.log("props please? ", this.props.settings.categories);
+      console.log("props please? ",this.props.chosenCategories);
     
     return(
       <View>

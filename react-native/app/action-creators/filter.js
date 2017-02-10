@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {LOCATION_ERROR, SEARCH_SETTINGS_ERROR} from '../errors';
 import {handleAuthenticationError} from './auth';
-import {RECEIVE_LOCATION, RECEIVE_SETTINGS, ADD_CATEGORY, REMOVE_CATEGORY, ADDRESS} from '../constants';
+import {RECEIVE_LOCATION, RECEIVE_SETTINGS, SET_CATEGORIES, ADDRESS} from '../constants';
 
 export const receiveLocation = location =>
 ({
@@ -16,15 +16,10 @@ export const receiveSearchSettings = settings =>
   settings
 });
 
-
-export const addCategory = categoryToAdd => ({
-  type: ADD_CATEGORY,
-  categoryToAdd
-});
-
-export const removeCategory = categoryToRemove => ({
-  type: REMOVE_CATEGORY,
-  categoryToRemove
+export const setCategories = categories => 
+({
+  type: SET_CATEGORIES,
+  categories
 });
 
 export const getCurrentLocation = () => {
@@ -48,9 +43,10 @@ export const getCurrentLocation = () => {
 };
 
 export const getSearchSettings = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      axios.get(`${ADDRESS}/api/searchSettings`)
+      axios.get(`${ADDRESS}/api/searchSettings`, 
+        { headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}})
         .then(res => res.data)
         .then(settings => {
            dispatch(receiveSearchSettings(settings));
@@ -65,9 +61,9 @@ export const getSearchSettings = () => {
 };
 
 // TODO: post updated searchSettings from Filter.js updateFilterOption()
-export const addSearchSettings = (priceRange, radius, categories) => {
-  return dispatch => {
-    return axios.put('http://10.0.2.2:1337/api/searchSettings', { priceRange: priceRange, radius: radius, categories: categories })
+export const addSearchSettings = (priceRange, radius) => {
+  return (dispatch, getState) => {
+    return axios.put(`${ADDRESS}/api/searchSettings`, { priceRange: priceRange, radius: radius, categories: getState().categories })
     .then(res => res.data)
     .catch(console.error);
   }

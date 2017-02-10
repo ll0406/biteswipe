@@ -7,7 +7,7 @@ const appReducer = combineReducers({
 	auth: require('./auth').default,
 	filter: require('./filter').default,
 	restaurants: require('./restaurants').default,
-	ui: require('./ui').default
+	ui: require('./ui').default,
 	categories: require('./categories').default
 });
 

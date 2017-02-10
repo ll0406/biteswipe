@@ -20,30 +20,58 @@ class Categories extends Component {
   constructor(props) {
     super(props);
 
+    console.log("like honestly, what the F U C K: ");
+
     this._renderRow = this._renderRow.bind(this);
     
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
+    
+    const categorySwitchStates = {};    
+
+    props.categories.forEach((category) => {
+       categorySwitchStates[category] = true; 
+    })
+
     this.state = {
-      dataSource: ds.cloneWithRows(this.props.settings.categories),
+      ds, 
+      dataSource: ds.cloneWithRows(props.categories),
       trueSwitchIsOn: true,
       falseSwitchIsOn: false,
+      categorySwitchStates 
     };
 
-    this.props.getCategories();
 
+  }
+
+  componentDidMount(){
+    this.props.getCategories();    
+  }
+
+  componentWillUnmount(){
+    const categorySwitchStates = this.state.categorySwitchStates;
+    const categories = [];
+
+    Object.keys(categorySwitchStates).forEach((category) => {
+      if(categorySwitchStates[category]) categories.push(category);
+    });
+
+    this.props.setCategories(categories);
   }
 
   selectOrDeselectCategory(value, rowData){
      console.log("select/deselect: value ", value);     
      console.log("select/deselect: rowData ", rowData);
      
-     if(value){
-      this.props.addCategory(rowData);
-     } 
-     else {
-      this.props.removeCategory(rowData);
-     }
+     let categorySwitchStates = this.state.categorySwitchStates;
+
+     const dataSource = this.state.ds.cloneWithRows(this.props.categories);
+
+     categorySwitchStates[rowData] = value;
+
+     this.setState({categorySwitchStates, dataSource});
+
   };
+
 
 
   _renderRow(rowData){
@@ -57,7 +85,7 @@ class Categories extends Component {
               }}
 
               style={{marginBottom: 10}}
-              value={this.props.settings.categories.indexOf(rowData) !== -1} 
+              value={this.state.categorySwitchStates[rowData]} 
 
           />
         </View>
@@ -66,7 +94,7 @@ class Categories extends Component {
 
 
   render() {
-
+    console.log("state here?? ", this.state);
     const goToDetailView = () => Actions.additionalcategories();
     return (
       <View>
@@ -83,6 +111,7 @@ class Categories extends Component {
     );
 
   }
+
 }
 
 

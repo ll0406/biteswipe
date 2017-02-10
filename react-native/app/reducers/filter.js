@@ -1,4 +1,4 @@
-import {RECEIVE_LOCATION, RECEIVE_SETTINGS, ADD_CATEGORY, REMOVE_CATEGORY} from '../constants';
+import {RECEIVE_LOCATION, RECEIVE_SETTINGS, SET_CATEGORIES} from '../constants';
 
 const initialState = {
 	location: null,
@@ -22,26 +22,8 @@ const reducer = (state = initialState, action) => {
     case RECEIVE_SETTINGS:
       newState.settings = action.settings;
       break;
-    case ADD_CATEGORY:
-      let addIndex = state.settings.categories.indexOf(action.categoryToAdd);
-      
-      console.log("adding Index: ", addIndex);
-
-      if(addIndex === -1) {
-        let categories = state.settings.categories.slice();
-       
-        categories.push(action.categoryToAdd);
-
-        newState.settings.categories = categories;
-      }
-      break;
-    case REMOVE_CATEGORY:
-      let removalIndex = state.settings.categories.indexOf(action.categoryToRemove);
-      console.log("removal Index: ", removalIndex);
-      if(removalIndex !== -1) state.settings.categories.splice(removalIndex, 1);
-      
-      newState.settings.categories = state.settings.categories;
-      
+    case SET_CATEGORIES:
+      newState.categories = action.categories;
       break;
     default:
       return state

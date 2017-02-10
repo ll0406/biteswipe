@@ -94,7 +94,9 @@ export default class BiteSwipe extends Component {
   }
 
   render() {
-    if(!this.state.rehydrated || !this.state.animated) {
+    //if(!this.state.rehydrated || !this.state.animated) {
+
+    if(false) {
       return (
         <LoadingSplash animationCompleted={this.animationCompleted}/>
         );

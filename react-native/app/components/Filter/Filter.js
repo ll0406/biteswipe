@@ -13,7 +13,7 @@ import {
   ListView
 } from 'react-native';
 
-import { Button } from 'react-native-elements'
+//import { Button } from 'react-native-elements'
 
 import { List, ListItem } from 'react-native-elements'
 import { Actions } from 'react-native-router-flux';
@@ -39,16 +39,14 @@ export default class Filter extends Component {
 		    name: 'Restaurant Categories'
 		  }
 	  	]),
-		radius: 5, 
-		priceRange: [],
-		categories: ['bars', 'french', 'mexican', 'newamerican'],
-		query : ''
+		radius: this.props.settings.radius, 
+		priceRange: this.props.settings.priceRange
 	  };
 	};
 
 	componentDidMount(){
 		this.props.getCurrentLocation();
-		this.props.getSearchSettings();
+		//this.props.getSearchSettings();
 	};
 
 	onDollarAmountPress(value){
@@ -104,7 +102,7 @@ export default class Filter extends Component {
 
 	renderRow (rowData, sectionID) {
 	  
-	  const goToDetailView = () => Actions.categories();
+	  const goToDetailView = () => Actions.categories({ addCategory : this.addCategory, removeCategory : this.removeCategory});
 	  
 	  return (
 	  	<View>
@@ -117,7 +115,7 @@ export default class Filter extends Component {
 		</View>
 	  )
    	
-   	  this.props.getRestaurants()
+   	  this.props.getRestaurants();
 	}
 
 	render(){
