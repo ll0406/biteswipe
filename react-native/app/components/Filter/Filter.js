@@ -13,14 +13,12 @@ import {
   ListView
 } from 'react-native';
 
-//import { Button } from 'react-native-elements'
-
 import { List, ListItem } from 'react-native-elements'
 import { Actions } from 'react-native-router-flux';
-import Autocomplete from 'react-native-autocomplete-input';
-import CheckBox from 'react-native-checkbox';
 
 import styles from './styles';
+
+import Updating from './Updating';
 
 export default class Filter extends Component {
 
@@ -40,32 +38,42 @@ export default class Filter extends Component {
 		    name: 'Restaurant Categories'
 		  }
 	  	]),
-		radius: this.props.settings.radius, 
-		priceRange: this.props.settings.priceRange
+	  	radius: props.settings.radius, 
+	  	priceRange: props.settings.priceRange,
+	  	updating: false
 	  };
 	};
 
 	onDollarAmountPress(value){
-		let indexLocation = this.state.priceRange.indexOf(value);
-	    indexLocation === -1 ? this.state.priceRange.push(value) : this.state.priceRange.splice(indexLocation, 1);
-	    console.log("indexLocation is: ", indexLocation);
-		console.log("princeRange is: ", this.state.priceRange);
+		const priceRange = this.state.priceRange;
+		let indexLocation = priceRange.indexOf(value);
+	  indexLocation === -1 ? priceRange.push(value) : priceRange.splice(indexLocation, 1);
+	  this.setState({
+	  	priceRange
+	  });
 	}
 
 	updateFilterOption(){
-	    Promise.all([
-	       //this.props.getCurrentLocation(),
-	       this.props.addSearchSettings(this.state.priceRange, this.processRadius(this.state.radius))
-	     ])
-	    .then(() => {
-	       this.props.clearSwipeCounter();
-	       this.props.clearRestaurants();
-	       return this.props.getRestaurants();
-	    })
-	    .then(() => {
-	    	Actions.pop();
-	    })
-	    .catch(console.log);	  
+		this.setState({
+			updating: true
+		});
+
+    Promise.all([
+       // this.props.getCurrentLocation(),
+       this.props.addSearchSettings(this.state.priceRange, this.processRadius(this.state.radius))
+     ])
+    .then(() => {
+       this.props.clearSwipeCounter();
+       this.props.clearRestaurants();
+       return this.props.getRestaurants();
+    })
+    .then(() => {
+    	this.setState({
+    		updating: false
+    	});
+    	Actions.pop();
+    })
+    .catch(console.log);
 	}
 
 	renderRow (rowData, sectionID) {
@@ -82,11 +90,8 @@ export default class Filter extends Component {
 	  )   	
 	}
 
-
 	processRadius(radius) {
-
 		//need a default radius if radius comes in blank!
-
 		const conversionChart = {
 			5 : '8047',
 			10 : '16093',
@@ -94,77 +99,78 @@ export default class Filter extends Component {
 			20 : '32187',
 			25 : '40000' //Yelp indicates the 40K meters is the max
 		};
-
-		console.log("converison!!! ", conversionChart[radius]);
-		
 		return conversionChart[radius];
 	}
 
 	render(){
-
-		return(
-			<View style={styles.container}>
-
-				<Text>BiteSwipe Filter Options:</Text>
-                <Text>Add Restaurant Category:</Text>
+		const priceRange = this.state.priceRange;
+		if(this.state.updating) {
+			return (
+				<Updating/>
+				);
+		} else {
+			return(
+				<View style={styles.container}>
 			    <List>
 			      <ListView
 			        renderRow={this.renderRow}
 			        dataSource={this.state.dataSource}
 			      />
 			    </List>
-		        <Text style={styles.text} >
-		        	Radius: {this.state.radius}
-		        </Text>
-		        <Slider
-		          step={5}
-		          minimumValue={5}
-          		  maximumValue={25}
-          		  value={5}
-		          {...this.state}
-		          onSlidingComplete={(value) => this.setState({ radius: value })} />
-			    <Text style={styles.text}>
-		          Price Range:
-		        </Text>
-			    <View style={styles.buttonContainer}> 
-				    <Button
+	        <Text style={styles.text}>
+	        	Radius: {this.state.radius}
+	        </Text>
+	        <Slider
+	          step={5}
+	          minimumValue={5}
+	      		  maximumValue={25}
+	      		  value={5}
+	          {...this.state}
+	          onSlidingComplete={(value) => this.setState({ radius: value })} />
+	       <Text style={styles.text}>
+	          Price Range:
+	        </Text>
+				  <View style={styles.buttonContainer}> 
+				  	<Button
 			         large				    
 			         title="$"
 			         color="#841584"
 			         accessibilityLabel="$"
 			         onPress={() => this.onDollarAmountPress(1)}
+			         style={priceRange.indexOf(1) !== -1 ? styles.buttonEnabled : styles.buttonDisabled}
 			       />
-				   <Button
+				   	<Button
 			         large				   
 			         title="$$"
 			         color="#841584"
 			         accessibilityLabel="$$"
 			         onPress={() => this.onDollarAmountPress(2)}
 			       />
-			       <Button
-			         large			       
-			         title="$$$"
-			         color="#841584"
-			         accessibilityLabel="$$$"
-			         onPress={() => this.onDollarAmountPress(3)}
-			       />
-			       <Button
-			         large
-			         title="$$$$"
-			         color="#841584"
-			         accessibilityLabel="$$$$"
-			         onPress={() => this.onDollarAmountPress(4)}
-			       />
-                </View>
-	            <Button
-	                large
-	            	backgroundColor={'#65C2E3'}
-	            	icon={{name: 'cached'}}
-	                onPress={this.updateFilterOption}
-	                title="Update"
-	                accessibilityLabel="Updated!"
-	            />
-			</View>
-		);
-	};
+						<Button
+							 large			       
+							 title="$$$"
+							 color="#841584"
+							 accessibilityLabel="$$$"
+							 onPress={() => this.onDollarAmountPress(3)}
+							/>
+						<Button
+							 large
+							 title="$$$$"
+							 color="#841584"
+							 accessibilityLabel="$$$$"
+							 onPress={() => this.onDollarAmountPress(4)}
+							/>
+					</View>
+          <Button
+            large
+          	backgroundColor={'#65C2E3'}
+          	icon={{name: 'cached'}}
+            onPress={this.updateFilterOption}
+            title="Update"
+            accessibilityLabel="Updated!"
+          />
+				</View>
+			);
+		};
+	}
 };

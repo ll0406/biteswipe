@@ -11,28 +11,20 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-import { List, ListItem } from 'react-native-elements'
 import { Actions } from 'react-native-router-flux';
 import styles from './styles';
 
+import Loading from '../Loading';
 
 class AdditionalCategories extends Component {
-
-  
   constructor(props){
     super(props);
-
-    
     this._renderRow = this._renderRow.bind(this);
     this.selectOrDeselectCategory = this.selectOrDeselectCategory.bind(this);
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-    console.log("this.props.categories: ", this.props.categories);
-
-    const categoryTitles = props.categories.map(function(category, index){
-      return category.title;
-    });
+    const categoryTitles = props.categories.map(category => category.title);
 
     const categorySwitchStates = {};    
 
@@ -44,16 +36,34 @@ class AdditionalCategories extends Component {
       ds,
       dataSource: ds.cloneWithRows(categoryTitles),
       categorySwitchStates,
-      categoryTitles
+      categoryTitles,
+      loading: false
     };
 
   }
 
   componentDidMount(){
-    this.props.getCategories();
+    this.setState({
+      loading: true
+    });
+
+    this.props.getCategories()
+    .then(() => {
+      this.setState({
+        loading: false
+      });
+    })
+    .catch(console.log);
   }
 
   componentWillReceiveProps(newProps){
+    // receive master list of categories
+    if(newProps.categories){
+      const categoryTitles = newProps.categories.map(category => category.title);
+      const dataSource = this.state.ds.cloneWithRows(categoryTitles);
+      this.setState({categoryTitles, dataSource});
+    };
+
     if(newProps.chosenCategories){
      
      const categorySwitchStates = {};    
@@ -64,7 +74,7 @@ class AdditionalCategories extends Component {
 
      const dataSource = this.state.ds.cloneWithRows(this.state.categoryTitles.slice());
      this.setState({categorySwitchStates, dataSource});
-    }
+    };
   }
 
   componentWillUnmount(){
@@ -86,16 +96,10 @@ class AdditionalCategories extends Component {
      const dataSource = this.state.ds.cloneWithRows(this.state.categoryTitles.slice());
 
      this.setState({categorySwitchStates, dataSource});
-
   };
-
-
 
   _renderRow(rowData){
       const onSwitch = this.state.categorySwitchStates[rowData] ? this.state.categorySwitchStates[rowData] : false;
-      
-      console.log("rowdata?? ", rowData);
-
       return(
         <View>
           <Text>{rowData}</Text>
@@ -103,31 +107,31 @@ class AdditionalCategories extends Component {
               onValueChange={(value) => {
                 this.selectOrDeselectCategory(value, rowData);
               }}
-
               style={{marginBottom: 10}}
               value={onSwitch} 
-
           />
         </View>
       )
-  };
-
-
-  render(){
-        
-      console.log("props please? ",this.props.chosenCategories);
-    
-    return(
-      <View>
-        <Text>Additonal Categories</Text>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this._renderRow}
-        />
-      </View>
-    );
-
   }
 
+  render(){
+    if(this.state.loading) {
+      return (
+        <Loading/>
+        );
+    }
+    else {    
+      return(
+        <View>
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={this._renderRow}
+            enableEmptySections
+          />
+        </View>
+      );
+    }
+  }
 }
+
 export default AdditionalCategories;

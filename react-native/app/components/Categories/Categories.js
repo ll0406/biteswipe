@@ -13,13 +13,9 @@ import {
 import { List, ListItem } from 'react-native-elements'
 import { Actions } from 'react-native-router-flux';
 
-
 class Categories extends Component {
-
-
   constructor(props) {
     super(props);
-
     this._renderRow = this._renderRow.bind(this);
     this.selectOrDeselectCategory = this.selectOrDeselectCategory.bind(this);
  
@@ -29,14 +25,13 @@ class Categories extends Component {
 
     props.categories.forEach((category) => {
        categorySwitchStates[category] = true; 
-    })
+    });
     
     this.state = {
       ds, 
       dataSource: ds.cloneWithRows(props.categories.slice()),
       categorySwitchStates 
     };
-
 
   }
 
@@ -81,25 +76,20 @@ class Categories extends Component {
         <View>
           <Text>{rowData}</Text>
           <Switch
-
               onValueChange={(value) => {
                 this.selectOrDeselectCategory(value, rowData);
               }}
-
               style={{marginBottom: 10}}
               value={this.state.categorySwitchStates[rowData]} 
-
           />
         </View>
       )
   };
 
-
   render() {
     const goToAdditionalCategories = () => Actions.additionalcategories();
     return (
       <View>
-        <Text>Current Restaurant Categories</Text>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}
@@ -110,10 +100,7 @@ class Categories extends Component {
         />
       </View>
     );
-
   }
-
-}
-
+};
 
 export default Categories;

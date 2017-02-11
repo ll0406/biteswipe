@@ -1,21 +1,12 @@
 import {RECEIVE_CATEGORIES} from '../constants';
 
-const initialState = {
-	catList: []
-};
-
-const reducer = (state = initialState, action) => {
-	let newState = Object.assign({}, state);
+const reducer = (state = [], action) => {
 	switch(action.type) {
 		case RECEIVE_CATEGORIES:
-			newState.catList = action.categories;
-			break;
-	    default:
-	    	return state;
+			return action.categories;
+    default:
+    	return state;
 	};
-
-	return newState;
-
 };
 
 export default reducer; 

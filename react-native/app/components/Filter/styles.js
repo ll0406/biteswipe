@@ -9,12 +9,18 @@ var styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     fontWeight: '500',
-    margin: 10,
+    margin: 10
+  },
+  buttonEnabled: {
+    color: 'green'
+  },
+  buttonDisabled: {
+    color: 'white'
   },
   buttonContainer: {
-    flexDirection: "row"
+    flexDirection: 'row'
   },
-    container: {
+  container: {
     backgroundColor: '#DFDFC5',
     flex: 1,
     paddingTop: 25

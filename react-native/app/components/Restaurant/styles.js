@@ -12,13 +12,16 @@ export const styles = StyleSheet.create({
     marginBottom: 15,
     padding: 15
   },
+  cardTitleContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end'
+  },
   cardTitle: {
-    backgroundColor: "transparent",
     color: "#ffffff",
     fontSize: 24,
-    padding: 8,
-    position: 'absolute',
-    top: 300
+    padding: 16,
   },
   container: {
     flex: 1

@@ -53,7 +53,6 @@ export const getRestaurants = () =>
 		return new Promise((resolve, reject) => {
 			axios.get(`${ADDRESS}/api/restaurants`,
 				{
-					headers: {'Authorization': `Bearer ${getState().auth.accessToken}`},
 					params: {
 					  latitude: getState().filter.location.latitude,
 					  longitude: getState().filter.location.longitude,
@@ -79,8 +78,7 @@ export const getRestaurants = () =>
 export const getRestaurant = (id) =>
 	(dispatch, getState) => {
 		return new Promise((resolve, reject) => {
-			axios.get(`${ADDRESS}/api/restaurants/${id}`, {
-	        headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}})
+			axios.get(`${ADDRESS}/api/restaurants/${id}`)
 			.then(res => res.data)
 			.then(restaurant => {
 				dispatch(receiveRestaurant(restaurant));
@@ -93,9 +91,7 @@ export const getRestaurant = (id) =>
 export const getReviews = (id) =>
 	(dispatch, getState) => {
 		return new Promise((resolve, reject) => {
-			axios.get(`${ADDRESS}/api/restaurants/${id}/reviews`, {
-				headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}
-			})
+			axios.get(`${ADDRESS}/api/restaurants/${id}/reviews`)
 			.then(res => res.data)
 			.then(reviews => {
 				dispatch(receiveReviews(reviews));

@@ -8,7 +8,6 @@ import myTheme from './light.js'
 
 import SwipeView from '../SwipeView';
 import Results from '../Results';
-import History from '../History';
 
 export class TabBar extends Component {
   constructor(props) {

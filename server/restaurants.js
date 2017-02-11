@@ -45,7 +45,6 @@ const yelp = (req, res, next) => {
 	})
 	.then(res => res.data)
 	.then(body => {
-		console.log("body TELL ME: ", body);
 		res.json(body);
 	})
 	.catch(error => {

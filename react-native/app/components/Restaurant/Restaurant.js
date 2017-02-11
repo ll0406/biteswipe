@@ -87,7 +87,9 @@ export default class extends Component {
             })
           }
         </Carousel> : <Text></Text> }
-        <Text style={styles.cardTitle}>{this.props.restaurant.name}</Text>
+        <View style={styles.cardTitleContainer}>
+          <Text style={styles.cardTitle}>{this.props.restaurant.name}</Text>
+        </View>
         <View>
           <Tabs >
             <Info tabLabel='Info' restaurant={this.props.restaurant} />

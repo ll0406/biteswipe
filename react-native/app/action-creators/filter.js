@@ -9,7 +9,6 @@ export const receiveLocation = location =>
   location
 });
 
-
 export const receiveSearchSettings = settings =>
 ({
   type: RECEIVE_SETTINGS,
@@ -45,8 +44,7 @@ export const getCurrentLocation = () => {
 export const getSearchSettings = () => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      axios.get(`${ADDRESS}/api/searchSettings`, 
-        { headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}})
+      axios.get(`${ADDRESS}/api/searchSettings`)
         .then(res => res.data)
         .then(settings => {
            dispatch(receiveSearchSettings(settings));
@@ -63,10 +61,11 @@ export const getSearchSettings = () => {
 export const addSearchSettings = (priceRange, radius) => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
+
       const settings = { priceRange: priceRange, radius: radius, categories: getState().filter.settings.categories };
       dispatch(receiveSearchSettings(settings));
-      axios.put(`${ADDRESS}/api/searchSettings`, settings,
-        { headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}})
+
+      axios.put(`${ADDRESS}/api/searchSettings`, settings)
         .then(res => res.data)
         .then(() => {
           resolve();
@@ -78,12 +77,5 @@ export const addSearchSettings = (priceRange, radius) => {
     }); 
   }
 };
-
-
-
-
-
-
-
 
 

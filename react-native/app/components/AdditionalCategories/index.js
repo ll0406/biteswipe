@@ -6,19 +6,19 @@ import {getCategories} from '../../action-creators/categories';
 const mapStateToProps = state => {
   return {
     chosenCategories: state.filter.settings.categories,
-    categories: state.categories.catList
+    categories: state.categories
   };
-}
+};
 
 const mapDispatchToProps = dispatch => { 
   return { 
     setCategories: (categories) => {
-      dispatch(setCategories(categories));
+      return dispatch(setCategories(categories));
     },
     getCategories: () => {
-      dispatch(getCategories());
+      return dispatch(getCategories());
     }
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdditionalCategories);

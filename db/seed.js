@@ -1,34 +1,14 @@
 const db = require('APP/db');
+const categories = require('./categories');
 
 const seedUsers = () => db.Promise.map([
-  {name: 'so many', email: 'god@example.com', password: '123456'},
-  {name: 'Barack Obama', email: 'barack@example.gov', password: '123456'},
+  {name: 'Dennis Deng', email: 'dennisdeng2002@yahoo.com', password: '123456'}
 ], user => db.model('users').create(user));
 
+console.log(categories.length);
+const restaurantCategories = categories.filter(category => category.parents.includes('restaurants'));
 
-const seedCategories = () => db.Promise.map([
-  {title:'bars'},
-  {title:'burgers'},
-  {title:'buffets'},
-  {title:'chinese'},
-  {title:'cafe'},  
-  {title:'deli'},
-  {title:'french'},
-  {title:'indpak'},
-  {title:'italian'},
-  {title:'japanese'},
-  {title:'kebab'},
-  {title:'korean'},
-  {title:'mexican'},
-  {title:'newamerican'},
-  {title:'pizza'},
-  {title:'salad'},   
-  {title:'seafood'},     
-  {title:'spanish'},
-  {title:'sushi'},
-  {title:'thai'},
-  {title:'vietnamese'},
-], category => db.model('categories').create(category));
+const seedCategories = () => db.Promise.map(restaurantCategories, category => db.model('categories').create(category));
 
 db.didSync
   .then(() => db.sync({force: true}))

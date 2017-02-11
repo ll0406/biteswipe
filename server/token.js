@@ -5,15 +5,11 @@ const User = require('APP/db/models/user');
 
 const authenticateRefreshToken = (req, res, next) => {
 
-  const header = req.headers['authorization'];
-  if(!header) return res.status(401).send('Authorization header not found');
-
-  const refreshToken = header.replace('Bearer ', '');
-  if(!refreshToken) return res.status(401).send('Refresh token not found');
+  if(!req.body.refreshToken) return res.status(401).send('Refresh token not found');
 
   return User.findOne({
     where: {
-      refresh_token: refreshToken
+      refresh_token: req.body.refreshToken
     }
   })
   .then(user => {
@@ -53,6 +49,9 @@ const authenticateAccessToken = (req, res, next) => {
 };
 
 const generateRefreshToken = (req, res, next) => {
+  // skip creating new refreshToken if already created (allows for multiple devices)
+  if(req.user.refreshToken) return next();
+
   const refreshToken = req.user.id + '.' + crypto.randomBytes(40).toString('hex');
   User.update({refresh_token: refreshToken}, {where: {id: req.user.id}})
   .then(user => {

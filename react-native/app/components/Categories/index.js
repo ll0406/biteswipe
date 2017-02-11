@@ -11,7 +11,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => { 
   return {     
     setCategories: (categories) => {
-      dispatch(setCategories(categories))
+      return dispatch(setCategories(categories))
     }
   }
 }

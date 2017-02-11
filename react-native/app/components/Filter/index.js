@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => { 
     getSearchSettings: () => { 
       return dispatch(getSearchSettings())
     } ,
-    addSearchSettings: (priceRange, radius) => {       //update to the db 
+    addSearchSettings: (priceRange, radius) => { 
       return dispatch(addSearchSettings(priceRange, radius))
     }, 
     receiveSearchSettings: (localSettings) => {
