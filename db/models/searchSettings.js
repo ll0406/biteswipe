@@ -14,7 +14,7 @@ const searchSettings = db.define('searchSettings', {
   },
   radius: {
     type: Sequelize.INTEGER,
-    defaultValue: 8050
+    defaultValue: 8047
   },
   categories: {
     type: Sequelize.ARRAY(Sequelize.STRING),

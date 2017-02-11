@@ -2,7 +2,7 @@ const db = require('APP/db');
 const categories = require('./categories');
 
 const seedUsers = () => db.Promise.map([
-  {name: 'Dennis Deng', email: 'dennisdeng2002@yahoo.com', password: '123456'}
+  {name: 'Barack Obama', email: 'barack@example.gov', password: '123456'}
 ], user => db.model('users').create(user));
 
 console.log(categories.length);

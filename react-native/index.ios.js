@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import Rimport React, { Component } from 'react';
 import {AppRegistry, View, StyleSheet, Linking, AsyncStorage} from 'react-native';
 import {connect, Provider} from 'react-redux';
 import store from './app/store';
@@ -11,6 +11,9 @@ import Login from './app/components/Login';
 import Filter from './app/components/Filter';
 import Signup from './app/components/Signup';
 import SwipeView from './app/components/SwipeView';
+import NavBar from './app/components/NavBar';
+import Categories from './app/components/Categories/';
+import AdditionalCategories from './app/components/AdditionalCategories/';
 import Restaurant from './app/components/Restaurant';
 import TabBar from './app/components/TabBar';
 import Loading from './app/components/Loading';
@@ -28,18 +31,21 @@ const connectedSwitch = connect(mapStateToProps)(Switch);
 const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
 
 const scenes = Actions.create(
-  <Scene key="root" component={connectedSwitch} selector={selector} tabs unmountScenes>
 
-    <Scene key="loggedIn" component={DrawerLayout} open={false} hideNavBar>
-      <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>
-      <Scene key="filter" component={Filter} title="Search Settings"/>
-      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant" intial />
-    </Scene>
+  <Scene key="root" component={connectedSwitch} selector={selector} tabs unmountScenes>
 
     <Scene key="notLoggedIn">
       <Scene key="splash" component={Splash} title="Splash" hideNavBar initial/>
       <Scene key="login" component={Login} title="Login" hideNavBar={false}/>
       <Scene key="signup" component={Signup} title="Signup" hideNavBar={false}/>
+    </Scene>
+
+    <Scene key="loggedIn" component={DrawerLayout} open={false} hideNavBar>
+      <Scene key="categories" component={Categories} title="Categories"/>
+      <Scene key="additionalcategories" component={AdditionalCategories} title="AdditionalCategories"/>
+      <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>
+      <Scene key="filter" component={Filter} title="Search Settings"/>
+      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant" intial/>
     </Scene>
 
   </Scene>

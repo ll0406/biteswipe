@@ -6,6 +6,7 @@ import {getCategories} from '../../action-creators/categories';
 const mapStateToProps = state => {
   return {
     chosenCategories: state.filter.settings.categories,
+    temporaryCategories: state.filter.temporaryCategories,
     categories: state.categories
   };
 };

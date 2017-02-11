@@ -10,12 +10,11 @@ export const receiveCategories = categories => ({
 export const getCategories = () =>
 	(dispatch, getState) => {
 		return new Promise((resolve, reject) => {
-			axios.get(`${ADDRESS}/api/categories`, 
-			 { headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}})
+			axios.get(`${ADDRESS}/api/categories`)
 				.then(res => res.data)
 				.then(categories => {
 					dispatch(receiveCategories(categories));
-					resolve();
+					resolve(categories);
 				})
 				.catch(error => handleAuthenticationError(error, getCategories, reject));
 		});

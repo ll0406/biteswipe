@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Filter from './Filter';
 
-import {getRestaurants, clearRestaurants, clearSwipeCounter} from '../../action-creators/restaurants';
+import {getRestaurants, clearRestaurants, clearSwipeCounter, setAvailable} from '../../action-creators/restaurants';
 import {getCurrentLocation, getSearchSettings, addSearchSettings, receiveSearchSettings} from '../../action-creators/filter';
 
 const mapStateToProps = state => {

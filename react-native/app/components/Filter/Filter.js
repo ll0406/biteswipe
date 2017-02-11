@@ -10,7 +10,8 @@ import {
   Slider,
   StyleSheet,
   TouchableOpacity,
-  ListView
+  ListView,
+  Alert
 } from 'react-native';
 
 import { List, ListItem } from 'react-native-elements'
@@ -27,8 +28,6 @@ export default class Filter extends Component {
 
 	  this.updateFilterOption = this.updateFilterOption.bind(this);
 	  this.onDollarAmountPress = this.onDollarAmountPress.bind(this);
-	  this.renderRow = this.renderRow.bind(this);
-	  this.processRadius = this.processRadius.bind(this);
 
 	  const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -38,11 +37,15 @@ export default class Filter extends Component {
 		    name: 'Restaurant Categories'
 		  }
 	  	]),
-	  	radius: props.settings.radius, 
+	  	radius: this.convertMetersToMiles(props.settings.radius), 
 	  	priceRange: props.settings.priceRange,
 	  	updating: false
 	  };
 	};
+
+	componentWillUnmount(){
+		
+	}
 
 	onDollarAmountPress(value){
 		const priceRange = this.state.priceRange;
@@ -60,24 +63,26 @@ export default class Filter extends Component {
 
     Promise.all([
        // this.props.getCurrentLocation(),
-       this.props.addSearchSettings(this.state.priceRange, this.processRadius(this.state.radius))
+       this.props.addSearchSettings(this.state.priceRange, this.convertMilesToMeters(this.state.radius))
      ])
     .then(() => {
        this.props.clearSwipeCounter();
        this.props.clearRestaurants();
        return this.props.getRestaurants();
     })
-    .then(() => {
+    .then(restaurants => {
+    	// clear updating screen
     	this.setState({
     		updating: false
     	});
-    	Actions.pop();
+    	if(!restaurants.length) Alert.alert('Filter Settings', 'No restaurants found')
+    	else Actions.pop();
     })
     .catch(console.log);
 	}
 
-	renderRow (rowData, sectionID) {
-	  const goToCategories = () => Actions.categories({ addCategory : this.addCategory, removeCategory : this.removeCategory});	  
+	renderRow(rowData, sectionID){
+	  const goToCategories = () => Actions.categories();	  
 	  return (
 	  	<View>
 		    <ListItem
@@ -90,20 +95,29 @@ export default class Filter extends Component {
 	  )   	
 	}
 
-	processRadius(radius) {
-		//need a default radius if radius comes in blank!
+	convertMetersToMiles(meters){
 		const conversionChart = {
-			5 : '8047',
-			10 : '16093',
-			15 : '24140',
-			20 : '32187',
-			25 : '40000' //Yelp indicates the 40K meters is the max
-		};
-		return conversionChart[radius];
+			8047 : 5,
+			16093 : 10,
+			24140 : 15,
+			32187 : 20,
+			40000 : 25
+		};		
+		return conversionChart[meters];
+	}
+
+	convertMilesToMeters(miles){
+		const conversionChart = {
+			5 : 8047,
+			10 : 16093,
+			15 : 24140,
+			20 : 32187,
+			25 : 40000 //Yelp indicates the 40K meters is the max
+		};		
+		return conversionChart[miles];
 	}
 
 	render(){
-		const priceRange = this.state.priceRange;
 		if(this.state.updating) {
 			return (
 				<Updating/>
@@ -123,8 +137,8 @@ export default class Filter extends Component {
 	        <Slider
 	          step={5}
 	          minimumValue={5}
-	      		  maximumValue={25}
-	      		  value={5}
+	      		maximumValue={25}
+	      		value={5}
 	          {...this.state}
 	          onSlidingComplete={(value) => this.setState({ radius: value })} />
 	       <Text style={styles.text}>
@@ -137,7 +151,6 @@ export default class Filter extends Component {
 			         color="#841584"
 			         accessibilityLabel="$"
 			         onPress={() => this.onDollarAmountPress(1)}
-			         style={priceRange.indexOf(1) !== -1 ? styles.buttonEnabled : styles.buttonDisabled}
 			       />
 				   	<Button
 			         large				   

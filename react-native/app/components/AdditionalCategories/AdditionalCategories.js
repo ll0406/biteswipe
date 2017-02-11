@@ -62,6 +62,7 @@ class AdditionalCategories extends Component {
       const categoryTitles = newProps.categories.map(category => category.title);
       const dataSource = this.state.ds.cloneWithRows(categoryTitles);
       this.setState({categoryTitles, dataSource});
+      this.setState({categoryTitles, dataSource});
     };
 
     if(newProps.chosenCategories){

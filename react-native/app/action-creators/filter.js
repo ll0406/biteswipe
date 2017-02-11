@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {LOCATION_ERROR, SEARCH_SETTINGS_ERROR} from '../errors';
 import {handleAuthenticationError} from './auth';
-import {RECEIVE_LOCATION, RECEIVE_SETTINGS, SET_CATEGORIES, ADDRESS} from '../constants';
+import {RECEIVE_LOCATION, RECEIVE_SETTINGS, SET_CATEGORIES, SET_TEMPORARY_CATEGORIES, ADDRESS} from '../constants';
 
 export const receiveLocation = location =>
 ({
@@ -21,6 +21,12 @@ export const setCategories = categories =>
   categories
 });
 
+export const setTemporaryCategories = categories => 
+({
+  type: SET_TEMPORARY_CATEGORIES,
+  categories
+});
+
 export const getCurrentLocation = () => {
   return dispatch => {
     return new Promise((resolve, reject) => {
@@ -31,7 +37,7 @@ export const getCurrentLocation = () => {
             longitude: position.coords.longitude
           };
           dispatch(receiveLocation(location));
-          resolve();
+          resolve(location);
       }, 
         error => {
           error.type = LOCATION_ERROR;
@@ -48,7 +54,7 @@ export const getSearchSettings = () => {
         .then(res => res.data)
         .then(settings => {
            dispatch(receiveSearchSettings(settings));
-           resolve();
+           resolve(settings);
         })
         .catch(error => {
           error.type = SEARCH_SETTINGS_ERROR;
@@ -68,7 +74,7 @@ export const addSearchSettings = (priceRange, radius) => {
       axios.put(`${ADDRESS}/api/searchSettings`, settings)
         .then(res => res.data)
         .then(() => {
-          resolve();
+          resolve(settings);
         })
         .catch(error => {
           error.type = SEARCH_SETTINGS_ERROR;

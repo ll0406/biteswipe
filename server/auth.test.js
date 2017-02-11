@@ -49,14 +49,14 @@ describe('/api/auth', () => {
       .post('/api/auth/local/login') 
       .send(alice)
       .then(res => {
-        refreshToken = 'Bearer ' + res.body.refreshToken
+        refreshToken = res.body.refreshToken
       })
     )
 
     it('responds with a new access token if given a valid refresh token', () =>
       agent
-        .get('/api/auth/token')
-        .set('Authorization', refreshToken)        
+        .post('/api/auth/token')
+        .send({refreshToken: refreshToken})        
         .expect(200)          
         .then(res => {
           expect(res.body.accessToken).to.not.be.null
@@ -67,39 +67,6 @@ describe('/api/auth', () => {
       agent.get('/api/auth/token')
         .set('Authorization', 'yomama')
         .expect(401)
-    )
-  })
-
-  describe('POST /logout when logged in', () => {
-    const agent = request.agent(app)
-    let refreshToken
-
-    before('log in', () => 
-      agent
-      .post('/api/auth/local/login') 
-      .send(alice)
-      .then(res => {
-        refreshToken = res.body.refreshToken
-      })
-    )
-
-    it('deletes the current refresh token', () => 
-      agent
-      .post('/api/auth/logout')
-      .send({
-        refreshToken: refreshToken
-      })
-      .expect(200)
-      .then(() =>
-        User.findOne({
-          where: {
-            email: alice.username
-          }
-        })
-        .then(user => {
-          expect(user.refresh_token).to.be.empty
-        })
-      )
     )
   })
 

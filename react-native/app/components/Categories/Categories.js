@@ -21,43 +21,44 @@ class Categories extends Component {
  
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     
-    const categorySwitchStates = {};    
-
-    props.categories.forEach((category) => {
+    const chosenCategories = props.temporaryCategories || props.chosenCategories;
+    
+    const categorySwitchStates = {};
+    chosenCategories.forEach((category) => {
        categorySwitchStates[category] = true; 
     });
     
     this.state = {
+      chosenCategories,
       ds, 
-      dataSource: ds.cloneWithRows(props.categories.slice()),
+      dataSource: ds.cloneWithRows(chosenCategories.slice()),
       categorySwitchStates 
     };
 
   }
 
   componentWillReceiveProps(newProps){
-    if(newProps.categories){
-     
-     const categorySwitchStates = {};    
-
-     newProps.categories.forEach((category) => {
+    if(newProps.temporaryCategories){
+      const chosenCategories = newProps.temporaryCategories.slice();
+      const categorySwitchStates = {};    
+      newProps.temporaryCategories.forEach((category) => {
        categorySwitchStates[category] = true; 
-     })
+      });
 
-     const dataSource = this.state.ds.cloneWithRows(newProps.categories.slice());
-     this.setState({categorySwitchStates, dataSource});
-    }
+      const dataSource = this.state.ds.cloneWithRows(chosenCategories);
+      this.setState({categorySwitchStates, dataSource});
+    };
   }
 
   componentWillUnmount(){
     const categorySwitchStates = this.state.categorySwitchStates;
-    const categories = [];
+    const chosenCategories = [];
 
     Object.keys(categorySwitchStates).forEach((category) => {
-      if(categorySwitchStates[category]) categories.push(category);
+      if(categorySwitchStates[category]) chosenCategories.push(category);
     });
 
-    this.props.setCategories(categories);
+    this.props.setTemporaryCategories(chosenCategories);
   }
 
   selectOrDeselectCategory(value, rowData){
@@ -65,10 +66,9 @@ class Categories extends Component {
 
      categorySwitchStates[rowData] = value;
 
-     const dataSource = this.state.ds.cloneWithRows(this.props.categories.slice());
+     const dataSource = this.state.ds.cloneWithRows(this.state.chosenCategories.slice());
 
      this.setState({categorySwitchStates, dataSource});
-
   };
 
   _renderRow(rowData){

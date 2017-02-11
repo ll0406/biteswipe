@@ -64,9 +64,10 @@ export const getRestaurants = () =>
 				})
 				.then(res => res.data)
 				.then(body => {
-					if(!body.businesses.length) dispatch(setAvailable(false));
-					else dispatch(receiveRestaurants(body.businesses.sort(() => 0.5 - Math.random())));
-					resolve();
+					let restaurants = body.businesses;
+					if(!restaurants.length) dispatch(setAvailable(false));
+					else dispatch(receiveRestaurants(restaurants.sort(() => 0.5 - Math.random())));
+					resolve(restaurants);
 				})
 				.catch(error => {
 					error.type = 'RESTAURANTS_ERROR';
@@ -82,7 +83,7 @@ export const getRestaurant = (id) =>
 			.then(res => res.data)
 			.then(restaurant => {
 				dispatch(receiveRestaurant(restaurant));
-				resolve();
+				resolve(restaurant);
 			})
 			.catch(error => handleAuthenticationError(error, getRestaurant, reject));
 			});
@@ -95,7 +96,7 @@ export const getReviews = (id) =>
 			.then(res => res.data)
 			.then(reviews => {
 				dispatch(receiveReviews(reviews));
-				resolve();
+				resolve(reviews);
 			})
 			.catch(error => handleAuthenticationError(error, getReviews, reject));
 			});
