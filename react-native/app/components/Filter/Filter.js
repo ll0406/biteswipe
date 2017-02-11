@@ -85,9 +85,7 @@ export default class Filter extends Component {
 
 	processRadius(radius) {
 
-		let stringRadius = radius.toString();
-
-		console.log("stringRadius!!!: ", stringRadius);
+		//need a default radius if radius comes in blank!
 
 		const conversionChart = {
 			5 : '8047',
@@ -97,15 +95,15 @@ export default class Filter extends Component {
 			25 : '40000' //Yelp indicates the 40K meters is the max
 		};
 
-		console.log("converison!!! ", conversionChart[stringRadius]);
+		console.log("converison!!! ", conversionChart[radius]);
 		
-		return conversionChart[stringRadius];
+		return conversionChart[radius];
 	}
 
 	render(){
 
 		return(
-			<View  style={styles.container}>
+			<View style={styles.container}>
 
 				<Text>BiteSwipe Filter Options:</Text>
                 <Text>Add Restaurant Category:</Text>
