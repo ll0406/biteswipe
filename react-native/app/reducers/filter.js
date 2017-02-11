@@ -14,14 +14,14 @@ const reducer = (state = initialState, action) => {
 		case RECEIVE_LOCATION:
 			newState.location = action.location;
 			break;
-    case RECEIVE_SETTINGS:
-      newState.settings = action.settings;
-      break;
-    case SET_CATEGORIES:
-      newState.settings.categories = action.categories;
-      break;
-    default:
-      return state
+	    case RECEIVE_SETTINGS:
+	      newState.settings = action.settings;
+	      break;
+	    case SET_CATEGORIES:
+	      newState.settings.categories = action.categories;
+	      break;
+	    default:
+	      return state
 	};
 
 	return newState;

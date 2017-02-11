@@ -30,6 +30,7 @@ export default class Filter extends Component {
 	  this.updateFilterOption = this.updateFilterOption.bind(this);
 	  this.onDollarAmountPress = this.onDollarAmountPress.bind(this);
 	  this.renderRow = this.renderRow.bind(this);
+	  this.processRadius = this.processRadius.bind(this);
 
 	  const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -54,7 +55,7 @@ export default class Filter extends Component {
 	updateFilterOption(){
 	    Promise.all([
 	       //this.props.getCurrentLocation(),
-	       this.props.addSearchSettings(this.state.priceRange,this.state.radius)
+	       this.props.addSearchSettings(this.state.priceRange, this.processRadius(this.state.radius))
 	     ])
 	    .then(() => {
 	       this.props.clearSwipeCounter();
@@ -79,6 +80,26 @@ export default class Filter extends Component {
 		    />
 		</View>
 	  )   	
+	}
+
+
+	processRadius(radius) {
+
+		let stringRadius = radius.toString();
+
+		console.log("stringRadius!!!: ", stringRadius);
+
+		const conversionChart = {
+			5 : '8047',
+			10 : '16093',
+			15 : '24140',
+			20 : '32187',
+			25 : '40000' //Yelp indicates the 40K meters is the max
+		};
+
+		console.log("converison!!! ", conversionChart[stringRadius]);
+		
+		return conversionChart[stringRadius];
 	}
 
 	render(){
