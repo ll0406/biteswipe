@@ -9,11 +9,10 @@ import TimeAgo from 'react-native-timeago';
 import { styles } from './styles';
 
 export default class Reviews extends Component {
-
   render() {
     return (
-    <ScrollView>
-      <View style={styles.tab}>
+    <ScrollView style={styles.tab}>
+      <View style={styles.scrollItem}>
         {
           this.props.reviews.map( (review, index) => {
             return (

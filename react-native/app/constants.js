@@ -37,5 +37,7 @@ export const SET_TEMPORARY_CATEGORIES = 'SET_TEMPORARY_CATEGORIES';
 // ui
 export const SET_CURRENT_TAB = 'SET_CURRENT_TAB';
 
+// general
+export const CLEAR_STORE = 'CLEAR_STORE';
 
 

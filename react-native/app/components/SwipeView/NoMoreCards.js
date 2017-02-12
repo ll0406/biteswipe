@@ -5,13 +5,12 @@ import {Actions} from 'react-native-router-flux';
 
 const NoMoreCards = props => {
 
-	const getRestaurants = () => props.getRestaurants();
 	const filter = () => Actions.filter();
 
   return (
   	<View style={styles.card}>
   		<Text style={styles.text}>No Restaurants Found</Text>
-  		<TouchableOpacity onPress={getRestaurants}>
+  		<TouchableOpacity onPress={filter}>
 	  		<Image source={require('./img/veggies.jpg')} style={styles.image}>
 	  			<View style={styles.imageIconContainer}>
 	  				<Icon name="refresh" size={100} color="white"/>

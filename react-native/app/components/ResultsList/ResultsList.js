@@ -62,7 +62,8 @@ export default class ResultsList extends Component {
 			        					<Image style={styles.image} source={{ uri: restaurant.image_url }}>
 			        						<View style={styles.textContainer}>
 			        							<Text style={styles.name}>{restaurant.name}</Text>
-			        							<Text style={styles.address}>{restaurant.location.address1}</Text>
+			        							<Text style={styles.address}>{restaurant.location.display_address[0]}</Text>
+			        							<Text style={styles.address}>{restaurant.location.display_address[1]}</Text>
 			        						</View>
 			        					</Image>
 		        					</TouchableOpacity>

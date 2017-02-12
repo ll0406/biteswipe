@@ -2,6 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import MapView from 'react-native-maps';
 import TimerMixin from 'react-timer-mixin';
+import {Actions} from 'react-native-router-flux';
 
 import styles from './styles';
 
@@ -32,6 +33,9 @@ const ResultsMap = React.createClass({
 	},
 
 	render() {
+
+		const goToRestaurant = restaurant => Actions.restaurant({ selectedRestaurant: restaurant }); 
+
 		return (
 			<View style ={styles.container}>
 			  <MapView
@@ -50,7 +54,7 @@ const ResultsMap = React.createClass({
 			    			identifier={`Marker${index}`}
 			    			coordinate={restaurant.coordinates}
 			    			title={restaurant.name}
-			    			description={restaurant.location.display_address1}
+			    			onCalloutPress={() => goToRestaurant(restaurant)}
 			    		/>)
 			    }
 			  </MapView>

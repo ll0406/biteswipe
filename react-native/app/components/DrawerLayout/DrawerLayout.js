@@ -28,8 +28,7 @@ export default class DrawerLayout extends Component {
 		// general setup -> drawer should only be mounted once
 	  Promise.all(promises)
 	  .then(() => {
-	  	// restaurants -> ImmutableJS list
-	  	if(this.props.restaurants.size > 0) return null;
+	  	if(this.props.restaurants.length) return null;
 	  	else return this.props.getRestaurants();
 	  })
 	  .then(() => {

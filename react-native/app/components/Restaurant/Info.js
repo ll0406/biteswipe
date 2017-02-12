@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 
 import {
-  Text
+  Text,
+  Linking
 } from 'react-native';
 
 import { View } from 'native-base';
@@ -9,7 +10,6 @@ import { View } from 'native-base';
 import { styles } from './styles';
 
 export default class Info extends Component {
-
   render() {
     return (
       <View style={styles.tab}>
@@ -33,6 +33,9 @@ export default class Info extends Component {
               )
             })
           }
+        </Text>
+        <Text style={styles.link} onPress={() => Linking.openURL(this.props.restaurant.url)}>
+          {this.props.restaurant.url.substring(0, 50) + '...'}
         </Text>
       </View>
     );

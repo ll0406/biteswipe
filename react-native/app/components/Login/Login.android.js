@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 import {
   View,
-  KeyboardAvoidingView,
   TextInput,
   Linking
 } from 'react-native';
@@ -25,6 +24,8 @@ import {ADDRESS} from '../../constants';
 import {Actions} from 'react-native-router-flux';
 
 import t from 'tcomb-form-native';
+
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 const Form = t.form.Form;
 const Email = t.subtype(t.String, email => {
@@ -102,7 +103,7 @@ export default class Login extends Component {
 
     return (
       <View style={styles.container}>
-        <KeyboardAvoidingView style={[theme.cardStyle, styles.card]} behavior="position">
+        <View style={[theme.cardStyle, styles.card]}>
 
           <SocialIcon
             title="Sign In With Facebook"
@@ -140,7 +141,8 @@ export default class Login extends Component {
 
           <Button title="Login" onPress={login} buttonStyle={styles.login}/>
           
-        </KeyboardAvoidingView>
+        </View>
+        <KeyboardSpacer/>
       </View>
     );
   };

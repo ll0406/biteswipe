@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 
 import {
   Platform,
-  View,
-  KeyboardAvoidingView
+  View
 } from 'react-native';
 
 import styles from './styles';
@@ -20,6 +19,8 @@ import {
 } from 'react-native-elements';
 
 import t from 'tcomb-form-native';
+
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 const Form = t.form.Form;
 const Email = t.subtype(t.String, email => {
@@ -107,7 +108,7 @@ export default class Signup extends Component {
 
     return (
       <View style={styles.container}>
-        <KeyboardAvoidingView style={[theme.cardStyle, styles.card]} behavior="position">
+        <View style={[theme.cardStyle, styles.card]} behavior="position">
 
           <Form
             ref="form"
@@ -119,7 +120,8 @@ export default class Signup extends Component {
 
           <Button title="Signup" onPress={signup} buttonStyle={styles.signup}/>
           
-        </KeyboardAvoidingView>
+        </View>
+        <KeyboardSpacer/>
       </View>
     );
   };

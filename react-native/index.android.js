@@ -67,7 +67,7 @@ export default class BiteSwipe extends Component {
       this.setState({
         rehydrated: true
       });
-    }).purge()
+    });
   }
 
   componentDidMount() {
@@ -94,9 +94,7 @@ export default class BiteSwipe extends Component {
   }
 
   render() {
-    //if(!this.state.rehydrated || !this.state.animated) {
-
-    if(false) {
+    if(!this.state.rehydrated || !this.state.animated) {
       return (
         <LoadingSplash animationCompleted={this.animationCompleted}/>
         );

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, Dimensions, StyleSheet} from 'react-native';
+import {View, Image, Text, Dimensions, StyleSheet} from 'react-native';
 import { styles } from './styles';
 
 const CarouselItem = (props) => {
@@ -8,6 +8,9 @@ const CarouselItem = (props) => {
       <Image
         source={{uri: props.image}}
         style={styles.cardImage}>
+        <View style={styles.cardTitleContainer}>
+          <Text style={styles.cardTitle}>{props.name}</Text>
+        </View>
       </Image>
     </View>
     );

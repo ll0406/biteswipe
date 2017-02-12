@@ -27,8 +27,8 @@ export const styles = StyleSheet.create({
     flex: 1
   },
   cardImage: {
-    width: Dimensions.get('window').width*1,
-    height: Dimensions.get('window').height*.5
+    width: Dimensions.get('window').width * 1,
+    height: Dimensions.get('window').height * 0.5
   },
   reviewImage: {
     width: 30,
@@ -36,9 +36,11 @@ export const styles = StyleSheet.create({
     borderRadius: 15
   },
   tab: {
-    flex: 1,
-    height: 850,
+    width: Dimensions.get('window').width * 1,
     padding: 15
+  },
+  scrollItem: {
+    height: 850
   },
   tabTitle: {
     color: 'black'
@@ -52,5 +54,8 @@ export const styles = StyleSheet.create({
   },
   pushDown: {
     marginTop: 12
+  },
+  link: {
+    color: 'blue'
   }
-})
+});

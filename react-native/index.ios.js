@@ -1,4 +1,4 @@
-import Rimport React, { Component } from 'react';
+import React, { Component } from 'react';
 import {AppRegistry, View, StyleSheet, Linking, AsyncStorage} from 'react-native';
 import {connect, Provider} from 'react-redux';
 import store from './app/store';
@@ -41,11 +41,11 @@ const scenes = Actions.create(
     </Scene>
 
     <Scene key="loggedIn" component={DrawerLayout} open={false} hideNavBar>
+      <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>
       <Scene key="categories" component={Categories} title="Categories"/>
       <Scene key="additionalcategories" component={AdditionalCategories} title="Additional Categories"/>
-      <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>
       <Scene key="filter" component={Filter} title="Search Settings"/>
-      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant" intial/>
+      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant"/>
     </Scene>
 
   </Scene>
@@ -66,7 +66,7 @@ export default class BiteSwipe extends Component {
     persistStore(store, {storage: AsyncStorage}, () => {
       this.setState({
         rehydrated: true
-      })
+      });
     });
   }
 
@@ -125,3 +125,4 @@ const styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('BiteSwipe', () => BiteSwipe);
+

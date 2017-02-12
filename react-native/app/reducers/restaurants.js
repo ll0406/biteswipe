@@ -2,11 +2,9 @@ import {
 	RECEIVE_RESTAURANTS, CLEAR_RESTAURANTS, INCREMENT_SWIPE_COUNTER, SET_AVAILABLE, 
 	CLEAR_SWIPE_COUNTER, ADD_TO_RESULTS, REMOVE_FROM_RESULTS, RECEIVE_RESTAURANT, RECEIVE_REVIEWS
 } from '../constants';
-import Immutable from 'immutable';
-import {REHYDRATE} from 'redux-persist/constants';
 
 const initialState = {
-	list: Immutable.List([]),
+	list: [],
 	results: [],
 	swipeCounter: 0,
 	available: true
@@ -16,10 +14,10 @@ const reducer = (state = initialState, action) => {
 	let newState = Object.assign({}, state);
 	switch(action.type) {
 		case RECEIVE_RESTAURANTS:
-			newState.list = newState.list.concat(Immutable.List(action.restaurants));
+			newState.list = newState.list.concat(action.restaurants);
 			break;
 		case CLEAR_RESTAURANTS:
-			newState.list = Immutable.List([]);
+			newState.list = [];
 			break;
 		case INCREMENT_SWIPE_COUNTER:
 			newState.swipeCounter = newState.swipeCounter + 1;
@@ -42,12 +40,6 @@ const reducer = (state = initialState, action) => {
     case RECEIVE_REVIEWS:
       newState.reviews = action.reviews;
       break;
-    case REHYDRATE:
-    	if(action.payload.restaurants) {
-    		newState = {...newState, ...action.payload.restaurants};
-    		newState.list = Immutable.List(newState.list);
-    	};
-    	break;
     default:
       return state;
 	};
