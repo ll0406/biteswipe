@@ -36,7 +36,6 @@ class AutocompleteExample extends Component {
   componentDidMount() {
     fetch(`${API}/films/`).then(res => res.json()).then((json) => {
       const { results: films } = json;
-      console.log("tell me the films: ", films);
       this.setState({ films });
     });
   }

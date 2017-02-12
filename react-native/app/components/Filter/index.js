@@ -2,37 +2,39 @@ import { connect } from 'react-redux';
 import Filter from './Filter';
 
 import {getRestaurants, clearRestaurants, clearSwipeCounter, setAvailable} from '../../action-creators/restaurants';
-import {getCurrentLocation, getSearchSettings, addSearchSettings, receiveSearchSettings} from '../../action-creators/filter';
+import {getCurrentLocation, updateSearchSettings, setTemporaryCategories} from '../../action-creators/filter';
 
 const mapStateToProps = state => {
   return {
     location: state.filter.location,
-    settings: state.filter.settings
+    settings: state.filter.settings,
+    chosenCategories: state.filter.settings.categories,
+    temporaryCategories: state.filter.temporaryCategories
   };
 }
 
 const mapDispatchToProps = dispatch => { 
   return { 
-    getCurrentLocation: () => { 
-      return dispatch(getCurrentLocation())
-    } ,
     getRestaurants: () => {
-      return dispatch(getRestaurants())
-    },
-    getSearchSettings: () => { 
-      return dispatch(getSearchSettings())
-    } ,
-    addSearchSettings: (priceRange, radius) => { 
-      return dispatch(addSearchSettings(priceRange, radius))
-    }, 
-    receiveSearchSettings: (localSettings) => {
-      return dispatch(receiveSearchSettings(localSettings))
+      return dispatch(getRestaurants());
     },
     clearRestaurants: () => {
-      return dispatch(clearRestaurants())
+      return dispatch(clearRestaurants());
     },
     clearSwipeCounter: () => {
-      return dispatch(clearSwipeCounter())
+      return dispatch(clearSwipeCounter());
+    },
+    setAvailable: available => {
+      return dispatch(setAvailable(available));
+    },
+    getCurrentLocation: () => { 
+      return dispatch(getCurrentLocation());
+    } ,
+    updateSearchSettings: (priceRange, radius, categories) => { 
+      return dispatch(updateSearchSettings(priceRange, radius, categories));
+    },
+    setTemporaryCategories: categories => { 
+      return dispatch(setTemporaryCategories(categories));
     }
   }
 }

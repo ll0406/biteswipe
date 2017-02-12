@@ -44,7 +44,8 @@ export default class Filter extends Component {
 	};
 
 	componentWillUnmount(){
-		
+		// clear temporary categories 
+		this.props.setTemporaryCategories(null);
 	}
 
 	onDollarAmountPress(value){
@@ -57,13 +58,17 @@ export default class Filter extends Component {
 	}
 
 	updateFilterOption(){
+		// prevent user from making changes during update
 		this.setState({
 			updating: true
 		});
 
+		// if tempCategories are null then use same categories found in settings
+		const chosenCategories = this.props.temporaryCategories || this.props.chosenCategories;
+
     Promise.all([
-       // this.props.getCurrentLocation(),
-       this.props.addSearchSettings(this.state.priceRange, this.convertMilesToMeters(this.state.radius))
+       this.props.getCurrentLocation(),
+       this.props.updateSearchSettings(this.state.priceRange, this.convertMilesToMeters(this.state.radius), chosenCategories)
      ])
     .then(() => {
        this.props.clearSwipeCounter();
@@ -75,8 +80,11 @@ export default class Filter extends Component {
     	this.setState({
     		updating: false
     	});
-    	if(!restaurants.length) Alert.alert('Filter Settings', 'No restaurants found')
-    	else Actions.pop();
+    	if(!restaurants.length) Alert.alert('Filter Settings', 'No restaurants found');
+    	else {
+    		this.props.setAvailable(true);
+    		Actions.pop();
+    	};
     })
     .catch(console.log);
 	}
@@ -129,6 +137,7 @@ export default class Filter extends Component {
 			      <ListView
 			        renderRow={this.renderRow}
 			        dataSource={this.state.dataSource}
+			        enableEmptySections
 			      />
 			    </List>
 	        <Text style={styles.text}>

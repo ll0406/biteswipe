@@ -47,7 +47,6 @@ const updateSecretsFile = (keys, values) => {
 };
 
 const convertRadiusToMeters = (radius) => {
-	console.log("ceiling!? ",  Math.ceil(radius * 1609.34));
 	return Math.ceil(radius * 1609.34);
 };
 

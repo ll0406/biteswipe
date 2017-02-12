@@ -34,7 +34,7 @@ export default class extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.restaurant.id !== nextProps.restaurant.id) {
+    if(this.props.restaurant && this.props.restaurant.id !== nextProps.restaurant.id) {
       // reset loading screen
       this.setState({
         loading: true

@@ -17,9 +17,6 @@ const reducer = (state = initialState, action) => {
 	    case RECEIVE_SETTINGS:
 	      newState.settings = action.settings;
 	      break;
-	    case SET_CATEGORIES:
-	      newState.settings.categories = action.categories;
-	      break;
       case SET_TEMPORARY_CATEGORIES:
         newState.temporaryCategories = action.temporaryCategories;
         break;

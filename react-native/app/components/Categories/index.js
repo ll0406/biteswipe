@@ -1,18 +1,23 @@
 import { connect } from 'react-redux';
 import Categories from './Categories';
+import {getCategories} from '../../action-creators/categories';
 import {setTemporaryCategories} from '../../action-creators/filter';
 
 const mapStateToProps = state => {
   return {
     chosenCategories: state.filter.settings.categories,
-    temporaryCategories: state.filter.temporaryCategories
+    temporaryCategories: state.filter.temporaryCategories,
+  	categories: state.categories
   };
 }
 
 const mapDispatchToProps = dispatch => { 
-  return {     
-    setTemporaryCategories: (categories) => {
-      return dispatch(setTemporaryCategories(categories))
+  return { 
+  	getCategories: () => {
+  		return dispatch(getCategories());
+  	},
+    setTemporaryCategories: categories => {
+      return dispatch(setTemporaryCategories(categories));
     }
   }
 }

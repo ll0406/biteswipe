@@ -18,7 +18,7 @@ export const HighlightsBox = props => {
         || category.alias === 'irish_pubs') 
     }
 
-    if ( props.restaurant.categories.some(hasBooze) ) {
+    if(props.restaurant.categories.some(hasBooze)) {
       return(<Image source={require('./img/beer_ico.png')} style={styles.highlightsBoxIcon} />);
     } else {
       return(<Image style={styles.highlightsBoxIcon} />);
@@ -28,17 +28,16 @@ export const HighlightsBox = props => {
   formatPrice = () => {
     switch (props.restaurant.price) {
       case '$': 
-        return (<View style={styles.priceBox}><Text style={styles.priceBold}>$<Text style={styles.priceLight}>$$$</Text></Text></View>);
+        return (<View style={styles.priceBox}><Text style={styles.priceLight}>$<Text style={styles.priceBold}>$$$</Text></Text></View>);
       case '$$':
-        return (<View style={styles.priceBox}><Text style={styles.priceBold}>$$<Text style={styles.priceLight}>$$</Text></Text></View>);
+        return (<View style={styles.priceBox}><Text style={styles.priceLight}>$$<Text style={styles.priceBold}>$$</Text></Text></View>);
       case '$$$':
-        return (<View style={styles.priceBox}><Text style={styles.priceBold}>$$$<Text style={styles.priceLight}>$</Text></Text></View>);
+        return (<View style={styles.priceBox}><Text style={styles.priceLight}>$$$<Text style={styles.priceBold}>$</Text></Text></View>);
       case '$$$$':
-        return (<View style={styles.priceBox}><Text style={styles.priceBold}>$$$$<Text style={styles.priceLight}></Text></Text></View>);
+        return (<View style={styles.priceBox}><Text style={styles.priceLight}>$$$$<Text style={styles.priceBold}></Text></Text></View>);
       default :
         return (<View style={styles.priceBox}><Text>-no data-</Text></View>)
     }
-
   }
 
   let distance = (props.restaurant.distance * 0.000621371);

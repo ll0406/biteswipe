@@ -99,9 +99,11 @@ export const styles = StyleSheet.create({
     borderRadius: 2
   },
   priceBold: {
+    fontSize: 20,
     color: '#FFFFFF'
   },
   priceLight: {
+    fontSize: 20,
     color: '#000000'
   },
   distanceDot: {

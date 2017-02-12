@@ -7,7 +7,7 @@ import { Actions } from 'react-native-router-flux';
 import { HighlightsBox } from './HighlightsBox';
 import { RatingStars } from './RatingStars';
 
-export const SummaryCard = React.createClass({  
+export const SummaryCard = React.createClass({
   render () {
     const restaurant = this.props.restaurant;
     const goToRestaurant = () => Actions.restaurant({selectedRestaurant: restaurant});

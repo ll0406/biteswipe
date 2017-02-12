@@ -5,7 +5,6 @@ const seedUsers = () => db.Promise.map([
   {name: 'Barack Obama', email: 'barack@example.gov', password: '123456'}
 ], user => db.model('users').create(user));
 
-console.log(categories.length);
 const restaurantCategories = categories.filter(category => category.parents.includes('restaurants'));
 
 const seedCategories = () => db.Promise.map(restaurantCategories, category => db.model('categories').create(category));

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {LOCATION_ERROR, SEARCH_SETTINGS_ERROR} from '../errors';
 import {handleAuthenticationError} from './auth';
-import {RECEIVE_LOCATION, RECEIVE_SETTINGS, SET_CATEGORIES, SET_TEMPORARY_CATEGORIES, ADDRESS} from '../constants';
+import {RECEIVE_LOCATION, RECEIVE_SETTINGS, SET_TEMPORARY_CATEGORIES, ADDRESS} from '../constants';
 
 export const receiveLocation = location =>
 ({
@@ -15,16 +15,10 @@ export const receiveSearchSettings = settings =>
   settings
 });
 
-export const setCategories = categories => 
-({
-  type: SET_CATEGORIES,
-  categories
-});
-
-export const setTemporaryCategories = categories => 
+export const setTemporaryCategories = temporaryCategories => 
 ({
   type: SET_TEMPORARY_CATEGORIES,
-  categories
+  temporaryCategories
 });
 
 export const getCurrentLocation = () => {
@@ -64,11 +58,11 @@ export const getSearchSettings = () => {
   };
 };
 
-export const addSearchSettings = (priceRange, radius) => {
+export const updateSearchSettings = (priceRange, radius, categories) => {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
 
-      const settings = { priceRange: priceRange, radius: radius, categories: getState().filter.settings.categories };
+      const settings = { priceRange, radius, categories };
       dispatch(receiveSearchSettings(settings));
 
       axios.put(`${ADDRESS}/api/searchSettings`, settings)
@@ -78,7 +72,7 @@ export const addSearchSettings = (priceRange, radius) => {
         })
         .catch(error => {
           error.type = SEARCH_SETTINGS_ERROR;
-          handleAuthenticationError(error, addSearchSettings, reject)
+          handleAuthenticationError(error, updateSearchSettings, reject)
         }); 
     }); 
   }

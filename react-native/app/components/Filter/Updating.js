@@ -8,7 +8,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-const Loading = props => {
+const Updating = props => {
 	return (
 		<View style={styles.container}>
 			<Text>Updating Settings</Text>
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default Loading;
+export default Updating;

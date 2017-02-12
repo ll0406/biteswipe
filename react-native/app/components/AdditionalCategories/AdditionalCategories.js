@@ -14,8 +14,6 @@ import {
 import { Actions } from 'react-native-router-flux';
 import styles from './styles';
 
-import Loading from '../Loading';
-
 class AdditionalCategories extends Component {
   constructor(props){
     super(props);
@@ -24,56 +22,40 @@ class AdditionalCategories extends Component {
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-    const categoryTitles = props.categories.map(category => category.title);
+    const chosenCategories = props.temporaryCategories || props.chosenCategories;
 
     const categorySwitchStates = {};    
-
-    props.chosenCategories.forEach((category) => {
-       categorySwitchStates[category] = true; 
-    })
-    
-    this.state = {
-      ds,
-      dataSource: ds.cloneWithRows(categoryTitles),
-      categorySwitchStates,
-      categoryTitles,
-      loading: false
-    };
-
-  }
-
-  componentDidMount(){
-    this.setState({
-      loading: true
+    chosenCategories.forEach((category) => {
+       categorySwitchStates[category] = true;
     });
 
-    this.props.getCategories()
-    .then(() => {
-      this.setState({
-        loading: false
-      });
-    })
-    .catch(console.log);
+    const categories = props.categories.list.map(category => category.alias);
+    
+    this.state = {
+      chosenCategories,
+      ds,
+      dataSource: ds.cloneWithRows(categories),
+      categorySwitchStates,
+      categories
+    };
+
   }
 
   componentWillReceiveProps(newProps){
     // receive master list of categories
     if(newProps.categories){
-      const categoryTitles = newProps.categories.map(category => category.title);
-      const dataSource = this.state.ds.cloneWithRows(categoryTitles);
-      this.setState({categoryTitles, dataSource});
-      this.setState({categoryTitles, dataSource});
+      const categories = newProps.categories.list.map(category => category.alias);
+      const dataSource = this.state.ds.cloneWithRows(categories);
+      this.setState({categories, dataSource});
     };
 
-    if(newProps.chosenCategories){
-     
+    if(newProps.temporaryCategories){
      const categorySwitchStates = {};    
-
-     newProps.chosenCategories.forEach((category) => {
+     newProps.temporaryCategories.forEach((category) => {
        categorySwitchStates[category] = true; 
      })
 
-     const dataSource = this.state.ds.cloneWithRows(this.state.categoryTitles.slice());
+     const dataSource = this.state.ds.cloneWithRows(this.state.categories.slice());
      this.setState({categorySwitchStates, dataSource});
     };
   }
@@ -86,52 +68,50 @@ class AdditionalCategories extends Component {
       if(categorySwitchStates[category]) categories.push(category);
     });
 
-    this.props.setCategories(categories);
+    this.props.setTemporaryCategories(categories);
   }
 
   selectOrDeselectCategory(value, rowData){
-     let categorySwitchStates = this.state.categorySwitchStates;
+    let categorySwitchStates = this.state.categorySwitchStates;
 
-     categorySwitchStates[rowData] = value;
+    categorySwitchStates[rowData] = value;
 
-     const dataSource = this.state.ds.cloneWithRows(this.state.categoryTitles.slice());
+    const dataSource = this.state.ds.cloneWithRows(this.state.categories.slice());
 
-     this.setState({categorySwitchStates, dataSource});
+    this.setState({categorySwitchStates, dataSource});
   };
 
   _renderRow(rowData){
-      const onSwitch = this.state.categorySwitchStates[rowData] ? this.state.categorySwitchStates[rowData] : false;
-      return(
-        <View>
-          <Text>{rowData}</Text>
+    const title = this.props.categories.map[rowData];
+    const onSwitch = this.state.categorySwitchStates[rowData] ? this.state.categorySwitchStates[rowData] : false;
+    return(
+      <View style={styles.row}>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{title}</Text>
+        </View>
+        <View style={styles.switchContainer}>
           <Switch
               onValueChange={(value) => {
                 this.selectOrDeselectCategory(value, rowData);
               }}
-              style={{marginBottom: 10}}
               value={onSwitch} 
           />
         </View>
-      )
+      </View>
+    );
   }
 
   render(){
-    if(this.state.loading) {
-      return (
-        <Loading/>
-        );
-    }
-    else {    
-      return(
-        <View>
-          <ListView
-            dataSource={this.state.dataSource}
-            renderRow={this._renderRow}
-            enableEmptySections
-          />
-        </View>
-      );
-    }
+    return(
+      <View style={styles.container}>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this._renderRow}
+          renderSeparator={(secId, rowId) => <View key={rowId} style={styles.separator}/>}
+          enableEmptySections
+        />
+      </View>
+    );
   }
 }
 

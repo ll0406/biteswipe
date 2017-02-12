@@ -41,11 +41,11 @@ const scenes = Actions.create(
     </Scene>
 
     <Scene key="loggedIn" component={DrawerLayout} open={false} hideNavBar>
-      <Scene key="categories" component={Categories} title="Categories"/>
-      <Scene key="additionalcategories" component={AdditionalCategories} title="AdditionalCategories"/>
       <Scene key="swipe" component={TabBar} title="BiteSwipe" initial/>
+      <Scene key="categories" component={Categories} title="Categories"/>
+      <Scene key="additionalcategories" component={AdditionalCategories} title="Additional Categories"/>
       <Scene key="filter" component={Filter} title="Search Settings"/>
-      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant" intial/>
+      <Scene key="restaurant" component={Restaurant} hideNavBar={false} title="Restaurant"/>
     </Scene>
 
   </Scene>
@@ -66,8 +66,8 @@ export default class BiteSwipe extends Component {
     persistStore(store, {storage: AsyncStorage}, () => {
       this.setState({
         rehydrated: true
-      })
-    });
+      });
+    }).purge()
   }
 
   componentDidMount() {

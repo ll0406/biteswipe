@@ -3,11 +3,13 @@
 const Sequelize = require('sequelize');
 const db = require('APP/db');
 
-const categories = db.define('categories', {
-
+const category = db.define('categories', {
   title: {
     type: Sequelize.STRING
+  },
+  alias: {
+  	type: Sequelize.STRING
   }
 });
 
-module.exports = categories;
+module.exports = category;

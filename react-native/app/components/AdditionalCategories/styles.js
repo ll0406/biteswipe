@@ -1,48 +1,32 @@
-
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F5FCFF',
+    flex: 1
+  },
+  row: {
+    flexDirection: 'row',
     flex: 1,
-    paddingTop: 25
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10
   },
-  autocompleteContainer: {
+  textContainer: {
     flex: 1,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: 1
+    justifyContent: 'center'
   },
-  itemText: {
-    fontSize: 15,
-    margin: 2
+  text: {
+    fontSize: 16
   },
-  descriptionContainer: {
-    // `backgroundColor` needs to be set otherwise the
-    // autocomplete input will disappear on text input.
-    backgroundColor: '#F5FCFF',
-    marginTop: 25
+  switchContainer: {
+    flex: 1,
+    justifyContent: 'center'
   },
-  infoText: {
-    textAlign: 'center'
-  },
-  titleText: {
-    fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 10,
-    marginTop: 10,
-    textAlign: 'center'
-  },
-  directorText: {
-    color: 'grey',
-    fontSize: 12,
-    marginBottom: 10,
-    textAlign: 'center'
-  },
-  openingText: {
-    textAlign: 'center'
+  separator: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: 'black',
   }
 });
 

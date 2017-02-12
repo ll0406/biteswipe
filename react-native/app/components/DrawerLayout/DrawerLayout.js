@@ -15,12 +15,11 @@ export default class DrawerLayout extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			initalized: false
+			initialized: false
 		};
 	}
 
-	componentDidMount(){
-
+	componentDidMount() {
 		let promises = [];
 		if(!this.props.user) promises.push(this.props.getAuthenticatedUser());
 		if(!this.props.location) promises.push(this.props.getCurrentLocation());
@@ -29,12 +28,13 @@ export default class DrawerLayout extends Component {
 		// general setup -> drawer should only be mounted once
 	  Promise.all(promises)
 	  .then(() => {
-	  	if(this.props.restaurants.length) return null;
+	  	// restaurants -> ImmutableJS list
+	  	if(this.props.restaurants.size > 0) return null;
 	  	else return this.props.getRestaurants();
 	  })
 	  .then(() => {
 	  	this.setState({
-	  		initalized: true
+	  		initialized: true
 	  	});	  	
 	  })
 	  .catch(error => {
@@ -49,8 +49,9 @@ export default class DrawerLayout extends Component {
 	  		case RESTAURANTS_ERROR:
 	  			break;
 	  	}
+	  	// disable loading screen
 	  	this.setState({
-	  		initalized: true
+	  		initialized: true
 	  	});
 	  });
 
@@ -63,7 +64,7 @@ export default class DrawerLayout extends Component {
 		const current = children[children.length - 1];
 		const open = navigationState.open;
 
-		if(!this.state.initalized) {
+		if(!this.state.initialized) {
 			return (
 				<Loading/>
 				);

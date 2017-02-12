@@ -6,10 +6,10 @@
 
 const User = require('./user');
 const OAuth = require('./oauth');
-const searchSettings = require('./searchSettings');
-const categories = require('./categories');
+const SearchSettings = require('./searchSettings');
+const Category = require('./category');
 
 OAuth.hasOne(User);
-User.hasOne(searchSettings);
+User.hasOne(SearchSettings);
 
-module.exports = {User, searchSettings, categories};
+module.exports = {User, SearchSettings, Category};
