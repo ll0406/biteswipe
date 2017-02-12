@@ -55,10 +55,6 @@ export default class DrawerLayout extends Component {
 	  });
 	}
 
-	componentWillUnmount() {
-		console.log('unmounting');
-	}
-
 	render() {
 
 		const navigationState = this.props.navigationState;
