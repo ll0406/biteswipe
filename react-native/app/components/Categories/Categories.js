@@ -43,7 +43,7 @@ class Categories extends Component {
   }
 
   componentDidMount(){
-    // skip if all categories list and map exist
+    // skip if all categories list and map exist -> master list from yelp
     if(this.props.categories.list && this.props.categories.map) return;
 
     this.props.getCategories()
@@ -69,15 +69,17 @@ class Categories extends Component {
     };
   }
 
+  // when user leaves page add all changes to temporaryCategories
+  // only update actual categories if user presses update on main Filter page
   componentWillUnmount(){
     const categorySwitchStates = this.state.categorySwitchStates;
-    const categories = [];
+    const temporaryCategories = [];
 
     Object.keys(categorySwitchStates).forEach((category) => {
-      if(categorySwitchStates[category]) categories.push(category);
+      if(categorySwitchStates[category]) temporaryCategories.push(category);
     });
 
-    this.props.setTemporaryCategories(categories);
+    this.props.setTemporaryCategories(temporaryCategories);
   }
 
   selectOrDeselectCategory(value, rowData){
@@ -91,6 +93,8 @@ class Categories extends Component {
   };
 
   _renderRow(rowData){
+    // we store categories using their alias -> send directly to yelp
+    // display using given title (hence the map from alias to title)
     const title = this.props.categories.map[rowData];
     const onSwitch = this.state.categorySwitchStates[rowData] ? this.state.categorySwitchStates[rowData] : false;
     return(

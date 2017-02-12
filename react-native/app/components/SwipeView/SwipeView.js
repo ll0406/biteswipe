@@ -8,23 +8,19 @@ import { View, DeckSwiper } from 'native-base'
 export default class SwipeView extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      startIndex: props.swipeCounter
+    };
     this.onSwipeRight = this.onSwipeRight.bind(this);
     this.onSwipeLeft = this.onSwipeLeft.bind(this);
   }
 
-  _compareArrays(arr1, arr2) {
-    if(arr1.length !== arr2.length) return false;
-    for(let i = 0; i < arr1.length; i++) {
-      if(arr1[i].id !== arr2[i].id) return false;
-    };
-    return true;
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
-    // compare and check whether restaurants contain same values
-    if(!this._compareArrays(nextProps.restaurants, this.props.restaurants)) return true;
+    // compare and check whether restaurants have the same reference
+    // since we use concat when we add new restaurants, this only fires then
+    if(nextProps.restaurants !== this.props.restaurants) return true;
     // update when we've reached end of restaurants
-    if(nextProps.swipeCounter >= this.props.restaurants.length) return true;
+    if(nextProps.swipeCounter === this.props.restaurants.length) return true;
     return false;
   }
 
@@ -43,16 +39,16 @@ export default class SwipeView extends Component {
   render() {
 
     // only slice when rendered - determined by shouldComponentUpdate
-    let slicedRestaurants = this.props.restaurants.slice(this.props.swipeCounter);
+    let slicedRestaurants = this.props.restaurants.slice(this.state.startIndex);
 
-    if(!slicedRestaurants.length || this.props.swipeCounter >= this.props.restaurants.length) {
+    if(!slicedRestaurants.length || this.props.swipeCounter === this.props.restaurants.length) {
       return (
         <View style={styles.swipeViewBackground}>
           <NoMoreCards/>
         </View>
         );
     } else if(slicedRestaurants.length === 1) {
-      // fucking hax - DeckSwiper requires two 'cards' so we push a empty card into array
+      // this be hax - DeckSwiper requires two 'cards' so we push a empty card into array
       // on next swipe swipeCounter === restaurants.length and we rerender with NoMoreCards
       slicedRestaurants = slicedRestaurants.push({});
 

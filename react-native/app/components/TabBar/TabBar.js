@@ -30,7 +30,7 @@ export class TabBar extends Component {
 
   render() {
 
-    const count = this.props.results.length;
+    const count = Object.keys(this.props.results).length;
     const resultsLabel = count > 0 ? `Results (${count})` : 'Results'
 
     return (

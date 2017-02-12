@@ -39,5 +39,3 @@ export const SET_CURRENT_TAB = 'SET_CURRENT_TAB';
 
 // general
 export const CLEAR_STORE = 'CLEAR_STORE';
-
-

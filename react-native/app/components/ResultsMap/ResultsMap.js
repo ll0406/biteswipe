@@ -16,7 +16,8 @@ const ResultsMap = React.createClass({
 	},
 
 	componentDidMount() {
-		const markers = this.props.restaurants.map((restaurant, index) => `Marker${index}`);
+		const restaurants = this.getObjectValues(this.props.restaurants);
+		const markers = restaurants.map((restaurant, index) => `Marker${index}`);
 		// dirty hax
 		this.setTimeout(() => {
 			this.map.fitToSuppliedMarkers(markers, false);
@@ -25,15 +26,25 @@ const ResultsMap = React.createClass({
 
 	componentWillReceiveProps(newProps) {
 		if(newProps.restaurants) {
-			const markers = newProps.restaurants.map((restaurant, index) => `Marker${index}`);
+			const restaurants = this.getObjectValues(newProps.restaurants);
+			const markers = restaurants.map((restaurant, index) => `Marker${index}`);
 			this.setTimeout(() => {
 				this.map.fitToSuppliedMarkers(markers, false);
 			}, 250);
 		}
 	},
 
+	getObjectValues(object) {
+		let values = [];
+		for(let key in object) {
+			values.push(object[key]);
+		}
+		return values;
+	},
+
 	render() {
 
+		const restaurants = this.getObjectValues(this.props.restaurants);
 		const goToRestaurant = restaurant => Actions.restaurant({ selectedRestaurant: restaurant }); 
 
 		return (
@@ -48,7 +59,7 @@ const ResultsMap = React.createClass({
 			      longitudeDelta: 0.01
 			    }}>
 			    {
-			    	this.props.restaurants.map((restaurant, index) => 
+			    	restaurants.map((restaurant, index) => 
 			    		<MapView.Marker
 			    			key={index}
 			    			identifier={`Marker${index}`}

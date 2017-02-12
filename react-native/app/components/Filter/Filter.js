@@ -81,7 +81,7 @@ export default class Filter extends Component {
     	this.setState({
     		updating: false
     	});
-    	if(!restaurants.length) Alert.alert('', 'No restaurants found');
+    	if(!restaurants.length) Alert.alert('', 'No Restaurants Found');
     	else {
     		this.props.setAvailable(true);
     		Actions.pop();

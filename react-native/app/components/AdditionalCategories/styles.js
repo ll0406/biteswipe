@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +28,13 @@ const styles = StyleSheet.create({
     flex: 1,
     height: StyleSheet.hairlineWidth,
     backgroundColor: 'black',
+  },
+  search: {
+    paddingLeft: 20,
+    fontSize: 20,
+    height: 50,
+    borderWidth: 5,
+    borderColor: '#E4E4E4'
   }
 });
 

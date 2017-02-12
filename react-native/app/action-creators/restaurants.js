@@ -66,6 +66,7 @@ export const getRestaurants = () =>
 				.then(body => {
 					let restaurants = body.businesses;
 					if(!restaurants.length) dispatch(setAvailable(false));
+					// for now just randomly sort restaurants to add variation
 					else dispatch(receiveRestaurants(restaurants.sort(() => 0.5 - Math.random())));
 					resolve(restaurants);
 				})

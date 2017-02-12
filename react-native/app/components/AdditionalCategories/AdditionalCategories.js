@@ -3,12 +3,10 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
-  Button,
   Switch,
   ListView,
-  TouchableHighlight
+  TextInput
 } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
@@ -17,8 +15,9 @@ import styles from './styles';
 class AdditionalCategories extends Component {
   constructor(props){
     super(props);
-    this._renderRow = this._renderRow.bind(this);
     this.selectOrDeselectCategory = this.selectOrDeselectCategory.bind(this);
+    this._renderRow = this._renderRow.bind(this);
+    this.setSearch = this.setSearch.bind(this);
 
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -36,9 +35,10 @@ class AdditionalCategories extends Component {
       ds,
       dataSource: ds.cloneWithRows(categories),
       categorySwitchStates,
-      categories
+      categories,
+      search: '',
+      filteredCategories: categories
     };
-
   }
 
   componentWillReceiveProps(newProps){
@@ -46,7 +46,7 @@ class AdditionalCategories extends Component {
     if(newProps.categories){
       const categories = newProps.categories.list.map(category => category.alias);
       const dataSource = this.state.ds.cloneWithRows(categories);
-      this.setState({categories, dataSource});
+      this.setState({categories, filteredCategories: categories, dataSource});
     };
 
     if(newProps.temporaryCategories){
@@ -55,20 +55,22 @@ class AdditionalCategories extends Component {
        categorySwitchStates[category] = true; 
      })
 
-     const dataSource = this.state.ds.cloneWithRows(this.state.categories.slice());
+     const dataSource = this.state.ds.cloneWithRows(this.state.filteredCategories.slice());
      this.setState({categorySwitchStates, dataSource});
     };
   }
 
+  // when user leaves page add all changes to temporaryCategories
+  // only update actual categories if user presses update on main Filter page
   componentWillUnmount(){
     const categorySwitchStates = this.state.categorySwitchStates;
-    const categories = [];
+    const temporaryCategories = [];
 
     Object.keys(categorySwitchStates).forEach((category) => {
-      if(categorySwitchStates[category]) categories.push(category);
+      if(categorySwitchStates[category]) temporaryCategories.push(category);
     });
 
-    this.props.setTemporaryCategories(categories);
+    this.props.setTemporaryCategories(temporaryCategories);
   }
 
   selectOrDeselectCategory(value, rowData){
@@ -76,7 +78,7 @@ class AdditionalCategories extends Component {
 
     categorySwitchStates[rowData] = value;
 
-    const dataSource = this.state.ds.cloneWithRows(this.state.categories.slice());
+    const dataSource = this.state.ds.cloneWithRows(this.state.filteredCategories.slice());
 
     this.setState({categorySwitchStates, dataSource});
   };
@@ -101,9 +103,28 @@ class AdditionalCategories extends Component {
     );
   }
 
+  setSearch(search){
+    this.setState({
+      search
+    });
+
+    const filteredCategories = this.state.categories.filter(category => category.toLowerCase().includes(search.toLowerCase()));
+    const dataSource = this.state.ds.cloneWithRows(filteredCategories);
+
+    this.setState({dataSource, filteredCategories});
+  }
+
   render(){
     return(
       <View style={styles.container}>
+        <View style={styles.searchContainer}>
+          <TextInput
+           style={styles.search}
+           value={this.state.search}
+           onChangeText={this.setSearch}
+           placeholder="Search..."
+           underlineColorAndroid="transparent"/>
+        </View>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}

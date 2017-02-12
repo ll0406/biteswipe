@@ -53,7 +53,10 @@ export default class DrawerLayout extends Component {
 	  		initialized: true
 	  	});
 	  });
+	}
 
+	componentWillUnmount() {
+		console.log('unmounting');
 	}
 
 	render() {

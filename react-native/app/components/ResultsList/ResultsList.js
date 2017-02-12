@@ -11,18 +11,29 @@ export default class ResultsList extends Component {
 	constructor(props) {
 		super(props);
 		const ds = new ListView.DataSource({rowHasChanged: this._rowHasChanged});
+		const restaurants = this.getObjectValues(props.restaurants);
+
 		this.state = {
-		  dataSource: ds.cloneWithRows(props.restaurants)
+		  dataSource: ds.cloneWithRows(restaurants)
 		};
 		this._deleteRow = this._deleteRow.bind(this);
 	}
 
 	componentWillReceiveProps(newProps) {
 	  if(newProps.restaurants) {
+	  	const restaurants = this.getObjectValues(newProps.restaurants);
 	    this.setState({
-	      dataSource: this.state.dataSource.cloneWithRows(newProps.restaurants)
+	      dataSource: this.state.dataSource.cloneWithRows(restaurants)
 	    });
 	  };
+	}
+
+	getObjectValues(object) {
+		let values = [];
+		for(let key in object) {
+			values.push(object[key]);
+		}
+		return values;
 	}
 
 	_rowHasChanged(row1, row2) {
