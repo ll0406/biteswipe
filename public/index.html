@@ -4,20 +4,42 @@
         <title>BiteSwipe</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="styles.css">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     </head>
-    <body>
-
+    <body id="main">
+     <div id="container">
       <div class="header">
       	<h1>BiteSwipe</h1>
         <p class="tagline">Swipe through restaurants near you and choose your favorites.</p>
         <a href="https://www.dropbox.com/s/1pmjsyj1t9n6c7d/biteswipe.apk?dl=1" class="myButton">Download for Android</a>
+        <div id="instructions">Installation Instructions</div>
+        <div id="card">
+          <div class="card">
+            <ol class="card-list">
+              <li>Press the download button on your Android phone.</li>
+              <li>Enable <span class='bold'>Installation from Unknown Sources</span>. <a href="https://www.applivery.com/blog/android-unknown-sources/">Click here for help</a>.</li>
+              <li>The app will download and install automatically.</li>
+            </ol>
+          </div>
+        </div>
       </div>
 
       <div class="footer">
         <p><a href="https://github.com/dennisdeng2002/biteswipe">See the code.</a></p>
         <p>Built by Dennis, Mark, Joe and Rachel at Fullstack Academy.</p>
       </div>
-
+    </div>
     </body>
 </html>
+
+<script>
+  $('#instructions').on('click', function () {
+    if ($('#card').is(':visible')) {
+      $('#card').slideUp('slow')
+    } else {
+      $('#card').slideDown('slow')
+    }
+  });
+</script>
