@@ -32,7 +32,7 @@ const selector = props => (props.loggedIn ? 'loggedIn' : 'notLoggedIn');
 
 const scenes = Actions.create(
 
-  <Scene key="root" component={connectedSwitch} selector={selector} tabs unmountScenes>
+  <Scene key="root" component={connectedSwitch} selector={selector} tabs>
 
     <Scene key="notLoggedIn">
       <Scene key="splash" component={Splash} title="Splash" hideNavBar initial/>

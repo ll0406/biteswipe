@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
   },
   switchContainer: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'flex-end'
   },
   separator: {
     flex: 1,

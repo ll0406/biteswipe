@@ -108,7 +108,7 @@ export default class Signup extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={[theme.cardStyle, styles.card]} behavior="position">
+        <View style={[theme.cardStyle, styles.card]}>
 
           <Form
             ref="form"

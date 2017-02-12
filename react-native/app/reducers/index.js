@@ -18,7 +18,7 @@ const rootReducer = (state, action) => {
 			if(!action.loggedIn) {
 				// stagger clearing of store
 				setTimeout(() => {
-					store.dispatch(() => {
+					store.dispatch({
 						type: CLEAR_STORE
 					});
 				}, 250);

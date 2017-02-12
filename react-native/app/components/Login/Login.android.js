@@ -142,7 +142,7 @@ export default class Login extends Component {
           <Button title="Login" onPress={login} buttonStyle={styles.login}/>
           
         </View>
-        <KeyboardSpacer/>
+        <KeyboardSpacer onToggle={(a,b)=>console.log(a,b)}/>
       </View>
     );
   };
