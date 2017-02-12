@@ -1,5 +1,6 @@
 # [BiteSwipe](https://biteswipe.herokuapp.com/)
 
+[ ![Codeship Status for dennisdeng2002/biteswipe](https://app.codeship.com/projects/51f6ec90-c622-0134-97c6-6634c9578aaa/status?branch=master)](https://app.codeship.com/projects/198531)
 #### Swipe through restaurants near you and choose your favorites.
 
 Mobile app built with React Native.
