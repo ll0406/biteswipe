@@ -25,9 +25,8 @@ export default class DeckSwiper extends Component {
       fadeAnim: new Animated.Value(0.8),
       index: index,
       disabled,
-      lastCard,
-      renderEmpty: props.renderEmpty
-    }
+      lastCard
+    };
   }
 
   getInitialStyle() {
@@ -38,7 +37,7 @@ export default class DeckSwiper extends Component {
         right: 0,
         left: 0
       }
-    }
+    };
   }
 
   selectNext() {

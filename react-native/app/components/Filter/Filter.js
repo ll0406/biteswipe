@@ -25,19 +25,35 @@ export default class Filter extends Component {
 
 	  this.updateFilterOption = this.updateFilterOption.bind(this);
 	  this.onDollarAmountPress = this.onDollarAmountPress.bind(this);
+	  this.goToCategories = this.goToCategories.bind(this);
 
-	  const priceRange = [1, 2, 3, 4].map(index => props.settings.priceRange.indexOf(index) !== -1);
+	  let radius = props.settings.temporaryRadius || props.settings.radius;
+	  radius = this.convertMetersToMiles(radius);
+
+	  let priceRange = props.settings.temporaryPriceRange || props.settings.priceRange;
+	  // stored as array of indexes -> convert to as array of booleans
+	  priceRange = this.convertPriceRangeToBooleans(priceRange);
 
 	  this.state = {
-	  	radius: this.convertMetersToMiles(props.settings.radius), 
+	  	radius, 
 	  	priceRange,
 	  	updating: false
 	  };
 	};
 
-	componentWillUnmount(){
-		// clear temporary categories 
-		this.props.setTemporaryCategories(null);
+	componentWillReceiveProps(nextProps){
+		if(nextProps.temporaryRadius) {
+			const radius = this.convertMetersToMiles(nextProps.temporaryRadius);
+			this.setState({
+				radius: radius
+			});
+		};
+		if(nextProps.temporaryPriceRange) {
+			const priceRange = this.convertPriceRangeToBooleans(nextProps.temporaryPriceRange);
+			this.setState({
+				priceRange
+			});
+		};
 	}
 
 	onDollarAmountPress(value){
@@ -57,19 +73,12 @@ export default class Filter extends Component {
 
 		// if tempCategories are null then use same categories found in settings
 		const chosenCategories = this.props.temporaryCategories || this.props.chosenCategories;
-		// priceRange = [1, 2, 3]
-		let priceRange = [];
-		this.state.priceRange.forEach((bool, index) => {
-			// shift index over by 1
-			if(bool) priceRange.push(index + 1);
-		});
-
-		// all deselected === selected
-		if(!priceRange.length) priceRange = [1, 2, 3, 4];
+		const priceRange = this.convertPriceRangeToIndexes(this.state.priceRange);
+		const radius = this.convertMilesToMeters(this.state.radius);
 
     Promise.all([
        this.props.getCurrentLocation(),
-       this.props.updateSearchSettings(priceRange, this.convertMilesToMeters(this.state.radius), chosenCategories)
+       this.props.updateSearchSettings(priceRange, radius, chosenCategories)
      ])
     .then(() => {
        this.props.clearSwipeCounter();
@@ -112,9 +121,34 @@ export default class Filter extends Component {
 		return conversionChart[miles];
 	}
 
+	convertPriceRangeToIndexes(priceRange) {
+		// priceRange = [true, false, true, true] => [1, 3, 4]
+		let convertedPriceRange = [];
+		priceRange.forEach((bool, index) => {
+			// shift index over by 1
+			if(bool) convertedPriceRange.push(index + 1);
+		});
+
+		// all deselected === selected
+		if(!convertedPriceRange.length) convertedPriceRange = [1, 2, 3, 4];
+		return convertedPriceRange;
+	}
+
+	convertPriceRangeToBooleans(priceRange) {
+		// priceRange = [1, 2, 3] => [true, true, true, false]
+		return [1, 2, 3, 4].map(index => priceRange.indexOf(index) !== -1);
+	}
+
+	goToCategories() {
+		const radius = this.convertMilesToMeters(this.state.radius);
+		const priceRange = this.convertPriceRangeToIndexes(this.state.priceRange);
+		this.props.setTemporaryRadius(radius);
+		this.props.setTemporaryPriceRange(priceRange);
+		Actions.categories();
+	}
+
 	render(){
 
-		const goToCategories = () => Actions.categories();
 		const priceRange = this.state.priceRange;
 
 		if(this.state.updating) {
@@ -128,7 +162,7 @@ export default class Filter extends Component {
 				    <ListItem
 				      key={0}
 				      title="Restaurant Categories"
-				      onPress={goToCategories}
+				      onPress={this.goToCategories}
 				    />
 			    </List>
 			    <View>
