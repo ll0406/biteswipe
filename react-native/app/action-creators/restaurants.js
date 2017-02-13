@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
 	RECEIVE_RESTAURANTS, CLEAR_RESTAURANTS, INCREMENT_SWIPE_COUNTER, SET_AVAILABLE, CLEAR_SWIPE_COUNTER, 
-	ADD_TO_RESULTS, REMOVE_FROM_RESULTS, RECEIVE_RESTAURANT, RECEIVE_REVIEWS, ADDRESS
+	ADD_TO_RESULTS, REMOVE_FROM_RESULTS, CLEAR_RESULTS, RECEIVE_RESTAURANT, RECEIVE_REVIEWS, ADDRESS
 } from '../constants';
 import {RESTAURANTS_ERROR} from '../errors';
 import {handleAuthenticationError} from './auth';
@@ -36,6 +36,10 @@ export const addToResults = restaurant => ({
 export const removeFromResults = restaurant => ({
 	type: REMOVE_FROM_RESULTS,
 	restaurant
+});
+
+export const clearResults = () => ({
+	type: CLEAR_RESULTS
 });
 
 export const receiveRestaurant = restaurant => ({

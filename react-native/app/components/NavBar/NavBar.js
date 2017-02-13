@@ -37,11 +37,17 @@ const NavBar = props => {
       break;
   };
 
+  const actions = props.tab === 1 ? [{ icon: 'delete', onPress: props.clearResults}] : [];
+
   return (
   	<Toolbar
   	    title={title}
   	    icon={icon}
   	    onIconPress={onIconPress}
+        actions={actions}
+        rightIconStyle={{
+            marginRight: 20
+        }}
   	/>
   );
 };

@@ -1,8 +1,10 @@
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import NavBar from './NavBar';
 
+import {clearResults} from '../../action-creators/restaurants';
+
 const mapStateToProps = state => ({
-	routes: state.routes
+	tab: state.ui.tab
 });
-const mapDispatchToProps = {};
-export default connect()(NavBar);
+const mapDispatchToProps = { clearResults };
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
