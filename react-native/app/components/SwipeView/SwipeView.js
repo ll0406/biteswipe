@@ -3,7 +3,8 @@ import { SummaryCard } from './SummaryCard';
 import { styles } from './styles';
 import NoMoreCards from './NoMoreCards';
 
-import { View, DeckSwiper } from 'native-base'
+import { View } from 'native-base'
+import DeckSwiper from '../DeckSwiper';
 
 export default class SwipeView extends Component {
   constructor(props) {
@@ -24,15 +25,15 @@ export default class SwipeView extends Component {
     return false;
   }
 
-  onSwipeRight() {
-    this.props.addToResults(this.props.restaurants[this.props.swipeCounter]);
+  onSwipeRight(restaurant) {
+    this.props.addToResults(restaurant);
     this.onSwipeLeft();
   }
 
   onSwipeLeft() {
     this.props.incrementSwipeCounter();
     if(this.props.restaurants.length - this.props.swipeCounter < 5 && this.props.available) {
-      this.props.getRestaurants();
+      // this.props.getRestaurants();
     };
   }
   
@@ -47,39 +48,15 @@ export default class SwipeView extends Component {
           <NoMoreCards/>
         </View>
         );
-    } else if(slicedRestaurants.length === 1) {
-      // this be hax - DeckSwiper requires two 'cards' so we push a empty card into array
-      // on next swipe swipeCounter === restaurants.length and we rerender with NoMoreCards
-      slicedRestaurants = slicedRestaurants.push({});
-
-      let rendered = false;
-      const renderItem = (cardData) => {
-        if(!rendered) {
-          rendered = true;
-          return <NoMoreCards/>
-        } else {
-          return <SummaryCard restaurant={cardData}/>;
-        };
-      };
-
-      return (
-        <View style={styles.swipeViewBackground}>
-          <DeckSwiper
-            dataSource={slicedRestaurants}
-            renderItem={renderItem}
-            onSwipeRight={() => this.onSwipeRight()}
-            onSwipeLeft={() => this.onSwipeLeft()}
-          />
-        </View>
-      );
     } else {
       return (
         <View style={styles.swipeViewBackground}>
           <DeckSwiper
             dataSource={slicedRestaurants}
             renderItem={(cardData) => <SummaryCard restaurant={cardData}/>}
-            onSwipeRight={() => this.onSwipeRight()}
+            onSwipeRight={restaurant => this.onSwipeRight(restaurant)}
             onSwipeLeft={() => this.onSwipeLeft()}
+            renderEmpty={() => <NoMoreCards/>}
           />
         </View>
       );
