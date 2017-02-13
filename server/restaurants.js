@@ -37,10 +37,11 @@ const yelp = (req, res, next) => {
 			latitude: req.query.latitude,
 			longitude: req.query.longitude,
 			radius: req.query.radius,
-			price: req.query.price,
+			price: req.query.priceRange,
 			categories: req.query.categories,
 			open_now: true,
-			offset: req.query.offset
+			offset: req.query.offset,
+			limit: 50
 		}
 	})
 	.then(res => res.data)

@@ -46,8 +46,8 @@ export const handleAuthenticationError = (error, func, reject) => {
 
 export const getAccessToken = (func, reject) => 
   (dispatch, getState) =>
-    axios.get(`${ADDRESS}/api/auth/token`, 
-      {headers: {'Authorization': `Bearer ${getState().auth.refreshToken}`}})
+    axios.post(`${ADDRESS}/api/auth/token`, 
+      { refreshToken: getState().auth.refreshToken })
       .then(res => res.data)
       .then(body => {
         dispatch(updateGettingAccessToken(false));
@@ -65,8 +65,8 @@ export const getAccessToken = (func, reject) =>
 export const getAuthenticatedUser = () => 
   (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      axios.get(`${ADDRESS}/api/auth/user`, 
-        {headers: {'Authorization': `Bearer ${getState().auth.refreshToken}`}})
+      axios.post(`${ADDRESS}/api/auth/user`, 
+        { refreshToken: getState().auth.refreshToken })
         .then(res => res.data)
         .then(body => {
           dispatch(receiveAuthenticatedUser(body.user));
@@ -116,13 +116,8 @@ export const login = (username, password) =>
       });
 
 export const logout = () =>
-  (dispatch, getState) =>
-    axios.post(`${ADDRESS}/api/auth/logout`, 
-      {refreshToken: getState().auth.refreshToken})
-      .then(() => {
-        dispatch(receiveRefreshToken(''));
-        dispatch(receiveAccessToken(''));
-        dispatch(updateLoggedIn(false));
-      })
-      .catch(console.log);
-
+  dispatch => {
+    dispatch(receiveRefreshToken(''));
+    dispatch(receiveAccessToken(''));
+    dispatch(updateLoggedIn(false));
+  };

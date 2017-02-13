@@ -12,20 +12,23 @@ export const styles = StyleSheet.create({
     marginBottom: 15,
     padding: 15
   },
+  cardTitleContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-end'
+  },
   cardTitle: {
-    backgroundColor: "transparent",
     color: "#ffffff",
     fontSize: 24,
-    padding: 8,
-    position: 'absolute',
-    top: 300
+    padding: 16,
   },
   container: {
     flex: 1
   },
   cardImage: {
-    width: Dimensions.get('window').width*1,
-    height: Dimensions.get('window').height*.5
+    width: Dimensions.get('window').width * 1,
+    height: Dimensions.get('window').height * 0.5
   },
   reviewImage: {
     width: 30,
@@ -33,9 +36,11 @@ export const styles = StyleSheet.create({
     borderRadius: 15
   },
   tab: {
-    flex: 1,
-    height: 850,
+    width: Dimensions.get('window').width * 1,
     padding: 15
+  },
+  scrollItem: {
+    height: 850
   },
   tabTitle: {
     color: 'black'
@@ -49,5 +54,8 @@ export const styles = StyleSheet.create({
   },
   pushDown: {
     marginTop: 12
+  },
+  link: {
+    color: 'blue'
   }
-})
+});

@@ -105,17 +105,8 @@ auth.post('/signup', (req, res, next) => {
   .catch(next)
 }, generateRefreshToken, generateAccessToken, respondWithTokens)
 
-auth.post('/logout', (req, res, next) => {
-  User.update({refresh_token: ''}, {where: {refresh_token: req.body.refreshToken}})
-  .then(user => {
-    if(!user) res.status(404).send('Invalid refresh token')
-    else res.sendStatus(200)
-  })
-  .catch(next)
-})
+auth.post('/token', authenticateRefreshToken, generateAccessToken, respondWithTokens)
 
-auth.get('/token', authenticateRefreshToken, generateAccessToken, respondWithTokens)
-
-auth.get('/user', authenticateRefreshToken, respondWithUser)
+auth.post('/user', authenticateRefreshToken, respondWithUser)
 
 module.exports = auth

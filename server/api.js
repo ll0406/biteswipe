@@ -11,6 +11,7 @@ api
   .use('/users', require('./users'))
   .use('/restaurants', require('./restaurants'))
   .use('/searchSettings', require('./searchSettings'))
+  .use('/categories', require('./categories'));
 
 // No routes matched? 404.
 api.use((req, res) => res.status(404).end());

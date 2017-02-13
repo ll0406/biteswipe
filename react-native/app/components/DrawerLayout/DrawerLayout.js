@@ -15,12 +15,11 @@ export default class DrawerLayout extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			initalized: false
+			initialized: false
 		};
 	}
 
-	componentDidMount(){
-
+	componentDidMount() {
 		let promises = [];
 		if(!this.props.user) promises.push(this.props.getAuthenticatedUser());
 		if(!this.props.location) promises.push(this.props.getCurrentLocation());
@@ -34,7 +33,7 @@ export default class DrawerLayout extends Component {
 	  })
 	  .then(() => {
 	  	this.setState({
-	  		initalized: true
+	  		initialized: true
 	  	});	  	
 	  })
 	  .catch(error => {
@@ -49,11 +48,11 @@ export default class DrawerLayout extends Component {
 	  		case RESTAURANTS_ERROR:
 	  			break;
 	  	}
+	  	// disable loading screen
 	  	this.setState({
-	  		initalized: true
+	  		initialized: true
 	  	});
 	  });
-
 	}
 
 	render() {
@@ -63,7 +62,7 @@ export default class DrawerLayout extends Component {
 		const current = children[children.length - 1];
 		const open = navigationState.open;
 
-		if(!this.state.initalized) {
+		if(!this.state.initialized) {
 			return (
 				<Loading/>
 				);

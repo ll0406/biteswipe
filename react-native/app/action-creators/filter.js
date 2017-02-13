@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {RECEIVE_LOCATION, RECEIVE_SETTINGS, ADDRESS} from '../constants';
 import {LOCATION_ERROR, SEARCH_SETTINGS_ERROR} from '../errors';
 import {handleAuthenticationError} from './auth';
+import {RECEIVE_LOCATION, RECEIVE_SETTINGS, SET_TEMPORARY_CATEGORIES, ADDRESS} from '../constants';
 
 export const receiveLocation = location =>
 ({
@@ -15,6 +15,12 @@ export const receiveSearchSettings = settings =>
   settings
 });
 
+export const setTemporaryCategories = temporaryCategories => 
+({
+  type: SET_TEMPORARY_CATEGORIES,
+  temporaryCategories
+});
+
 export const getCurrentLocation = () => {
   return dispatch => {
     return new Promise((resolve, reject) => {
@@ -25,7 +31,7 @@ export const getCurrentLocation = () => {
             longitude: position.coords.longitude
           };
           dispatch(receiveLocation(location));
-          resolve();
+          resolve(location);
       }, 
         error => {
           error.type = LOCATION_ERROR;
@@ -36,13 +42,13 @@ export const getCurrentLocation = () => {
 };
 
 export const getSearchSettings = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       axios.get(`${ADDRESS}/api/searchSettings`)
         .then(res => res.data)
         .then(settings => {
            dispatch(receiveSearchSettings(settings));
-           resolve();
+           resolve(settings);
         })
         .catch(error => {
           error.type = SEARCH_SETTINGS_ERROR;
@@ -52,4 +58,24 @@ export const getSearchSettings = () => {
   };
 };
 
-// TODO: post updated searchSettings from Filter.js updateFilterOption()
+export const updateSearchSettings = (priceRange, radius, categories) => {
+  return (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+
+      const settings = { priceRange, radius, categories };
+      dispatch(receiveSearchSettings(settings));
+
+      axios.put(`${ADDRESS}/api/searchSettings`, settings)
+        .then(res => res.data)
+        .then(() => {
+          resolve(settings);
+        })
+        .catch(error => {
+          error.type = SEARCH_SETTINGS_ERROR;
+          handleAuthenticationError(error, updateSearchSettings, reject)
+        }); 
+    }); 
+  }
+};
+
+

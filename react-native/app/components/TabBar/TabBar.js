@@ -8,7 +8,6 @@ import myTheme from './light.js'
 
 import SwipeView from '../SwipeView';
 import Results from '../Results';
-import History from '../History';
 
 export class TabBar extends Component {
   constructor(props) {
@@ -31,7 +30,7 @@ export class TabBar extends Component {
 
   render() {
 
-    const count = this.props.results.length;
+    const count = Object.keys(this.props.results).length;
     const resultsLabel = count > 0 ? `Results (${count})` : 'Results'
 
     return (

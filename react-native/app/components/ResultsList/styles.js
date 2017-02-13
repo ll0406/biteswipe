@@ -32,7 +32,7 @@ export default StyleSheet.create({
 		alignItems: 'center'		
 	},
 	image: {
-		height: 200,
+		height: 150,
 		width: width * 0.9,
 		margin: imageMargin
 	},

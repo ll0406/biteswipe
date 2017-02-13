@@ -21,40 +21,21 @@ export default class extends Component {
   }
 
   componentDidMount() {
-    Promise.all([
-      this.props.getRestaurant(this.props.selectedRestaurant.id),
-      this.props.getReviews(this.props.selectedRestaurant.id)
-      ])
-    .then(() => {
-      this.setState({
-        loading: false
-      })
-    })
-    .catch(console.log)
+    this.load();
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.restaurant.id !== nextProps.restaurant.id) {
-      // reset loading screen
-      this.setState({
-        loading: true
-      });
-
-      Promise.all([
-        this.props.getRestaurant(this.props.selectedRestaurant.id),
-        this.props.getReviews(this.props.selectedRestaurant.id)
-        ])
-      .then(() => {
-        this.setState({
-          loading: false
-        });
-      })
-      .catch(console.log)
-
+    // if not currently loading restaurant, reload
+    if(this.props.restaurant && this.props.restaurant.id !== nextProps.restaurant.id) {
+      this.load();
     };
   }
 
   load() {
+    this.setState({
+      loading: true
+    });
+
     Promise.all([
       this.props.getRestaurant(this.props.selectedRestaurant.id),
       this.props.getReviews(this.props.selectedRestaurant.id)
@@ -64,37 +45,46 @@ export default class extends Component {
         loading: false
       });
     })
-    .catch(console.log)
+    .catch(error => {
+      this.setState({
+        loading: false
+      });
+      console.log(error);
+    });
   }
 
   render() {
     if(this.state.loading) {
       return (
         <Loading />
-      )
+      );
     } else {
       return (
-      <View style={styles.main}>
-        { this.props.restaurant.photos ? <Carousel
-          style={styles.cardImage}
-          delay={10000}
-          autoplay={true}>
+        <View style={styles.main}>
           {
-            this.props.restaurant.photos.map( (photo, index) => {
-              return (
-                <CarouselItem key={index} image={photo}></CarouselItem>
-              )
-            })
+            <Carousel
+              style={styles.cardImage}
+              delay={10000}
+              autoplay={true}>
+              {
+                this.props.restaurant.photos ?
+                this.props.restaurant.photos.map((photo, index) => {
+                  return (
+                    <CarouselItem key={index} image={photo} name={this.props.restaurant.name}/>
+                  )
+                })
+                : <CarouselItem key={index} image="https://upload.wikimedia.org/wikipedia/commons/2/28/Rough_chameleon_%28Trioceros_rudis%29.jpg" name={this.props.restaurant.name}/>
+              }
+            </Carousel>
           }
-        </Carousel> : <Text></Text> }
-        <Text style={styles.cardTitle}>{this.props.restaurant.name}</Text>
-        <View>
-          <Tabs >
-            <Info tabLabel='Info' restaurant={this.props.restaurant} />
-            <Reviews tabLabel='Reviews' reviews={this.props.reviews} />
-          </Tabs>
+          <View>
+            <Tabs >
+              <Info tabLabel='Info' restaurant={this.props.restaurant} />
+              <Reviews tabLabel='Reviews' reviews={this.props.reviews} />
+            </Tabs>
+          </View>
         </View>
-      </View>
-    )}
+        );
+    };
   }
 }

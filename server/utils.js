@@ -46,6 +46,10 @@ const updateSecretsFile = (keys, values) => {
 
 };
 
+const convertRadiusToMeters = (radius) => {
+	return Math.ceil(radius * 1609.34);
+};
+
 module.exports = {
 	updateSecretsFile
 };

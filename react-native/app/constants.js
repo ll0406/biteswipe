@@ -21,7 +21,7 @@ export const ADD_TO_RESULTS = 'ADD_TO_RESULTS';
 export const REMOVE_FROM_RESULTS = 'REMOVE_FROM_RESULTS';
 export const SET_AVAILABLE = 'SET_AVAILABLE';
 
-// restaurants
+// restaurant
 export const RECEIVE_RESTAURANT = 'RECEIVE_RESTAURANT';
 
 // reviews
@@ -31,6 +31,11 @@ export const RECEIVE_REVIEWS = 'RECEIVE_REVIEWS';
 export const RECEIVE_LOCATION = 'RECEIVE_LOCATION';
 export const RECEIVE_SETTINGS = 'RECEIVE_SETTINGS';
 export const SET_SETTINGS = 'SET_SETTINGS';
+export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
+export const SET_TEMPORARY_CATEGORIES = 'SET_TEMPORARY_CATEGORIES';
 
 // ui
 export const SET_CURRENT_TAB = 'SET_CURRENT_TAB';
+
+// general
+export const CLEAR_STORE = 'CLEAR_STORE';

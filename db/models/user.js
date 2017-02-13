@@ -54,12 +54,8 @@ function setEmailAndPassword(user) {
 
 function setSettings(user) {
   db.model('searchSettings').findOrCreate({
-    where: {user_id: user.id},
-    defaults: {
-      categories: ['pizza', 'newamerican', 'italian', 'chinese', 'sushi', 'mexican', 'burgers', 'indpak'],
-      priceRange: [1,2,3,4]
-    }
-  })
-}
+    where: {user_id: user.id}
+  });
+};
 
 module.exports = User;

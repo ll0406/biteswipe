@@ -53,7 +53,6 @@ export const getRestaurants = () =>
 		return new Promise((resolve, reject) => {
 			axios.get(`${ADDRESS}/api/restaurants`,
 				{
-					headers: {'Authorization': `Bearer ${getState().auth.accessToken}`},
 					params: {
 					  latitude: getState().filter.location.latitude,
 					  longitude: getState().filter.location.longitude,
@@ -65,9 +64,11 @@ export const getRestaurants = () =>
 				})
 				.then(res => res.data)
 				.then(body => {
-					if(!body.businesses.length) dispatch(setAvailable(false));
-					else dispatch(receiveRestaurants(body.businesses.sort(() => 0.5 - Math.random())));
-					resolve();
+					let restaurants = body.businesses;
+					if(!restaurants.length) dispatch(setAvailable(false));
+					// for now just randomly sort restaurants to add variation
+					else dispatch(receiveRestaurants(restaurants.sort(() => 0.5 - Math.random())));
+					resolve(restaurants);
 				})
 				.catch(error => {
 					error.type = 'RESTAURANTS_ERROR';
@@ -79,12 +80,11 @@ export const getRestaurants = () =>
 export const getRestaurant = (id) =>
 	(dispatch, getState) => {
 		return new Promise((resolve, reject) => {
-			axios.get(`${ADDRESS}/api/restaurants/${id}`, {
-	        headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}})
+			axios.get(`${ADDRESS}/api/restaurants/${id}`)
 			.then(res => res.data)
 			.then(restaurant => {
 				dispatch(receiveRestaurant(restaurant));
-				resolve();
+				resolve(restaurant);
 			})
 			.catch(error => handleAuthenticationError(error, getRestaurant, reject));
 			});
@@ -93,14 +93,12 @@ export const getRestaurant = (id) =>
 export const getReviews = (id) =>
 	(dispatch, getState) => {
 		return new Promise((resolve, reject) => {
-			axios.get(`${ADDRESS}/api/restaurants/${id}/reviews`, {
-				headers: {'Authorization': `Bearer ${getState().auth.accessToken}`}
-			})
+			axios.get(`${ADDRESS}/api/restaurants/${id}/reviews`)
 			.then(res => res.data)
 			.then(reviews => {
 				dispatch(receiveReviews(reviews));
-				resolve();
+				resolve(reviews);
 			})
-			.catch(error => handleAuthenticationError(error, getRestaurant, reject));
+			.catch(error => handleAuthenticationError(error, getReviews, reject));
 			});
 		}
