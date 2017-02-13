@@ -36,15 +36,15 @@ export const receiveAuthenticatedUser = user => ({
 })
 
 // can be utilized by any action-creators that hit protected routes
-export const handleAuthenticationError = (error, func, reject) => {
-  if (error.response && error.response.status === 401) store.dispatch(getAccessToken(func, reject));
+export const handleAuthenticationError = (error, func, resolve, reject) => {
+  if (error.response && error.response.status === 401) store.dispatch(getAccessToken(func, resolve, reject));
   else {
     console.log(error);
     if(reject) reject(error);
   };
 };
 
-export const getAccessToken = (func, reject) => 
+export const getAccessToken = (func, resolve, reject) => 
   (dispatch, getState) =>
     axios.post(`${ADDRESS}/api/auth/token`, 
       { refreshToken: getState().auth.refreshToken })
@@ -53,7 +53,13 @@ export const getAccessToken = (func, reject) =>
         dispatch(updateGettingAccessToken(false));
         dispatch(receiveAccessToken(body.accessToken));
         // try async thunk again
-        if(func) dispatch(func());
+        if(func) {
+          // since func() should be a promise we reject/resolve
+          // when that promise finishes (crazy inception of promises)
+          dispatch(func())
+          .then(resolve)
+          .catch(reject)
+        };
       })
       .catch(error => {
         if(error.response && error.response.status === 401) dispatch(logout);

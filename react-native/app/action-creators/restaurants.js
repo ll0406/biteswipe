@@ -76,7 +76,7 @@ export const getRestaurants = () =>
 				})
 				.catch(error => {
 					error.type = 'RESTAURANTS_ERROR';
-					handleAuthenticationError(error, getRestaurants, reject)
+					handleAuthenticationError(error, getRestaurants, resolve, reject)
 				});
 			});
 		};
@@ -90,7 +90,7 @@ export const getRestaurant = (id) =>
 				dispatch(receiveRestaurant(restaurant));
 				resolve(restaurant);
 			})
-			.catch(error => handleAuthenticationError(error, getRestaurant, reject));
+			.catch(error => handleAuthenticationError(error, getRestaurant, resolve, reject));
 			});
 		}
 
@@ -103,6 +103,6 @@ export const getReviews = (id) =>
 				dispatch(receiveReviews(reviews));
 				resolve(reviews);
 			})
-			.catch(error => handleAuthenticationError(error, getReviews, reject));
+			.catch(error => handleAuthenticationError(error, getReviews, resolve, reject));
 			});
 		}

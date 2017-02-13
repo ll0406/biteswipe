@@ -52,7 +52,7 @@ export const getSearchSettings = () => {
         })
         .catch(error => {
           error.type = SEARCH_SETTINGS_ERROR;
-          handleAuthenticationError(error, getSearchSettings, reject)
+          handleAuthenticationError(error, getSearchSettings, resolve, reject)
         }); 
     });
   };
@@ -72,7 +72,7 @@ export const updateSearchSettings = (priceRange, radius, categories) => {
         })
         .catch(error => {
           error.type = SEARCH_SETTINGS_ERROR;
-          handleAuthenticationError(error, updateSearchSettings, reject)
+          handleAuthenticationError(error, updateSearchSettings, resolve, reject)
         }); 
     }); 
   }

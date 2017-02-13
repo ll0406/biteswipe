@@ -37,7 +37,7 @@ const NavBar = props => {
       break;
   };
 
-  const actions = props.tab === 1 ? [{ icon: 'delete', onPress: props.clearResults}] : [];
+  const actions = (props.tab === 1 && current.name !== 'restaurant') ? [{ icon: 'delete', onPress: props.clearResults}] : [];
 
   return (
   	<Toolbar

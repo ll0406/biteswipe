@@ -47,7 +47,8 @@ export default class DrawerLayout extends Component {
 	  			break;
 	  		case RESTAURANTS_ERROR:
 	  			break;
-	  	}
+	  	};
+	  	console.log(error);
 	  	// disable loading screen
 	  	this.setState({
 	  		initialized: true
