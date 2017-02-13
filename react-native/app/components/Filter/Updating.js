@@ -11,7 +11,7 @@ import {
 const Updating = props => {
 	return (
 		<View style={styles.container}>
-			<Text>Updating Settings</Text>
+			<Text style={styles.text}>Updating Settings</Text>
 			<ActivityIndicator
 			  animating={true}
 			  size="large"
@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
 		backgroundColor: 'rgba(0, 0, 0, 0.2)'
 	},
 	text: {
-		fontSize: 24
+		fontSize: 16,
+		margin: 10
 	}
 });
 

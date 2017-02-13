@@ -9,19 +9,21 @@ export default class DeckSwiper extends Component {
 	constructor(props) {
     super(props);
 
+    const index = props.index || 0;
     const disabled = props.dataSource.length === 0;
     const lastCard = props.dataSource.length === 1;
+
 
     this.state = {
       pan: new Animated.ValueXY(),
       pan2: new Animated.ValueXY(),
       enter: new Animated.Value(0.8),
-      selectedItem : props.dataSource[0],
-      selectedItem2 : props.dataSource[1],
+      selectedItem : props.dataSource[index],
+      selectedItem2 : props.dataSource[index + 1],
       card1Top: true,
       card2Top: false,
       fadeAnim: new Animated.Value(0.8),
-      index: 0,
+      index: index,
       disabled,
       lastCard,
       renderEmpty: props.renderEmpty
@@ -239,7 +241,7 @@ export default class DeckSwiper extends Component {
 	    return(
 	      <View ref={c => this._root = c} style={{position: 'relative', flexDirection: 'column'}}>
 	      	{
-	      		(this.state.selectedItem) === undefined ? (<View />) :
+	      		(this.state.selectedItem) === undefined ? this.props.renderEmpty() :
 	      		(
 							<View>
 								<Animated.View style={[this.getCardStyles()[1], this.getInitialStyle().topCard, {opacity: this.state.fadeAnim}]} {...this._panResponder.panHandlers}>
@@ -261,7 +263,7 @@ export default class DeckSwiper extends Component {
 	    return(
 	      <View ref={c => this._root = c} style={{position: 'relative', flexDirection: 'column'}}>
 	      	{
-	      		(this.state.selectedItem) === undefined ? (<View />) :
+	      		(this.state.selectedItem) === undefined ? this.props.renderEmpty() :
 	      		(
 							<View>
 							  <Animated.View style={[this.getCardStyles()[1], this.getInitialStyle().topCard, {opacity: this.state.fadeAnim}]} {...this._panResponder.panHandlers}>

@@ -9,9 +9,6 @@ import DeckSwiper from '../DeckSwiper';
 export default class SwipeView extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      startIndex: props.swipeCounter
-    };
     this.onSwipeRight = this.onSwipeRight.bind(this);
     this.onSwipeLeft = this.onSwipeLeft.bind(this);
   }
@@ -20,8 +17,6 @@ export default class SwipeView extends Component {
     // compare and check whether restaurants have the same reference
     // since we use concat when we add new restaurants, this only fires then
     if(nextProps.restaurants !== this.props.restaurants) return true;
-    // update when we've reached end of restaurants
-    if(nextProps.swipeCounter === this.props.restaurants.length) return true;
     return false;
   }
 
@@ -33,34 +28,23 @@ export default class SwipeView extends Component {
   onSwipeLeft() {
     this.props.incrementSwipeCounter();
     if(this.props.restaurants.length - this.props.swipeCounter < 5 && this.props.available) {
-      // this.props.getRestaurants();
+      this.props.getRestaurants();
     };
   }
   
   render() {
-
-    // only slice when rendered - determined by shouldComponentUpdate
-    let slicedRestaurants = this.props.restaurants.slice(this.state.startIndex);
-
-    if(!slicedRestaurants.length || this.props.swipeCounter === this.props.restaurants.length) {
-      return (
-        <View style={styles.swipeViewBackground}>
-          <NoMoreCards/>
-        </View>
-        );
-    } else {
-      return (
-        <View style={styles.swipeViewBackground}>
-          <DeckSwiper
-            dataSource={slicedRestaurants}
-            renderItem={(cardData) => <SummaryCard restaurant={cardData}/>}
-            onSwipeRight={restaurant => this.onSwipeRight(restaurant)}
-            onSwipeLeft={() => this.onSwipeLeft()}
-            renderEmpty={() => <NoMoreCards/>}
-          />
-        </View>
-      );
-    };
+    return (
+      <View style={styles.swipeViewBackground}>
+        <DeckSwiper
+          dataSource={this.props.restaurants}
+          renderItem={(cardData) => <SummaryCard restaurant={cardData}/>}
+          onSwipeRight={restaurant => this.onSwipeRight(restaurant)}
+          onSwipeLeft={() => this.onSwipeLeft()}
+          renderEmpty={() => <NoMoreCards/>}
+          index={this.props.swipeCounter}
+        />
+      </View>
+    );
   }
 
 };
