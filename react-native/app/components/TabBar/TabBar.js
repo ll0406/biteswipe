@@ -18,14 +18,11 @@ export class TabBar extends Component {
     this._onChangeTab = this._onChangeTab.bind(this);
   }
 
-  componentWillUnmount() {
-    this.props.setCurrentTab(this.state.selected);
-  }
-
   _onChangeTab(tab) {
     this.setState({
       selected: tab.i
     });
+    this.props.setCurrentTab(tab.i);
   }
 
   render() {
