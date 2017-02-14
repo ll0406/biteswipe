@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Toolbar} from 'react-native-material-design';
 import {Actions} from 'react-native-router-flux';
 import { colors } from '../colors';
-
+import {styles} from './styles';
 import {BackAndroid} from 'react-native';
 
 export default class NavBar extends Component {
@@ -69,6 +69,7 @@ export default class NavBar extends Component {
           icon={icon}
           onIconPress={onIconPress}
           actions={actions}
+          style={styles.NavBar}
           rightIconStyle={{
               marginRight: 20
           }}

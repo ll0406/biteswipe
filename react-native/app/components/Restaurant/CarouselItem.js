@@ -6,7 +6,7 @@ const CarouselItem = (props) => {
   return(
     <View style={styles.container}>
       <Image
-        source={{uri: props.image}}
+        source={{uri: props.image || 'http://www.fillmurray.com/284/196'}}
         style={styles.cardImage}>
         <View style={styles.cardTitleContainer}>
           <Text style={styles.cardTitle}>{props.name}</Text>
