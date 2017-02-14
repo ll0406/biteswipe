@@ -1,6 +1,9 @@
 import React from 'react';
 import {Toolbar} from 'react-native-material-design';
 import {Actions} from 'react-native-router-flux';
+import {styles} from './styles';
+
+import { colors } from '../colors';
 
 const NavBar = props => {
 
@@ -42,6 +45,12 @@ const NavBar = props => {
   	    title={title}
   	    icon={icon}
   	    onIconPress={onIconPress}
+        style={styles.NavBar}
+        overrides={{
+          color: colors.primaryText,
+          leftIconColor: colors.primaryText,
+          rightIconColor: colors.primaryText,
+        }}
   	/>
   );
 };
