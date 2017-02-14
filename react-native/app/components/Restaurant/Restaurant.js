@@ -70,13 +70,13 @@ export default class extends Component {
                 delay={10000}
                 autoplay={true}>
                 {
-                  this.props.restaurant.photos ?
+                  this.props.restaurant.photos.length ?
                   this.props.restaurant.photos.map((photo, index) => {
                     return (
                       <CarouselItem key={index} image={photo} name={this.props.restaurant.name}/>
                     )
                   })
-                  : <CarouselItem key={index} image="https://upload.wikimedia.org/wikipedia/commons/2/28/Rough_chameleon_%28Trioceros_rudis%29.jpg" name={this.props.restaurant.name}/>
+                  : <CarouselItem image="https://upload.wikimedia.org/wikipedia/commons/2/28/Rough_chameleon_%28Trioceros_rudis%29.jpg" name={this.props.restaurant.name}/>
                 }
               </Carousel>
             }
