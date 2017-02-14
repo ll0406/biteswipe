@@ -8,6 +8,8 @@ import {persistStore} from 'redux-persist';
 
 import LoadingSplash from './app/components/LoadingSplash';
 
+import {colors} from './app/components/colors';
+
 import {receiveRefreshToken, receiveAccessToken, updateLoggedIn} from './app/action-creators/auth';
 import scenes from './app/scenes';
 
@@ -74,7 +76,7 @@ export default class BiteSwipe extends Component {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: '#2196F3'
+    backgroundColor: colors.primary
   },
   navTitle: {
     color: 'white'

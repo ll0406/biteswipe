@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { styles } from './styles';
 
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { Tabs } from 'native-base';
+import { Container, Tabs } from 'native-base';
 import Carousel from 'react-native-looped-carousel';
+
+import myTheme from './light.js'
 
 import Reviews from './Reviews';
 import Info from './Info';
@@ -60,30 +62,32 @@ export default class extends Component {
       );
     } else {
       return (
-        <View style={styles.main}>
-          {
-            <Carousel
-              style={styles.cardImage}
-              delay={10000}
-              autoplay={true}>
-              {
-                this.props.restaurant.photos ?
-                this.props.restaurant.photos.map((photo, index) => {
-                  return (
-                    <CarouselItem key={index} image={photo} name={this.props.restaurant.name}/>
-                  )
-                })
-                : <CarouselItem key={index} image="https://upload.wikimedia.org/wikipedia/commons/2/28/Rough_chameleon_%28Trioceros_rudis%29.jpg" name={this.props.restaurant.name}/>
-              }
-            </Carousel>
-          }
-          <View>
-            <Tabs >
-              <Info tabLabel='Info' restaurant={this.props.restaurant} />
-              <Reviews tabLabel='Reviews' reviews={this.props.reviews} />
-            </Tabs>
+        <Container theme={myTheme}>
+          <View style={styles.main}>
+            {
+              <Carousel
+                style={styles.cardImage}
+                delay={10000}
+                autoplay={true}>
+                {
+                  this.props.restaurant.photos ?
+                  this.props.restaurant.photos.map((photo, index) => {
+                    return (
+                      <CarouselItem key={index} image={photo} name={this.props.restaurant.name}/>
+                    )
+                  })
+                  : <CarouselItem key={index} image="https://upload.wikimedia.org/wikipedia/commons/2/28/Rough_chameleon_%28Trioceros_rudis%29.jpg" name={this.props.restaurant.name}/>
+                }
+              </Carousel>
+            }
+            <View>
+              <Tabs >
+                <Info tabLabel='Info' restaurant={this.props.restaurant} />
+                <Reviews tabLabel='Reviews' reviews={this.props.reviews} />
+              </Tabs>
+            </View>
           </View>
-        </View>
+        </Container>
         );
     };
   }

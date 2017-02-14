@@ -58,10 +58,11 @@ export const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     borderRadius: 10,
-    backgroundColor: colors.primary,
+    borderWidth: 2,
+    backgroundColor: '#E0F2F1',
     flexDirection: 'row',
     alignItems: 'center',
-    elevation: 4,
+    borderColor: colors.lightPrimary,
   },
   yelpContainer: {
     alignItems: 'center',
@@ -104,15 +105,15 @@ export const styles = StyleSheet.create({
   priceBold: {
     textAlign: 'center',
     fontSize: 24,
-    color: colors.primaryText,
+    color: colors.secondaryText,
   },
   priceLight: {
     fontSize: 20,
-    color: colors.secondaryText,
+    color: '#aaa',
   },
   distanceDot: {
     marginLeft: 5,
-    backgroundColor: colors.darkPrimary,
+    backgroundColor: colors.lightPrimary,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
@@ -120,7 +121,8 @@ export const styles = StyleSheet.create({
     height: 50,
   },
   distanceDotText: {
-    lineHeight: 14
+    lineHeight: 17,
+    fontSize: 16,
   },
   rowContainer: {
     flexDirection: 'row',

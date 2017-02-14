@@ -15,7 +15,7 @@ export const SummaryCard = React.createClass({
       <View style={styles.card}>
         <TouchableHighlight onPress={goToRestaurant}>
           <Image 
-            source={{uri: restaurant.image_url}} 
+            source={{uri: restaurant.image_url || 'http://www.fillmurray.com/284/196'}} 
             style={styles.cardImage}>
             <View style={styles.cardTitleContainer}>
               <Text style={styles.cardTitle}>{restaurant.name}</Text>
