@@ -1,8 +1,11 @@
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import NavBar from './NavBar';
 
+import {clearResults} from '../../action-creators/restaurants';
+import {setTemporaryCategories, setTemporaryRadius, setTemporaryPriceRange} from '../../action-creators/filter';
+
 const mapStateToProps = state => ({
-	routes: state.routes
+	tab: state.ui.tab
 });
-const mapDispatchToProps = {};
-export default connect()(NavBar);
+const mapDispatchToProps = { clearResults, setTemporaryCategories, setTemporaryRadius, setTemporaryPriceRange };
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

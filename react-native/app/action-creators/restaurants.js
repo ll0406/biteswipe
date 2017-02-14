@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
 	RECEIVE_RESTAURANTS, CLEAR_RESTAURANTS, INCREMENT_SWIPE_COUNTER, SET_AVAILABLE, CLEAR_SWIPE_COUNTER, 
-	ADD_TO_RESULTS, REMOVE_FROM_RESULTS, RECEIVE_RESTAURANT, RECEIVE_REVIEWS, ADDRESS
+	ADD_TO_RESULTS, REMOVE_FROM_RESULTS, CLEAR_RESULTS, RECEIVE_RESTAURANT, RECEIVE_REVIEWS, ADDRESS
 } from '../constants';
 import {RESTAURANTS_ERROR} from '../errors';
 import {handleAuthenticationError} from './auth';
@@ -38,6 +38,10 @@ export const removeFromResults = restaurant => ({
 	restaurant
 });
 
+export const clearResults = () => ({
+	type: CLEAR_RESULTS
+});
+
 export const receiveRestaurant = restaurant => ({
 	type: RECEIVE_RESTAURANT,
 	restaurant
@@ -72,7 +76,7 @@ export const getRestaurants = () =>
 				})
 				.catch(error => {
 					error.type = 'RESTAURANTS_ERROR';
-					handleAuthenticationError(error, getRestaurants, reject)
+					handleAuthenticationError(error, getRestaurants, resolve, reject)
 				});
 			});
 		};
@@ -86,7 +90,7 @@ export const getRestaurant = (id) =>
 				dispatch(receiveRestaurant(restaurant));
 				resolve(restaurant);
 			})
-			.catch(error => handleAuthenticationError(error, getRestaurant, reject));
+			.catch(error => handleAuthenticationError(error, getRestaurant, resolve, reject));
 			});
 		}
 
@@ -99,6 +103,6 @@ export const getReviews = (id) =>
 				dispatch(receiveReviews(reviews));
 				resolve(reviews);
 			})
-			.catch(error => handleAuthenticationError(error, getReviews, reject));
+			.catch(error => handleAuthenticationError(error, getReviews, resolve, reject));
 			});
 		}

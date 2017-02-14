@@ -2,14 +2,16 @@ import { connect } from 'react-redux';
 import Filter from './Filter';
 
 import {getRestaurants, clearRestaurants, clearSwipeCounter, setAvailable} from '../../action-creators/restaurants';
-import {getCurrentLocation, updateSearchSettings, setTemporaryCategories} from '../../action-creators/filter';
+import {getCurrentLocation, updateSearchSettings, setTemporaryRadius, setTemporaryPriceRange} from '../../action-creators/filter';
 
 const mapStateToProps = state => {
   return {
     location: state.filter.location,
     settings: state.filter.settings,
     chosenCategories: state.filter.settings.categories,
-    temporaryCategories: state.filter.temporaryCategories
+    temporaryCategories: state.filter.temporaryCategories,
+    temporaryRadius: state.filter.temporaryRadius,
+    temporaryPriceRange: state.filter.temporaryPriceRange
   };
 }
 
@@ -33,8 +35,11 @@ const mapDispatchToProps = dispatch => { 
     updateSearchSettings: (priceRange, radius, categories) => { 
       return dispatch(updateSearchSettings(priceRange, radius, categories));
     },
-    setTemporaryCategories: categories => { 
-      return dispatch(setTemporaryCategories(categories));
+    setTemporaryRadius: radius => { 
+      return dispatch(setTemporaryRadius(radius));
+    },
+    setTemporaryPriceRange: priceRange => { 
+      return dispatch(setTemporaryPriceRange(priceRange));
     }
   }
 }

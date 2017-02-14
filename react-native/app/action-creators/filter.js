@@ -1,7 +1,10 @@
 import axios from 'axios';
 import {LOCATION_ERROR, SEARCH_SETTINGS_ERROR} from '../errors';
 import {handleAuthenticationError} from './auth';
-import {RECEIVE_LOCATION, RECEIVE_SETTINGS, SET_TEMPORARY_CATEGORIES, ADDRESS} from '../constants';
+import {
+  RECEIVE_LOCATION, RECEIVE_SETTINGS, SET_CATEGORIES, SET_TEMPORARY_CATEGORIES, 
+  SET_TEMPORARY_RADIUS, SET_TEMPORARY_PRICE_RANGE, ADDRESS
+} from '../constants';
 
 export const receiveLocation = location =>
 ({
@@ -19,6 +22,18 @@ export const setTemporaryCategories = temporaryCategories =>
 ({
   type: SET_TEMPORARY_CATEGORIES,
   temporaryCategories
+});
+
+export const setTemporaryRadius = temporaryRadius => 
+({
+  type: SET_TEMPORARY_RADIUS,
+  temporaryRadius
+});
+
+export const setTemporaryPriceRange = temporaryPriceRange => 
+({
+  type: SET_TEMPORARY_PRICE_RANGE,
+  temporaryPriceRange
 });
 
 export const getCurrentLocation = () => {
@@ -52,7 +67,7 @@ export const getSearchSettings = () => {
         })
         .catch(error => {
           error.type = SEARCH_SETTINGS_ERROR;
-          handleAuthenticationError(error, getSearchSettings, reject)
+          handleAuthenticationError(error, getSearchSettings, resolve, reject)
         }); 
     });
   };
@@ -72,7 +87,7 @@ export const updateSearchSettings = (priceRange, radius, categories) => {
         })
         .catch(error => {
           error.type = SEARCH_SETTINGS_ERROR;
-          handleAuthenticationError(error, updateSearchSettings, reject)
+          handleAuthenticationError(error, updateSearchSettings, resolve, reject)
         }); 
     }); 
   }

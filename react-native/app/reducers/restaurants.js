@@ -1,6 +1,6 @@
 import {
-	RECEIVE_RESTAURANTS, CLEAR_RESTAURANTS, INCREMENT_SWIPE_COUNTER, SET_AVAILABLE, 
-	CLEAR_SWIPE_COUNTER, ADD_TO_RESULTS, REMOVE_FROM_RESULTS, RECEIVE_RESTAURANT, RECEIVE_REVIEWS
+	RECEIVE_RESTAURANTS, CLEAR_RESTAURANTS, INCREMENT_SWIPE_COUNTER, SET_AVAILABLE, CLEAR_SWIPE_COUNTER, 
+	ADD_TO_RESULTS, REMOVE_FROM_RESULTS, CLEAR_RESULTS, RECEIVE_RESTAURANT, RECEIVE_REVIEWS
 } from '../constants';
 
 const initialState = {
@@ -37,6 +37,9 @@ const reducer = (state = initialState, action) => {
 			let deletedResults = Object.assign({}, newState.results);
 			delete deletedResults[action.restaurant.id];
 			newState.results = deletedResults;
+			break;
+		case CLEAR_RESULTS:
+			newState.results = [];
 			break;
     case RECEIVE_RESTAURANT:
       newState.restaurant = action.restaurant;

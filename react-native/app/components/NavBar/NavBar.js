@@ -1,58 +1,84 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Toolbar} from 'react-native-material-design';
 import {Actions} from 'react-native-router-flux';
-import {styles} from './styles';
-
 import { colors } from '../colors';
 
-const NavBar = props => {
+import {BackAndroid} from 'react-native';
 
-  const navigationState = props.navigationState;
-  const current = props.current;
+export default class NavBar extends Component {
+  constructor(props) {
+    super(props);
+    this.clearTemporarySettings = this.clearTemporarySettings.bind(this);
+  }
 
-  const open = () => {
-    Actions.refresh({ key: navigationState.key, open: value => !value });
-  };
+  componentDidMount() {
+    BackAndroid.addEventListener("hardwareBackPress", () => {
+      this.clearTemporarySettings();
+    });
+  }
 
-  const back = () => {
-    Actions.pop();
-  };
+  clearTemporarySettings() {
+    // clear all temporary filter settings on back
+    if(this.props.current.name === 'filter') {
+      this.props.setTemporaryCategories(null);
+      this.props.setTemporaryRadius(null);
+      this.props.setTemporaryPriceRange(null);
+    };
+  }
 
-  let title;
-  let icon;
-  let onIconPress;
+  render() {
+    const navigationState = this.props.navigationState;
+    const current = this.props.current;
 
-  switch(current.name) {
-    case 'swipe':
-      title = current.title;
-      icon = 'menu';
-      onIconPress = open;
-      break;
-    case 'restaurant':
-      title = current.selectedRestaurant.name || 'No restaurant selected';
-      icon = 'keyboard-backspace';
-      onIconPress = back;
-      break;
-    default:
-      title = current.title;
-      icon = 'keyboard-backspace';
-      onIconPress = back;
-      break;
-  };
+    const open = () => {
+      Actions.refresh({ key: navigationState.key, open: value => !value });
+    };
 
-  return (
-  	<Toolbar
-  	    title={title}
-  	    icon={icon}
-  	    onIconPress={onIconPress}
-        style={styles.NavBar}
-        overrides={{
-          color: colors.primaryText,
-          leftIconColor: colors.primaryText,
-          rightIconColor: colors.primaryText,
-        }}
-  	/>
-  );
+    const back = () => {
+      this.clearTemporarySettings();
+      Actions.pop();
+    };
+
+    let title;
+    let icon;
+    let onIconPress;
+
+    switch(current.name) {
+      case 'swipe':
+        title = current.title;
+        icon = 'menu';
+        onIconPress = open;
+        break;
+      case 'restaurant':
+        title = current.selectedRestaurant.name || 'No restaurant selected';
+        icon = 'keyboard-backspace';
+        onIconPress = back;
+        break;
+      default:
+        title = current.title;
+        icon = 'keyboard-backspace';
+        onIconPress = back;
+        break;
+    };
+
+    const actions = (this.props.tab === 1 && current.name !== 'restaurant') ? [{ icon: 'delete', onPress: this.props.clearResults}] : [];
+
+    return (
+      <Toolbar
+          title={title}
+          icon={icon}
+          onIconPress={onIconPress}
+          actions={actions}
+          rightIconStyle={{
+              marginRight: 20
+          }}
+          overrides={{
+            color: colors.primaryText,
+            leftIconColor: colors.primaryText,
+            rightIconColor: colors.primaryText,
+          }}
+      />
+    );
+  }
+
 };
-
-export default NavBar;

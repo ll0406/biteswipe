@@ -16,6 +16,6 @@ export const getCategories = () =>
 					dispatch(receiveCategories(categories));
 					resolve(categories);
 				})
-				.catch(error => handleAuthenticationError(error, getCategories, reject));
+				.catch(error => handleAuthenticationError(error, getCategories, resolve, reject));
 		});
 	}
