@@ -70,7 +70,7 @@ export default class ResultsList extends Component {
 		        			<Card style={styles.rowFront}>
 		        				<CardItem style={styles.cardItem}>
 		        					<TouchableOpacity onPress={() => Actions.restaurant({selectedRestaurant: restaurant})} activeOpacity={1}>        					
-			        					<Image style={styles.image} source={{ uri: restaurant.image_url }}>
+			        					<Image style={styles.image} source={{ uri: restaurant.image_url || 'https://upload.wikimedia.org/wikipedia/commons/2/28/Rough_chameleon_%28Trioceros_rudis%29.jpg' }}>
 			        						<View style={styles.textContainer}>
 			        							<Text style={styles.name}>{restaurant.name}</Text>
 			        							<Text style={styles.address}>{restaurant.location.display_address[0]}</Text>

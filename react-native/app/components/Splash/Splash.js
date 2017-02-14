@@ -8,7 +8,7 @@ import {
 const {width, height} = Dimensions.get('window');
 
 import styles from './styles';
-
+import {colors} from '../colors';
 import Carousel from 'react-native-looped-carousel';
 import CarouselItem from './CarouselItem';
 

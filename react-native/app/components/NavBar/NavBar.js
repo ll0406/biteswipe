@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Toolbar} from 'react-native-material-design';
 import {Actions} from 'react-native-router-flux';
+import { colors } from '../colors';
+
 import {BackAndroid} from 'react-native';
 
 export default class NavBar extends Component {
@@ -69,6 +71,11 @@ export default class NavBar extends Component {
           actions={actions}
           rightIconStyle={{
               marginRight: 20
+          }}
+          overrides={{
+            color: colors.primaryText,
+            leftIconColor: colors.primaryText,
+            rightIconColor: colors.primaryText,
           }}
       />
     );
